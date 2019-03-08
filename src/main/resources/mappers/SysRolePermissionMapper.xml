@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.js.dao.SysRolePermissionMapper">
+  <resultMap id="BaseResultMap" type="com.js.entity.SysRolePermission">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="role_id" jdbcType="INTEGER" property="roleId" />
+    <result column="perms_id" jdbcType="INTEGER" property="permsId" />
+    <result column="object_id" jdbcType="VARCHAR" property="objectId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, role_id, perms_id, object_id
+  </sql>
+  <select id="findById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from js_sys_role_permission
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="delete" parameterType="java.lang.Integer">
+    delete from js_sys_role_permission
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.js.entity.SysRolePermission">
+    insert into js_sys_role_permission (role_id, perms_id,
+      object_id)
+    values (#{roleId,jdbcType=INTEGER}, #{permsId,jdbcType=INTEGER},
+      #{objectId,jdbcType=VARCHAR})
+  </insert>
+
+  <update id="update" parameterType="com.js.entity.SysRolePermission">
+    update js_sys_role_permission
+    <set>
+      <if test="roleId != null">
+        role_id = #{roleId,jdbcType=INTEGER},
+      </if>
+      <if test="permsId != null">
+        perms_id = #{permsId,jdbcType=INTEGER},
+      </if>
+      <if test="objectId != null">
+        object_id = #{objectId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <delete id="deleteByRoleId" parameterType="java.lang.Integer">
+    delete from js_sys_role_permission
+    where role_id = #{roleId}
+  </delete>
+</mapper>

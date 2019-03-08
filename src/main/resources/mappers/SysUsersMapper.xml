@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.js.dao.SysUsersMapper">
+  <resultMap id="BaseResultMap" type="com.js.entity.SysUsers">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="nickname" jdbcType="VARCHAR" property="nickname" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="user_img" jdbcType="VARCHAR" property="userImg" />
+    <result column="token_code" jdbcType="VARCHAR" property="tokenCode" />
+    <result column="object_id" jdbcType="VARCHAR" property="objectId" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    id, user_id, nickname, password, user_img, token_code, object_id,status
+  </sql>
+
+  <sql id="where_sql">
+    <if test="param.id != null">and id = #{param.id}</if>
+    <if test="param.userId != null">and user_id = #{param.userId}</if>
+    <if test="param.nickname != null and param.nickname != ''">and nickname like '%'+#{param.nickname}+'%'</if>
+    <if test="param.tokenCode != null and param.tokenCode != ''">and token_code = #{param.tokenCode}</if>
+    <if test="param.objectId != null and param.objectId != ''">and object_id = #{param.objectId}</if>
+    <if test="param.status != null">and status = #{param.status}</if>
+
+  </sql>
+
+  <sql id="order_by_sql">
+    <if test="page != null">
+      <if test="page.orderBy != null and page.orderBy !=''">
+        ORDER BY ${page.orderBy} ${page.order}
+      </if>
+      <if test="page.start >= 0 and page.rows > 0">
+        limit #{page.start}, #{page.rows}
+      </if>
+    </if>
+  </sql>
+
+  <select id="findList" parameterType="com.js.entity.SysUsers" resultMap="BaseResultMap">
+    select * from js_sys_users
+  </select>
+
+  <select id="findById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from js_sys_users
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <select id="findPageList" parameterType="map" resultMap="BaseResultMap">
+    SELECT * FROM js_sys_users
+    <where>
+      <include refid="where_sql"/>
+    </where>
+    <include refid="order_by_sql"/>
+   </select>
+
+  <select id="findPageListCount" parameterType="com.js.entity.SysUsers" resultType="int">
+    SELECT count(*) FROM js_sys_users
+    <where>
+      <include refid="where_sql"/>
+    </where>
+  </select>
+
+  <select id="getRolesById" parameterType="java.lang.Integer" resultType="com.js.entity.SysRoles">
+    select r.* from js_sys_users u
+    left join js_sys_user_roles ur on u.id=ur.user_id
+    left join js_sys_rols r on ur.role_id=r.id
+    WHERE u.id=#{id,jdbcType=INTEGER}
+  </select>
+
+  <select id="getPermsById" parameterType="java.lang.Integer" resultType="com.js.entity.OldSysPermission">
+    select p.* from js_sys_users u
+    left join js_sys_user_permission up on u.id=up.user_id
+    left join js_old_sys_permission p on up.perms_id=p.perms_id
+    WHERE u.id=#{id,jdbcType=INTEGER}
+  </select>
+
+
+  <delete id="delete" parameterType="java.lang.Integer">
+    delete from js_sys_users
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+
+  <insert id="insert" parameterType="com.js.entity.SysUsers" useGeneratedKeys="true" keyProperty="id">
+    insert into js_sys_users (user_id, nickname, password, user_img, token_code, object_id,status)
+    values (#{userId,jdbcType=INTEGER}, #{nickname,jdbcType=VARCHAR},
+      #{password,jdbcType=VARCHAR}, #{userImg,jdbcType=VARCHAR}, #{tokenCode,jdbcType=VARCHAR},
+      #{objectId,jdbcType=VARCHAR},#{status,jdbcType=INTEGER})
+  </insert>
+
+  <update id="update" parameterType="com.js.entity.SysUsers">
+    update js_sys_users
+    <set>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="nickname != null and nickname!=''">
+        nickname = #{nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null and password!=''">
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="userImg != null and userImg!=''">
+        user_img = #{userImg,jdbcType=VARCHAR},
+      </if>
+      <if test="tokenCode != null and tokenCode!=''">
+        token_code = #{tokenCode,jdbcType=VARCHAR},
+      </if>
+      <if test="objectId != null and objectId!=''">
+        object_id = #{objectId,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <update id="setPassword" parameterType="com.js.entity.SysUsers">
+    update js_sys_users
+    <set>
+      <if test="password != null and password!=''">
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where user_id = #{userId,jdbcType=INTEGER}
+  </update>
+</mapper>

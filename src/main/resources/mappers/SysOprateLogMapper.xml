@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.js.dao.SysOprateLogMapper">
+  <resultMap id="BaseResultMap" type="com.js.entity.SysOprateLog">
+    <result column="id" jdbcType="BIGINT" property="id" />
+    <result column="object_id" jdbcType="VARCHAR" property="objectId" />
+    <result column="act_u_id" jdbcType="BIGINT" property="actUId" />
+    <result column="updatetime" jdbcType="TIMESTAMP" property="updatetime" />
+    <result column="act_type" jdbcType="VARCHAR" property="actType" />
+    <result column="ip" jdbcType="VARCHAR" property="ip" />
+  </resultMap>
+
+
+  <sql id="Base_Column_List">
+    id, object_id, act_u_id, updatetime, act_type, ip
+  </sql>
+
+  <sql id="where_sql">
+    <if test="param.id != null">and id = #{param.id}</if>
+    <if test="param.objectId != null and param.objectId != ''">and object_id = #{param.objectId}</if>
+    <if test="param.actUId != null">and act_u_id = #{param.actUId}</if>
+    <if test="param.updatetime != null and param.updatetime != ''">and updatetime = #{param.updatetime}</if>
+    <if test="param.actType != null and param.actType != ''">and act_type = #{param.actType}</if>
+    <if test="param.ip != null and param.ip != ''">and ip = #{param.ip}</if>
+
+  </sql>
+
+  <sql id="order_by_sql">
+    <if test="page != null">
+      <if test="page.orderBy != null and page.orderBy !=''">
+        ORDER BY ${page.orderBy} ${page.order}
+      </if>
+      <if test="page.start >= 0 and page.rows > 0">
+        limit #{page.start}, #{page.rows}
+      </if>
+    </if>
+  </sql>
+
+  <select id="findById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from js_sys_oprate_Log
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <select id="findPageList" parameterType="map" resultMap="BaseResultMap">
+    SELECT * FROM js_sys_oprate_Log
+    <where>
+      <include refid="where_sql"/>
+    </where>
+    <include refid="order_by_sql"/>
+  </select>
+
+  <select id="findPageListCount" parameterType="com.js.entity.SysOprateLog" resultType="int">
+    SELECT count(*)
+    FROM js_sys_oprate_Log
+    <where>
+      <include refid="where_sql"/>
+    </where>
+  </select>
+
+  <insert id="insert" parameterType="com.js.entity.SysOprateLog">
+    insert into js_sys_oprate_Log (object_id, act_u_id,
+      updatetime, act_type, ip)
+    values (#{objectId,jdbcType=VARCHAR}, #{actUId,jdbcType=BIGINT},
+      #{updatetime,jdbcType=TIMESTAMP}, #{actType,jdbcType=VARCHAR}, #{ip,jdbcType=VARCHAR}
+      )
+  </insert>
+</mapper>

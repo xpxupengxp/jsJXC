@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script src="http://code.jquery.com/jquery-2.2.4.js"
+        integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI="
+        crossorigin="anonymous"></script>
+<script type="text/javascript">
+        var JsonData = JSON.stringify({
+            page:1
+        });
+        $.ajax({
+            type: "POST",
+            url: "http://192.168.2.130:8080/jsJXC/employee/pageList",
+            dataType: 'json',
+            xhrFields: {
+                withCredentials: true
+            },
+            contentType: "application/json",
+            data: JsonData,
+            success: function(data) {
+                console.log(data)
+            }
+        });
+
+</script>
+</body>
+</html>
