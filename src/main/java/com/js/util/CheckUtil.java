@@ -55,11 +55,12 @@ public class CheckUtil {
     /**
      * 验证长度
      * @param str 验证内容
-     * @param num 设置长度
+     * @param snum 设置最短长度
+     * @param lnum 设置最大长度
      * @return 返回true为正确，false为不正确
      */
-    public static boolean checkNumber(String str, Integer num) {
-        if(str.length() <= num) {
+    public static boolean checkNumber(String str, Integer snum, Integer lnum) {
+        if(str != null && str.length() >= snum && str.length() <= lnum) {
             return true;
         }
         return false;
