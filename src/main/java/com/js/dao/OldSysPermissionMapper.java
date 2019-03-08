@@ -10,7 +10,7 @@ import java.util.List;
 public interface OldSysPermissionMapper extends GenericDao<OldSysPermission> {
 
     //通过主键删除(物理删除)
-    int delete(Integer permsId1);
+    int delete(Integer permsId);
 
     //通过权限id查询角色
     List<SysRoles> getRoles(Integer permsId);
