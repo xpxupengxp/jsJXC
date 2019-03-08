@@ -1,5 +1,6 @@
 package com.js.controller;
 
+import com.alibaba.druid.util.StringUtils;
 import com.js.entity.OldSysPermission;
 import com.js.entity.SysUsers;
 import com.js.service.OldSysPermissionService;
@@ -78,6 +79,10 @@ public class OldSysPermissionController {
         if(oldSysPermission.getPage() != 0 && oldSysPermission.getRows() != 0){
             pageUtil.setPage(oldSysPermission.getPage());
             pageUtil.setRows(oldSysPermission.getRows());
+        }
+        if(!StringUtils.isEmpty(oldSysPermission.getOrderBy()) && !StringUtils.isEmpty(oldSysPermission.getOrder())){
+            pageUtil.setOrderBy(oldSysPermission.getOrderBy());
+            pageUtil.setOrder(oldSysPermission.getOrder());
         }
         return oldSysPermissionService.findPageList(oldSysPermission,pageUtil);
 

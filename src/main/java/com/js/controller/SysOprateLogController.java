@@ -1,5 +1,6 @@
 package com.js.controller;
 
+import com.alibaba.druid.util.StringUtils;
 import com.js.entity.SysOprateLog;
 import com.js.service.SysOprateLogService;
 import com.js.util.ApiResponse;
@@ -51,6 +52,10 @@ public class SysOprateLogController {
         if(sysOprateLog.getPage() != 0 && sysOprateLog.getRows() != 0){
             pageUtil.setPage(sysOprateLog.getPage());
             pageUtil.setRows(sysOprateLog.getRows());
+        }
+        if(!StringUtils.isEmpty(sysOprateLog.getOrderBy()) && !StringUtils.isEmpty(sysOprateLog.getOrder())){
+            pageUtil.setOrderBy(sysOprateLog.getOrderBy());
+            pageUtil.setOrder(sysOprateLog.getOrder());
         }
         return sysOprateLogService.findPageList(sysOprateLog,pageUtil);
 

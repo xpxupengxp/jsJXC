@@ -10,19 +10,19 @@ public interface SysRolesService {
     ApiResponse delete(Integer id);
 
     //添加
-    ApiResponse insert(SysRoles sysRols);
+    ApiResponse insert(SysRoles sysRoles);
 
     //通过主键查询
     SysRoles findById(Integer id);
 
     //分页查询
-    ApiResponse findPageList(SysRoles sysRols, PageUtil pageUtil);
+    ApiResponse findPageList(SysRoles sysRoles, PageUtil pageUtil);
 
     //不分页查询
-    ApiResponse findList(SysRoles sysRols);
+    ApiResponse findList(SysRoles sysRoles);
 
     //修改
-    ApiResponse update(SysRoles sysRols);
+    ApiResponse update(SysRoles sysRoles);
 
     //通过角色id获取用户
     ApiResponse getUsers(Integer id);
@@ -31,7 +31,7 @@ public interface SysRolesService {
     ApiResponse getPerms(Integer id);
 
     //启用/停用角色
-    void switchStatus(SysRoles sysRols);
+    void switchStatus(SysRoles sysRoles);
 
     //设置角色权限
     ApiResponse setPerms(SysRolePermission sysRolePermission);

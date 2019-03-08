@@ -1,6 +1,7 @@
 package com.js.controller;
 
 
+import com.alibaba.druid.util.StringUtils;
 import com.js.entity.SysEmployee;
 import com.js.service.SysEmployeeService;
 import com.js.util.ApiResponse;
@@ -78,7 +79,7 @@ public class SysEmployeeController {
             pageUtil.setPage(sysEmployee.getPage());
             pageUtil.setRows(sysEmployee.getRows());
         }
-        if(sysEmployee.getOrderBy() != null && sysEmployee.getOrderBy() != ""){
+        if(!StringUtils.isEmpty(sysEmployee.getOrderBy()) && !StringUtils.isEmpty(sysEmployee.getOrder())){
             pageUtil.setOrderBy(sysEmployee.getOrderBy());
             pageUtil.setOrder(sysEmployee.getOrder());
         }

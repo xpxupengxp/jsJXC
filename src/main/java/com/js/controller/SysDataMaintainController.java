@@ -1,5 +1,6 @@
 package com.js.controller;
 
+import com.alibaba.druid.util.StringUtils;
 import com.js.entity.SysDataMaintain;
 import com.js.service.SysDataMaintainService;
 import com.js.util.ApiResponse;
@@ -75,6 +76,10 @@ public class SysDataMaintainController {
         if(sysDataMaintain.getPage() != 0 && sysDataMaintain.getRows() != 0){
             pageUtil.setPage(sysDataMaintain.getPage());
             pageUtil.setRows(sysDataMaintain.getRows());
+        }
+        if(!StringUtils.isEmpty(sysDataMaintain.getOrderBy()) && !StringUtils.isEmpty(sysDataMaintain.getOrder())){
+            pageUtil.setOrderBy(sysDataMaintain.getOrderBy());
+            pageUtil.setOrder(sysDataMaintain.getOrder());
         }
         return sysDataMaintainService.findPageList(sysDataMaintain,pageUtil);
 

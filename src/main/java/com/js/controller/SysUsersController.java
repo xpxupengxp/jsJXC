@@ -1,5 +1,6 @@
 package com.js.controller;
 
+import com.alibaba.druid.util.StringUtils;
 import com.js.entity.SysUserPermission;
 import com.js.entity.SysUserRoles;
 import com.js.entity.SysUsers;
@@ -78,6 +79,10 @@ public class SysUsersController {
         if(sysUsers.getPage() != 0 && sysUsers.getRows() != 0){
             pageUtil.setPage(sysUsers.getPage());
             pageUtil.setRows(sysUsers.getRows());
+        }
+        if(!StringUtils.isEmpty(sysUsers.getOrderBy()) && !StringUtils.isEmpty(sysUsers.getOrder())){
+            pageUtil.setOrderBy(sysUsers.getOrderBy());
+            pageUtil.setOrder(sysUsers.getOrder());
         }
         return sysUsersService.findPageList(sysUsers,pageUtil);
 

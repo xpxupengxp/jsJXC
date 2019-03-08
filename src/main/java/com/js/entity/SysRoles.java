@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 系统角色类（js_sys_rols）
+ * 系统角色类（js_sys_roles）
  */
 public class SysRoles implements Serializable {
     private Integer id;//编号
@@ -26,9 +26,30 @@ public class SysRoles implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+
     private int page;//当前页码
 
     private int rows;//每页条数
+
+    private String orderBy;//排序字段
+
+    private String order;//排序（ASC、DESC）
+
+    public String getOrderBy() {
+        return orderBy;
+    }
+
+    public void setOrderBy(String orderBy) {
+        this.orderBy = orderBy;
+    }
+
+    public String getOrder() {
+        return order;
+    }
+
+    public void setOrder(String order) {
+        this.order = order;
+    }
 
     public int getRows() {
         return rows;

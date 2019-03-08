@@ -1,6 +1,5 @@
 package com.js.util;
 
-import com.js.entity.SysEmployee;
 import org.apache.ibatis.annotations.Param;
 
 import java.io.Serializable;

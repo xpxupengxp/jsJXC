@@ -26,6 +26,26 @@ public class SysOprateLog implements Serializable {
 
     private int rows;//每页条数
 
+    private String orderBy;//排序字段
+
+    private String order;//排序（ASC、DESC）
+
+    public String getOrderBy() {
+        return orderBy;
+    }
+
+    public void setOrderBy(String orderBy) {
+        this.orderBy = orderBy;
+    }
+
+    public String getOrder() {
+        return order;
+    }
+
+    public void setOrder(String order) {
+        this.order = order;
+    }
+
     public int getRows() {
         return rows;
     }

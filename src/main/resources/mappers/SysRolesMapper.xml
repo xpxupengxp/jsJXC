@@ -38,18 +38,18 @@
   </sql>
 
   <select id="findList" parameterType="com.js.entity.SysRoles" resultMap="BaseResultMap">
-    select * from js_sys_rols
+    select * from js_sys_roles
   </select>
 
   <select id="findById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from js_sys_rols
+    from js_sys_roles
     where id = #{id,jdbcType=INTEGER}
   </select>
 
   <select id="findPageList" parameterType="map" resultMap="BaseResultMap">
-    SELECT * FROM js_sys_rols
+    SELECT * FROM js_sys_roles
     <where>
       <include refid="where_sql"/>
     </where>
@@ -57,7 +57,7 @@
   </select>
 
   <select id="findPageListCount" parameterType="com.js.entity.SysRoles" resultType="int">
-    SELECT count(*) FROM js_sys_rols
+    SELECT count(*) FROM js_sys_roles
     <where>
       <include refid="where_sql"/>
     </where>
@@ -65,25 +65,25 @@
 
 
   <select id="getUsersByRoleId" parameterType="java.lang.Integer" resultType="com.js.entity.SysUsers">
-    select u.* from js_sys_rols r
+    select u.* from js_sys_roles r
     left join js_sys_user_roles ur on r.id=ur.role_id
     left join js_sys_users u on ur.user_id=u.id
     WHERE r.id=#{id,jdbcType=INTEGER}
   </select>
 
   <select id="getPermsByRoleId" parameterType="java.lang.Integer" resultType="com.js.entity.OldSysPermission">
-    select p.* from js_sys_rols r
+    select p.* from js_sys_roles r
     left join js_sys_role_permission rp on r.id=rp.role_id
     left join js_old_sys_permission p on rp.perms_id=p.perms_id
     WHERE r.id=#{id,jdbcType=INTEGER}
   </select>
 
   <delete id="delete" parameterType="java.lang.Integer">
-    delete from js_sys_rols
+    delete from js_sys_roles
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.js.entity.SysRoles">
-    insert into js_sys_rols (name, rols_desc,
+    insert into js_sys_roles (name, rols_desc,
       org, system, object_id,status)
     values (#{name,jdbcType=VARCHAR}, #{rolsDesc,jdbcType=VARCHAR},
       #{org,jdbcType=VARCHAR}, #{system,jdbcType=VARCHAR}, #{objectId,jdbcType=VARCHAR},#{status,jdbcType=INTEGER}
@@ -91,7 +91,7 @@
   </insert>
 
   <update id="update" parameterType="com.js.entity.SysRoles">
-    update js_sys_rols
+    update js_sys_roles
     <set>
       <if test="name != null and name !=''">
         name = #{name,jdbcType=VARCHAR},

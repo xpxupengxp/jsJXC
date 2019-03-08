@@ -1,5 +1,6 @@
 package com.js.controller;
 
+import com.alibaba.druid.util.StringUtils;
 import com.js.entity.Org;
 import com.js.service.OrgService;
 import com.js.util.ApiResponse;
@@ -75,6 +76,10 @@ public class OrgController {
         if(org.getPage() != 0 && org.getRows() != 0){
             pageUtil.setPage(org.getPage());
             pageUtil.setRows(org.getRows());
+        }
+        if(!StringUtils.isEmpty(org.getOrderBy()) && !StringUtils.isEmpty(org.getOrder())){
+            pageUtil.setOrderBy(org.getOrderBy());
+            pageUtil.setOrder(org.getOrder());
         }
         return orgService.findPageList(org,pageUtil);
 

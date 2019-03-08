@@ -1,5 +1,6 @@
 package com.js.controller;
 
+import com.alibaba.druid.util.StringUtils;
 import com.js.entity.SysRolePermission;
 import com.js.entity.SysRoles;
 import com.js.service.SysRolesService;
@@ -17,105 +18,109 @@ import org.springframework.web.bind.annotation.RestController;
 public class SysRolesController {
 
     @Autowired
-    private SysRolesService sysRolsService;
+    private SysRolesService sysRolesService;
 
 
     /**
      * 添加
-     * @param sysRols
+     * @param sysRoles
      * @return
      */
     @RequestMapping(value = "/insert",method = RequestMethod.POST)
     @OperationLogger(actType="新增角色")
-    public ApiResponse insert(@RequestBody SysRoles sysRols) {
-        return sysRolsService.insert(sysRols);
+    public ApiResponse insert(@RequestBody SysRoles sysRoles) {
+        return sysRolesService.insert(sysRoles);
     }
 
     /**
      * 修改
-     * @param sysRols
+     * @param sysRoles
      * @return
      */
     @RequestMapping(value = "/update",method = RequestMethod.PUT)
     @OperationLogger(actType="修改角色")
-    public ApiResponse update(@RequestBody SysRoles sysRols) {
-        return sysRolsService.update(sysRols);
+    public ApiResponse update(@RequestBody SysRoles sysRoles) {
+        return sysRolesService.update(sysRoles);
     }
 
 
 
     /**
      * 删除
-     * @param sysRols
+     * @param sysRoles
      * @return
      */
     @RequestMapping(value = "/delete",method = RequestMethod.DELETE)
     @OperationLogger(actType="删除角色")
-    public ApiResponse delete(@RequestBody SysRoles sysRols) {
-        return sysRolsService.delete(sysRols.getId());
+    public ApiResponse delete(@RequestBody SysRoles sysRoles) {
+        return sysRolesService.delete(sysRoles.getId());
     }
 
 
     /**
      * 通过主键查询
-     * @param sysRols
+     * @param sysRoles
      * @return
      */
     @RequestMapping(value = "/findById",method = RequestMethod.POST)
-    public ApiResponse findById(@RequestBody SysRoles sysRols) {
-        return ApiResponse.ok().setData(sysRolsService.findById(sysRols.getId()));
+    public ApiResponse findById(@RequestBody SysRoles sysRoles) {
+        return ApiResponse.ok().setData(sysRolesService.findById(sysRoles.getId()));
     }
 
 
     /**
      * 分页查询
-     * @param sysRols
+     * @param sysRoles
      * @return
      */
     @RequestMapping(value = "/pageList",method = RequestMethod.POST)
-    public ApiResponse pageList(@RequestBody SysRoles sysRols, PageUtil pageUtil) {
-        if(sysRols.getPage() != 0 && sysRols.getRows() != 0){
-            pageUtil.setPage(sysRols.getPage());
-            pageUtil.setRows(sysRols.getRows());
+    public ApiResponse pageList(@RequestBody SysRoles sysRoles, PageUtil pageUtil) {
+        if(sysRoles.getPage() != 0 && sysRoles.getRows() != 0){
+            pageUtil.setPage(sysRoles.getPage());
+            pageUtil.setRows(sysRoles.getRows());
         }
-        return sysRolsService.findPageList(sysRols,pageUtil);
+        if(!StringUtils.isEmpty(sysRoles.getOrderBy()) && !StringUtils.isEmpty(sysRoles.getOrder())){
+            pageUtil.setOrderBy(sysRoles.getOrderBy());
+            pageUtil.setOrder(sysRoles.getOrder());
+        }
+        return sysRolesService.findPageList(sysRoles,pageUtil);
 
     }
 
 
     /**
      * 不分页查询
-     * @param sysRols
+     * @param sysRoles
      * @return
      */
     @RequestMapping(value = "/list",method = RequestMethod.POST)
-    public ApiResponse list(@RequestBody SysRoles sysRols) {
-        return sysRolsService.findList(sysRols);
+    public ApiResponse list(@RequestBody SysRoles sysRoles) {
+        return sysRolesService.findList(sysRoles);
 
     }
 
 
 //    /**
 //     * 启用/停用角色
-//     * @param sysRols
+//     * @param sysRoles
 //     * @return
 //     */
 //    @RequestMapping(value = "/switchStatus",method = RequestMethod.POST)
-//    public ApiResponse switchStatus(@RequestBody SysRoles sysRols) {
-//        sysRolsService.switchStatus(sysRols);
+//    public ApiResponse switchStatus(@RequestBody SysRoles sysRoles) {
+//        sysRolsService.switchStatus(sysRoles);
 //        return ApiResponse.ok();
 //    }
 
 
     /**
-     * 添加权限
+     * 通过roleId设置权限
      * @param sysRolePermission
      * @return
      */
     @RequestMapping(value = "/setPerms",method = RequestMethod.POST)
     @OperationLogger(actType="设置角色权限")
     public ApiResponse setPerms(@RequestBody SysRolePermission sysRolePermission) {
-        return ApiResponse.ok().setData(sysRolsService.setPerms(sysRolePermission));
+        return ApiResponse.ok().setData(sysRolesService.setPerms(sysRolePermission));
     }
 
 }

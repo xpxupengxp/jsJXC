@@ -67,8 +67,7 @@
   </select>
 
   <select id="findPageListCount" parameterType="com.js.entity.OldSysPermission" resultType="int">
-    SELECT count(*)
-    FROM js_old_sys_permission
+    SELECT count(*) FROM js_old_sys_permission
     <where>
       <include refid="where_sql"/>
     </where>
@@ -78,13 +77,14 @@
     select r.* from
     js_old_sys_permission p
     left join js_sys_role_permission rp on p.perms_id=rp.perms_id
-    left join js_sys_rols r on rp.role_id=r.id
+    left join js_sys_roles r on rp.role_id=r.id
     WHERE p.perms_id=#{permsId,jdbcType=INTEGER}
   </select>
 
   <select id="getUsers" parameterType="java.lang.Integer" resultType="com.js.entity.SysUsers">
     select u.* from
-    js_old_sys_permission p left join js_sys_user_permission up on p.perms_id=up.perms_id
+    js_old_sys_permission p
+    left join js_sys_user_permission up on p.perms_id=up.perms_id
     left join js_sys_users u on up.user_id=u.id
     WHERE p.perms_id=#{permsId,jdbcType=INTEGER}
   </select>

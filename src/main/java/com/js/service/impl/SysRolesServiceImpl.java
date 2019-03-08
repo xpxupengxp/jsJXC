@@ -17,14 +17,14 @@ import java.util.List;
 public class SysRolesServiceImpl implements SysRolesService {
 
     @Autowired
-    private SysRolesMapper sysRolsMapper;
+    private SysRolesMapper sysRolesMapper;
 
     @Autowired
     private SysRolePermissionMapper sysRolePermissionMapper;
 
     @Override
     public ApiResponse delete(Integer id) {
-        int i = sysRolsMapper.delete(id);
+        int i = sysRolesMapper.delete(id);
         if(i != 0){
             return ApiResponse.ok().setMsg("删除成功！");
         }
@@ -33,14 +33,14 @@ public class SysRolesServiceImpl implements SysRolesService {
     }
 
     @Override
-    public ApiResponse insert(SysRoles sysRols) {
-        if(CheckUtil.isEmptyBatch(sysRols.getName())) {
+    public ApiResponse insert(SysRoles sysRoles) {
+        if(CheckUtil.isEmptyBatch(sysRoles.getName())) {
             return ApiResponse.error(405).setMsg("角色名称不能为空！");
         }
-        if(CheckUtil.isEmptyBatch(sysRols.getOrg())) {
+        if(CheckUtil.isEmptyBatch(sysRoles.getOrg())) {
             return ApiResponse.error(405).setMsg("所在组织不能为空！");
         }
-        int i = sysRolsMapper.insert(sysRols);
+        int i = sysRolesMapper.insert(sysRoles);
         if(i !=0){
             return ApiResponse.ok().setMsg("添加成功！");
         }
@@ -49,32 +49,32 @@ public class SysRolesServiceImpl implements SysRolesService {
 
     @Override
     public SysRoles findById(Integer id) {
-        return sysRolsMapper.findById(id);
+        return sysRolesMapper.findById(id);
     }
 
     @Override
-    public ApiResponse findPageList(SysRoles sysRols, PageUtil pageUtil) {
+    public ApiResponse findPageList(SysRoles sysRoles, PageUtil pageUtil) {
         if(null != pageUtil){
-            pageUtil.setTotalRows(sysRolsMapper.findPageListCount(sysRols));
+            pageUtil.setTotalRows(sysRolesMapper.findPageListCount(sysRoles));
         }
-        List<SysRoles> pageList = sysRolsMapper.findPageList(sysRols, pageUtil);
+        List<SysRoles> pageList = sysRolesMapper.findPageList(sysRoles, pageUtil);
         return ApiResponse.ok().setData(pageList).setPage(pageUtil);
     }
 
     @Override
-    public ApiResponse findList(SysRoles sysRols) {
-        return ApiResponse.ok().setData(sysRolsMapper.findList(sysRols));
+    public ApiResponse findList(SysRoles sysRoles) {
+        return ApiResponse.ok().setData(sysRolesMapper.findList(sysRoles));
     }
 
     @Override
-    public ApiResponse update(SysRoles sysRols) {
-        if(CheckUtil.isEmptyBatch(sysRols.getName())) {
+    public ApiResponse update(SysRoles sysRoles) {
+        if(CheckUtil.isEmptyBatch(sysRoles.getName())) {
             return ApiResponse.error(405).setMsg("角色名称不能为空！");
         }
-        if(CheckUtil.isEmptyBatch(sysRols.getOrg())) {
+        if(CheckUtil.isEmptyBatch(sysRoles.getOrg())) {
             return ApiResponse.error(405).setMsg("所在组织不能为空！");
         }
-        int i = sysRolsMapper.update(sysRols);
+        int i = sysRolesMapper.update(sysRoles);
         if(i !=0){
             return ApiResponse.ok().setMsg("修改成功！");
         }
@@ -83,22 +83,22 @@ public class SysRolesServiceImpl implements SysRolesService {
 
     @Override
     public ApiResponse getUsers(Integer id) {
-        return ApiResponse.ok().setData(sysRolsMapper.getUsersByRoleId(id));
+        return ApiResponse.ok().setData(sysRolesMapper.getUsersByRoleId(id));
     }
 
     @Override
     public ApiResponse getPerms(Integer id) {
-        return ApiResponse.ok().setData(sysRolsMapper.getPermsByRoleId(id));
+        return ApiResponse.ok().setData(sysRolesMapper.getPermsByRoleId(id));
     }
 
     @Override
-    public void switchStatus(SysRoles sysRols) {
-        if(sysRols.getStatus() == 0){
-            sysRols.setStatus(1);
-            sysRolsMapper.update(sysRols);
+    public void switchStatus(SysRoles sysRoles) {
+        if(sysRoles.getStatus() == 0){
+            sysRoles.setStatus(1);
+            sysRolesMapper.update(sysRoles);
         }else {
-            sysRols.setStatus(0);
-            sysRolsMapper.update(sysRols);
+            sysRoles.setStatus(0);
+            sysRolesMapper.update(sysRoles);
         }
     }
 
@@ -116,7 +116,7 @@ public class SysRolesServiceImpl implements SysRolesService {
             j++;
         }
         if(j == perms.length) {
-            return ApiResponse.error(405).setMsg("设置成功！");
+            return ApiResponse.ok().setMsg("设置成功！");
         }
         return ApiResponse.error(405).setMsg("设置失败！");
     }
