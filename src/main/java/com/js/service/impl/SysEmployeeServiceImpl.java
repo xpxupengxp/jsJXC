@@ -25,8 +25,7 @@ public class SysEmployeeServiceImpl implements SysEmployeeService {
 
     @Override
     public ApiResponse delete(Integer id) {
-        int i = sysEmployeeMapper.delete(id);
-        if(i != 0){
+        if(sysEmployeeMapper.delete(id) > 0){
             return ApiResponse.ok().setMsg("删除成功！");
         }
         //405代表操作失败
@@ -94,8 +93,7 @@ public class SysEmployeeServiceImpl implements SysEmployeeService {
         if (!CheckUtil.isEmptyBatch(sysEmployee.getUserEmail()) && !CheckUtil.checkEmail(sysEmployee.getUserEmail())) {
             return ApiResponse.error(405).setMsg("邮箱不正确！");
         }
-        int i = sysEmployeeMapper.update(sysEmployee);
-        if(i !=0){
+        if(sysEmployeeMapper.update(sysEmployee) > 0){
             return ApiResponse.ok().setMsg("修改成功！");
         }
         return ApiResponse.error(405).setMsg("修改失败！");
@@ -132,8 +130,7 @@ public class SysEmployeeServiceImpl implements SysEmployeeService {
             sysUsers.setUserImg("js/img");
             sysUsers.setTokenCode("888888");
             sysUsers.setStatus(1);
-            int insert = sysUsersMapper.insert(sysUsers);
-            if(insert != 0){
+            if(sysUsersMapper.insert(sysUsers) > 0){
                 return ApiResponse.ok().setMsg("生成用户账号成功！");
             }
             return ApiResponse.error(405).setMsg("生成用户账号失败！");
