@@ -79,7 +79,7 @@
   </select>
 
   <delete id="delete" parameterType="java.lang.Integer">
-    delete from js_sys_rols
+    delete from js_sys_roles
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.js.entity.SysRoles">
@@ -114,4 +114,9 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <delete id="deleteByIds" parameterType="java.lang.Integer">
+    delete from js_sys_roles
+    where id in <foreach collection="array" item="ids" open="(" separator="," close=")">#{ids}</foreach>
+  </delete>
 </mapper>

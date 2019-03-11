@@ -18,9 +18,14 @@ public class SysDataMaintainServiceImpl implements SysDataMaintainService {
     private SysDataMaintainMapper sysDataMaintainMapper;
 
     @Override
-    public ApiResponse delete(Long id) {
-        int i = sysDataMaintainMapper.delete(id);
-        if(i != 0){
+    public ApiResponse delete(Long[] ids) {
+        int i = 0;
+        if(ids.length == 1) {
+            i = sysDataMaintainMapper.delete(ids[0]);
+        }else if(ids.length > 1) {
+            i = sysDataMaintainMapper.deleteByIds(ids);
+        }
+        if(i > 0){
             return ApiResponse.ok().setMsg("删除成功！");
         }
         //405代表操作失败

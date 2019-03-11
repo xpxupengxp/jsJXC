@@ -78,35 +78,41 @@ public class SysLogAspect {
         Object[] args = joinPoint.getArgs();
         Object rvt = joinPoint.proceed(args);
         ApiResponse a = (ApiResponse)rvt;
-        ApiResponse b = (ApiResponse)a.getData();
-        if(b.getCode() == 200) {
-            HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder
-                    .getRequestAttributes()).getRequest();
-            String ip = request.getRemoteAddr();
-            try {
-                String targetName = joinPoint.getTarget().getClass().getName();
-                String methodName = joinPoint.getSignature().getName();
-                Object[] arguments = joinPoint.getArgs();
-                Class targetClass = Class.forName(targetName);
-                Method[] methods = targetClass.getMethods();
-                String actType = "";
-                for (Method method : methods) {
-                    if (method.getName().equals(methodName)) {
-                        Class[] clazzs = method.getParameterTypes();
-                        if (clazzs.length == arguments.length) {
-                            actType = method.getAnnotation(OperationLogger.class).actType();
-                        }
+        if(a.getCode() != 200) {
+            return rvt;
+        }
+        if(a.getData() != null) {
+            ApiResponse b = (ApiResponse)a.getData();
+            if(b.getCode() != 200) {
+                return rvt;
+            }
+        }
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder
+                .getRequestAttributes()).getRequest();
+        String ip = request.getRemoteAddr();
+        try {
+            String targetName = joinPoint.getTarget().getClass().getName();
+            String methodName = joinPoint.getSignature().getName();
+            Object[] arguments = joinPoint.getArgs();
+            Class targetClass = Class.forName(targetName);
+            Method[] methods = targetClass.getMethods();
+            String actType = "";
+            for (Method method : methods) {
+                if (method.getName().equals(methodName)) {
+                    Class[] clazzs = method.getParameterTypes();
+                    if (clazzs.length == arguments.length) {
+                        actType = method.getAnnotation(OperationLogger.class).actType();
                     }
                 }
-                SysOprateLog sysOprateLog = new SysOprateLog();
-                sysOprateLog.setActType(actType);
-                sysOprateLog.setObjectId("0000");
-                sysOprateLog.setUpdatetime(new Date());
-                sysOprateLog.setIp(ip);
-                sysOprateLogService.insert(sysOprateLog);
-            }catch (Exception e) {
-                logger.error("异常信息：",e.getMessage());
             }
+            SysOprateLog sysOprateLog = new SysOprateLog();
+            sysOprateLog.setActType(actType);
+            sysOprateLog.setObjectId("0000");
+            sysOprateLog.setUpdatetime(new Date());
+            sysOprateLog.setIp(ip);
+            sysOprateLogService.insert(sysOprateLog);
+        }catch (Exception e) {
+            logger.error("异常信息：",e.getMessage());
         }
         return rvt;
     }

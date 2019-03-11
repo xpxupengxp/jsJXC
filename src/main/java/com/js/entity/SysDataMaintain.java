@@ -9,6 +9,8 @@ import java.util.Date;
 public class SysDataMaintain implements Serializable {
     private Long id;//编号
 
+    private Long[] ids;//编号数组
+
     private String objectId;//对象编号
 
     private Long actUId;//创建人
@@ -129,5 +131,13 @@ public class SysDataMaintain implements Serializable {
 
     public void setOp(String op) {
         this.op = op == null ? null : op.trim();
+    }
+
+    public Long[] getIds() {
+        return ids;
+    }
+
+    public void setIds(Long[] ids) {
+        this.ids = ids;
     }
 }

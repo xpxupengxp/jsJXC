@@ -50,7 +50,7 @@ public class OrgController {
     @RequestMapping(value = "/delete",method = RequestMethod.DELETE)
     @OperationLogger(actType="删除组织机构")
     public ApiResponse delete(@RequestBody Org org) {
-        return orgService.delete(org.getOrgId());
+        return orgService.delete(org.getOrgIds());
     }
 
 

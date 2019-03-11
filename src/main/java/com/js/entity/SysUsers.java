@@ -10,6 +10,8 @@ import java.util.List;
 public class SysUsers implements Serializable {
     private Integer id;//编号
 
+    private Integer[] ids;//编号数组
+
     private Integer userId;//用户ID(账号)
 
     private String nickname;//昵称
@@ -129,5 +131,13 @@ public class SysUsers implements Serializable {
 
     public void setObjectId(String objectId) {
         this.objectId = objectId == null ? null : objectId.trim();
+    }
+
+    public Integer[] getIds() {
+        return ids;
+    }
+
+    public void setIds(Integer[] ids) {
+        this.ids = ids;
     }
 }

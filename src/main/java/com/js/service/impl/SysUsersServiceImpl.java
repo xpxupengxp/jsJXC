@@ -31,8 +31,14 @@ public class SysUsersServiceImpl implements SysUsersService {
 
 
     @Override
-    public ApiResponse delete(Integer id) {
-        if(sysUsersMapper.delete(id) > 0){
+    public ApiResponse delete(Integer[] ids) {
+        int i = 0;
+        if(ids.length == 1) {
+            i = sysUsersMapper.delete(ids[0]);
+        }else if(ids.length > 1) {
+            i = sysUsersMapper.deleteByIds(ids);
+        }
+        if(i > 0){
             return ApiResponse.ok().setMsg("删除成功！");
         }
         //405代表操作失败

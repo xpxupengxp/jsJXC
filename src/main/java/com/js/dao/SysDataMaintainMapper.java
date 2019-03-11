@@ -11,4 +11,6 @@ public interface SysDataMaintainMapper extends GenericDao<SysDataMaintain> {
      * @return
      */
     int delete(Long id);
+
+    int deleteByIds(Long[] ids);
 }

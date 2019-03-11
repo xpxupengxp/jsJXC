@@ -19,9 +19,14 @@ public class OrgServiceImpl implements OrgService {
     private OrgMapper orgMapper;
 
     @Override
-    public ApiResponse delete(Integer id) {
-        int i = orgMapper.delete(id);
-        if(i != 0){
+    public ApiResponse delete(Integer[] ids) {
+        int i = 0;
+        if(ids.length == 1) {
+            i = orgMapper.delete(ids[0]);
+        }else if(ids.length > 1) {
+            i = orgMapper.deleteByIds(ids);
+        }
+        if(i > 0){
             return ApiResponse.ok().setMsg("删除成功！");
         }
         //405代表操作失败

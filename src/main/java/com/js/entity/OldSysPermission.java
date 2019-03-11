@@ -8,6 +8,8 @@ import java.io.Serializable;
 public class OldSysPermission implements Serializable {
     private Integer permsId;//权限编号
 
+    private Integer[] permsIds;//权限编号数组
+
     private String permsDesc;//权限描述
 
     private String permsImg;//权限图标
@@ -146,5 +148,13 @@ public class OldSysPermission implements Serializable {
 
     public void setObjectId(String objectId) {
         this.objectId = objectId == null ? null : objectId.trim();
+    }
+
+    public Integer[] getPermsIds() {
+        return permsIds;
+    }
+
+    public void setPermsIds(Integer[] permsIds) {
+        this.permsIds = permsIds;
     }
 }

@@ -118,4 +118,8 @@
     where org_id = #{orgId,jdbcType=INTEGER}
   </update>
 
+  <delete id="deleteByIds" parameterType="java.lang.Integer">
+    delete from js_org
+    where org_id in <foreach collection="array" item="ids" open="(" separator="," close=")">#{ids}</foreach>
+  </delete>
 </mapper>

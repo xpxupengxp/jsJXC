@@ -52,7 +52,7 @@ public class SysRolesController {
     @RequestMapping(value = "/delete",method = RequestMethod.DELETE)
     @OperationLogger(actType="删除角色")
     public ApiResponse delete(@RequestBody SysRoles sysRols) {
-        return sysRolsService.delete(sysRols.getId());
+        return sysRolsService.delete(sysRols.getIds());
     }
 
 

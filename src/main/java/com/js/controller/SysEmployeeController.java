@@ -52,7 +52,7 @@ public class SysEmployeeController {
     @RequestMapping(value = "/delete",method = RequestMethod.DELETE)
     @OperationLogger(actType="删除员工")
     public ApiResponse delete(@RequestBody SysEmployee sysEmployee) {
-        return sysEmployeeService.delete(sysEmployee.getUserId());
+        return sysEmployeeService.delete(sysEmployee.getUserIds());
     }
 
 
