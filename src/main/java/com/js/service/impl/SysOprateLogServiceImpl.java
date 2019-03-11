@@ -19,8 +19,7 @@ public class SysOprateLogServiceImpl implements SysOprateLogService {
 
     @Override
     public ApiResponse insert(SysOprateLog sysOprateLog) {
-        int i = sysOprateLogMapper.insert(sysOprateLog);
-        if(i !=0){
+        if(sysOprateLogMapper.insert(sysOprateLog) > 0){
             return ApiResponse.ok().setMsg("添加成功！");
         }
         return ApiResponse.error(405).setMsg("添加失败！");

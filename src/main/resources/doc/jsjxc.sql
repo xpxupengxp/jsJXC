@@ -11,7 +11,7 @@
  Target Server Version : 50713
  File Encoding         : 65001
 
- Date: 07/03/2019 18:08:24
+ Date: 11/03/2019 11:33:07
 */
 
 SET NAMES utf8mb4;
@@ -33,7 +33,7 @@ CREATE TABLE `js_old_sys_permission`  (
   `perms_url` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'URL地址',
   `sequence` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '排序值',
   `object_id` varbinary(50) NULL DEFAULT NULL COMMENT '对象编号',
-  `status` int(11) NULL DEFAULT NULL COMMENT '状态（0:禁用，1:正常）',
+  `status` int(11) NULL DEFAULT 1 COMMENT '状态（0:禁用，1:正常）',
   PRIMARY KEY (`perms_id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
@@ -59,7 +59,7 @@ CREATE TABLE `js_org`  (
   `org_sequence` int(11) NULL DEFAULT NULL COMMENT '组织排序',
   `org_type_id` int(11) NULL DEFAULT NULL COMMENT '组织类型ID',
   `object_id` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '对象编号',
-  `status` int(11) NULL DEFAULT NULL COMMENT '状态（0:禁用，1:正常）',
+  `status` int(11) NULL DEFAULT 1 COMMENT '状态（0:禁用，1:正常）',
   PRIMARY KEY (`org_id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
@@ -77,7 +77,7 @@ CREATE TABLE `js_sys_data_maintain`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '编号',
   `object_id` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '对象编号',
   `act_u_id` bigint(20) NULL DEFAULT NULL COMMENT '创建人',
-  `inserttime` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+  `inserttime` datetime NULL DEFAULT NULL COMMENT '创建时间',
   `deleted` int(11) NULL DEFAULT NULL COMMENT '删除标志',
   `enable` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '允许标志',
   `hided` int(11) NULL DEFAULT NULL COMMENT '隐藏标志',
@@ -108,7 +108,7 @@ CREATE TABLE `js_sys_employee`  (
   `user_ethnicity` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '民族',
   `user_hukou` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '户口',
   `user_hunyin` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '婚姻',
-  `user_Induction` datetime(0) NULL DEFAULT NULL COMMENT '入职时间',
+  `user_Induction` datetime NULL DEFAULT NULL COMMENT '入职时间',
   `user_join_insurance` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '用户参保',
   `user_shebao` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '社保',
   `user_labor_contract_end` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '合同终止时间',
@@ -120,22 +120,29 @@ CREATE TABLE `js_sys_employee`  (
   `user_place_now` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '现居住地',
   `user_Photo` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '员工照片',
   `user_zzmm` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '政治面貌',
-  `is_master` tinyint(255) NULL DEFAULT NULL COMMENT '是否正式员工',
+  `is_master` tinyint(255) NULL DEFAULT NULL COMMENT '是否正式员工（0：试用，1：正式）',
   `object_id` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '对象编号',
   `org_id` int(11) NULL DEFAULT NULL COMMENT '所属组织',
-  `status` int(11) NULL DEFAULT NULL COMMENT '状态（0:禁用，1:正常）',
+  `status` int(11) NULL DEFAULT 1 COMMENT '状态（0:禁用，1:正常）',
   PRIMARY KEY (`user_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 14 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of js_sys_employee
 -- ----------------------------
-INSERT INTO `js_sys_employee` VALUES (1, '001', '一号', '16615985446', '87564894', '重庆市大渡口区', '52664878', '52664878@qq.com', '男', '1890-01-17', '111', '本科', '好', '汉', '重庆', '否', '2018-05-28 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 1);
-INSERT INTO `js_sys_employee` VALUES (2, '002', '二号', '16615985447', '87564894', '重庆市大渡口区', '52664878', '52664878@qq.com', '男', '1890-02-17', '222', '本科', '好', '汉', '重庆', '否', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 2, 1);
-INSERT INTO `js_sys_employee` VALUES (3, '003', '三号', '16615985448', '87564894', '重庆市大渡口区', '52664878', '52664878@qq.com', '男', '1890-03-17', '333', '本科', '好', '汉', '重庆', '否', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 1);
-INSERT INTO `js_sys_employee` VALUES (4, '004', '四号', '16615985449', '87564894', '重庆市大渡口区', '52664878', '52664878@qq.com', '男', '1890-04-17', '444', '本科', '好', '汉', '重庆', '否', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 2, 1);
+INSERT INTO `js_sys_employee` VALUES (1, '001', '一号', '16615985446', '87564894', '重庆市大渡口区', '52664878', '52664878@qq.com', '男', '1890-01-17', '111', '本科', '好', '汉', '重庆', '否', '2018-05-28 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, 1, 1);
+INSERT INTO `js_sys_employee` VALUES (2, '002', '二号', '16615985447', '87564894', '重庆市大渡口区', '52664878', '52664878@qq.com', '男', '1890-02-17', '222', '本科', '好', '汉', '重庆', '否', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, 2, 1);
+INSERT INTO `js_sys_employee` VALUES (3, '003', '三号', '16615985448', '87564894', '重庆市大渡口区', '52664878', '52664878@qq.com', '男', '1890-03-17', '333', '本科', '好', '汉', '重庆', '否', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, 1, 1);
+INSERT INTO `js_sys_employee` VALUES (4, '004', '四号', '16615985449', '87564894', '重庆市大渡口区', '52664878', '52664878@qq.com', '男', '1890-04-17', '444', '本科', '好', '汉', '重庆', '否', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, 2, 1);
 INSERT INTO `js_sys_employee` VALUES (5, '005', '五号', '16615985449', '87564894', '重庆市大渡口区', '52664878', '52664878@qq.com', '男', '1890-05-17', '555', '本科', '好', '汉', '重庆', '否', '2018-05-28 00:00:00', '否', '否', '2018-05-28 00:00:00.000', '2018-05-28 00:00:00.000', '劳动', '15668456255', '否', '多多', '重庆市大渡口', 'js/img', '团员', 1, '001', 1, 1);
 INSERT INTO `js_sys_employee` VALUES (6, '1212', '王大', '18796584256', '8455156', '重庆市大渡口区', '568442', '518418@qq.com', '男', '1985-06-16', '666', '本科', '好', '汉', '重庆', '否', '2018-12-14 08:00:00', '否', '否', '2010-08-13', '2010-08-13', '劳动', '18796584256', '否', '王二', '重庆市大渡口区', 'js/img', '团员', 1, '001', 1, 1);
+INSERT INTO `js_sys_employee` VALUES (7, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL, 1);
+INSERT INTO `js_sys_employee` VALUES (8, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL, 1);
+INSERT INTO `js_sys_employee` VALUES (9, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, 1);
+INSERT INTO `js_sys_employee` VALUES (10, NULL, NULL, '15884237243', NULL, '', '', '', '男', '', '', '', NULL, '', '', '已婚', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', '', 0, NULL, NULL, 1);
+INSERT INTO `js_sys_employee` VALUES (11, NULL, NULL, '15884237243', NULL, '', '14', '', '男', '', '', '', NULL, '', '', '已婚', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', '', 0, NULL, NULL, 1);
+INSERT INTO `js_sys_employee` VALUES (12, '008', '亲', '14785562487', NULL, '', '', '', '男', '', '', '', NULL, '', '', '已婚', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', '', 1, NULL, NULL, 1);
+INSERT INTO `js_sys_employee` VALUES (13, '1', '1', '15884632587', NULL, '', '', '', '男', '', '', '', NULL, '', '', '已婚', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', '', 1, NULL, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for js_sys_employee_org
@@ -165,11 +172,22 @@ CREATE TABLE `js_sys_oprate_log`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '编号',
   `object_id` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '对象编号',
   `act_u_id` bigint(20) NULL DEFAULT NULL COMMENT '操作人员',
-  `updatetime` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `updatetime` datetime NULL DEFAULT NULL COMMENT '更新时间',
   `act_type` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '操作类型',
   `ip` varchar(15) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '访问IP',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of js_sys_oprate_log
+-- ----------------------------
+INSERT INTO `js_sys_oprate_log` VALUES (1, '0000', NULL, '2019-03-08 11:55:02', '新增员工', '192.168.2.249');
+INSERT INTO `js_sys_oprate_log` VALUES (2, '0000', NULL, '2019-03-08 11:55:53', '新增员工', '192.168.2.249');
+INSERT INTO `js_sys_oprate_log` VALUES (3, '0000', NULL, '2019-03-08 11:56:55', '新增员工', '192.168.2.249');
+INSERT INTO `js_sys_oprate_log` VALUES (4, '0000', NULL, '2019-03-08 16:14:31', '新增员工', '192.168.2.249');
+INSERT INTO `js_sys_oprate_log` VALUES (5, '0000', NULL, '2019-03-08 17:31:59', '设置角色权限', '192.168.2.130');
+INSERT INTO `js_sys_oprate_log` VALUES (6, '0000', NULL, '2019-03-08 17:33:08', '设置角色权限', '192.168.2.130');
+INSERT INTO `js_sys_oprate_log` VALUES (7, '0000', NULL, '2019-03-08 17:34:50', '设置角色权限', '192.168.2.130');
 
 -- ----------------------------
 -- Table structure for js_sys_role_permission
@@ -181,12 +199,15 @@ CREATE TABLE `js_sys_role_permission`  (
   `perms_id` int(11) NULL DEFAULT NULL COMMENT '权限ID',
   `object_id` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '对象编号',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of js_sys_role_permission
 -- ----------------------------
 INSERT INTO `js_sys_role_permission` VALUES (1, 1, 3, NULL);
+INSERT INTO `js_sys_role_permission` VALUES (8, 2, 1, NULL);
+INSERT INTO `js_sys_role_permission` VALUES (9, 2, 3, NULL);
+INSERT INTO `js_sys_role_permission` VALUES (10, 2, 6, NULL);
 
 -- ----------------------------
 -- Table structure for js_sys_roles
@@ -199,7 +220,7 @@ CREATE TABLE `js_sys_roles`  (
   `org` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '所在组织',
   `system` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '所在系统',
   `object_id` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '对象编号',
-  `status` int(11) NULL DEFAULT NULL COMMENT '状态（0:禁用，1:正常）',
+  `status` int(11) NULL DEFAULT 1 COMMENT '状态（0:禁用，1:正常）',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
@@ -259,7 +280,7 @@ CREATE TABLE `js_sys_users`  (
   `user_img` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '用户头像',
   `token_code` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '登录识别码',
   `object_id` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '对象编号',
-  `status` int(11) NULL DEFAULT NULL COMMENT '状态（0:禁用，1:正常）',
+  `status` int(11) NULL DEFAULT 1 COMMENT '状态（0:禁用，1:正常）',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 

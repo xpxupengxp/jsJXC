@@ -11,7 +11,13 @@ public class CheckUtil {
     /**
      * 正则表达式：验证手机号
      */
-    public static final String REGEX_TEL = "^((17[0-9])|(14[0-9])|(13[0-9])|(15[^4,\\D])|(18[0,5-9]))\\d{8}$";
+    public static final String REGEX_MOBILE = "^1([38][0-9]|4[579]|5[0-3,5-9]|6[6]|7[0135678]|9[89])\\d{8}$";
+
+    /**
+     * 正则表达式：验证电话号
+     */
+    public static final String REGEX_TEL= "^(\\(\\d{3,4}\\)|\\d{3,4}-|\\s)?\\d{7,14}$";
+
 
     /**
      * 正则表达式：验证邮箱
@@ -32,12 +38,12 @@ public class CheckUtil {
 
     /**
      * 校验手机号
-     * @param tel
+     * @param mobile
      * @return 返回true为正确，false为不正确
      */
-    public static boolean checkTel(String tel) {
-        Pattern pattern = Pattern.compile(REGEX_TEL);
-        Matcher matcher = pattern.matcher(tel);
+    public static boolean checkMobile(String mobile) {
+        Pattern pattern = Pattern.compile(REGEX_MOBILE);
+        Matcher matcher = pattern.matcher(mobile);
         return matcher.matches();
     }
 

@@ -20,8 +20,7 @@ public class OrgServiceImpl implements OrgService {
 
     @Override
     public ApiResponse delete(Integer id) {
-        int i = orgMapper.delete(id);
-        if(i != 0){
+        if(orgMapper.delete(id) > 0){
             return ApiResponse.ok().setMsg("删除成功！");
         }
         //405代表操作失败
@@ -36,8 +35,7 @@ public class OrgServiceImpl implements OrgService {
         if(CheckUtil.isEmptyBatch(org.getOrgName())) {
             return ApiResponse.error(405).setMsg("组织名称不能为空！");
         }
-        int i = orgMapper.insert(org);
-        if(i !=0){
+        if(orgMapper.insert(org) > 0){
             return ApiResponse.ok().setMsg("添加成功！");
         }
         return ApiResponse.error(405).setMsg("添加失败！");
@@ -71,8 +69,7 @@ public class OrgServiceImpl implements OrgService {
         if(CheckUtil.isEmptyBatch(org.getOrgName())) {
             return ApiResponse.error(405).setMsg("组织名称不能为空！");
         }
-        int i = orgMapper.update(org);
-        if(i !=0){
+        if(orgMapper.update(org) > 0){
             return ApiResponse.ok().setMsg("修改成功！");
         }
         return ApiResponse.error(405).setMsg("修改失败！");

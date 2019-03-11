@@ -11,6 +11,7 @@ import com.js.util.CheckUtil;
 import com.js.util.PageUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import java.util.List;
 
@@ -34,23 +35,43 @@ public class SysEmployeeServiceImpl implements SysEmployeeService {
 
     @Override
     public ApiResponse insert(SysEmployee sysEmployee) {
+        // 参数非空验证
         if(CheckUtil.isEmptyBatch(sysEmployee.getUserCode())) {
-            return ApiResponse.error(405).setMsg("用户编号不能为空！");
+            return ApiResponse.error(405).setMsg("员工编号不能为空！");
         }
-        if(CheckUtil.isEmptyBatch(sysEmployee.getUserTelephone())) {
-            return ApiResponse.error(405).setMsg("电话不能为空！");
+        if(CheckUtil.isEmptyBatch(sysEmployee.getUserName())) {
+            return ApiResponse.error(405).setMsg("员工姓名不能为空！");
+        }
+        if(CheckUtil.isEmptyBatch(sysEmployee.getUserMobile())) {
+            return ApiResponse.error(405).setMsg("手机号不能为空！");
+        }
+        if(CheckUtil.isEmptyBatch(sysEmployee.getUserAddress())) {
+            return ApiResponse.error(405).setMsg("地址不能为空！");
+        }
+        if(CheckUtil.isEmptyBatch(sysEmployee.getUserQq())) {
+            return ApiResponse.error(405).setMsg("QQ不能为空！");
+        }
+        if(CheckUtil.isEmptyBatch(sysEmployee.getUserEmail())) {
+            return ApiResponse.error(405).setMsg("邮箱不能为空！");
+        }
+        if(CheckUtil.isEmptyBatch(sysEmployee.getUserSex())) {
+            return ApiResponse.error(405).setMsg("性别不能为空！");
+        }
+        if(CheckUtil.isEmptyBatch(sysEmployee.getBirthday())) {
+            return ApiResponse.error(405).setMsg("生日不能为空！");
         }
         if(CheckUtil.isEmptyBatch(sysEmployee.getIdCard())) {
             return ApiResponse.error(405).setMsg("员工卡号不能为空！");
         }
-        if(!CheckUtil.checkTel(sysEmployee.getUserTelephone())) {
-            return ApiResponse.error(405).setMsg("请输入正确的电话号码！");
+
+        //参数正则验证
+        if(!CheckUtil.checkMobile(sysEmployee.getUserTelephone())){
+            return ApiResponse.error(405).setMsg("请输入正确的手机号！");
         }
-        if (!CheckUtil.isEmptyBatch(sysEmployee.getUserEmail()) && !CheckUtil.checkEmail(sysEmployee.getUserEmail())) {
-            return ApiResponse.error(405).setMsg("邮箱不正确！");
+        if (!CheckUtil.checkEmail(sysEmployee.getUserEmail())) {
+            return ApiResponse.error(405).setMsg("请输入正确的邮箱！");
         }
-        int i = sysEmployeeMapper.insert(sysEmployee);
-        if(i !=0){
+        if(sysEmployeeMapper.insert(sysEmployee) > 0){
             return ApiResponse.ok().setMsg("添加成功！");
         }
         return ApiResponse.error(405).setMsg("添加失败！");
@@ -87,7 +108,7 @@ public class SysEmployeeServiceImpl implements SysEmployeeService {
         if(CheckUtil.isEmptyBatch(sysEmployee.getIdCard())) {
             return ApiResponse.error(405).setMsg("员工卡号不能为空！");
         }
-        if(!CheckUtil.checkTel(sysEmployee.getUserTelephone())) {
+        if(!CheckUtil.checkMobile(sysEmployee.getUserTelephone())) {
             return ApiResponse.error(405).setMsg("请输入正确的电话号码！");
         }
         if (!CheckUtil.isEmptyBatch(sysEmployee.getUserEmail()) && !CheckUtil.checkEmail(sysEmployee.getUserEmail())) {

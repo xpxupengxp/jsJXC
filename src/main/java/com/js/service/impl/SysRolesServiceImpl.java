@@ -24,8 +24,7 @@ public class SysRolesServiceImpl implements SysRolesService {
 
     @Override
     public ApiResponse delete(Integer id) {
-        int i = sysRolesMapper.delete(id);
-        if(i != 0){
+        if(sysRolesMapper.delete(id) > 0){
             return ApiResponse.ok().setMsg("删除成功！");
         }
         //405代表操作失败
@@ -40,8 +39,7 @@ public class SysRolesServiceImpl implements SysRolesService {
         if(CheckUtil.isEmptyBatch(sysRoles.getOrg())) {
             return ApiResponse.error(405).setMsg("所在组织不能为空！");
         }
-        int i = sysRolesMapper.insert(sysRoles);
-        if(i !=0){
+        if(sysRolesMapper.insert(sysRoles) > 0){
             return ApiResponse.ok().setMsg("添加成功！");
         }
         return ApiResponse.error(405).setMsg("添加失败！");
@@ -74,8 +72,7 @@ public class SysRolesServiceImpl implements SysRolesService {
         if(CheckUtil.isEmptyBatch(sysRoles.getOrg())) {
             return ApiResponse.error(405).setMsg("所在组织不能为空！");
         }
-        int i = sysRolesMapper.update(sysRoles);
-        if(i !=0){
+        if(sysRolesMapper.update(sysRoles) > 0){
             return ApiResponse.ok().setMsg("修改成功！");
         }
         return ApiResponse.error(405).setMsg("修改失败！");

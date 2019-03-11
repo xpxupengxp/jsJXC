@@ -47,8 +47,7 @@ public class SysUsersServiceImpl implements SysUsersService {
         if(CheckUtil.isEmptyBatch(sysUsers.getPassword())) {
             return ApiResponse.error(405).setMsg("密码不能为空！");
         }
-        int i = sysUsersMapper.insert(sysUsers);
-        if(i !=0){
+        if(sysUsersMapper.insert(sysUsers) > 0){
             return ApiResponse.ok().setMsg("添加成功！");
         }
         return ApiResponse.error(405).setMsg("添加失败！");
@@ -82,8 +81,7 @@ public class SysUsersServiceImpl implements SysUsersService {
         if(CheckUtil.isEmptyBatch(sysUsers.getPassword())) {
             return ApiResponse.error(405).setMsg("密码不能为空！");
         }
-        int i = sysUsersMapper.update(sysUsers);
-        if(i !=0){
+        if(sysUsersMapper.update(sysUsers) > 0){
             return ApiResponse.ok().setMsg("修改成功！");
         }
         return ApiResponse.error(405).setMsg("修改失败！");
