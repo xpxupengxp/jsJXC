@@ -19,4 +19,6 @@ public interface GenericDao<S> {
     int update(S var1);
 
     <T extends S> List<T> findList(T var1);
+
+    int deleteByIds(Integer[] ids);
 }

@@ -9,6 +9,8 @@ import java.util.Date;
 public class SysEmployee implements Serializable {
     private Integer userId;//员工ID
 
+    private Integer[] userIds;//员工ID数组
+
     private String userCode;//员工编号
 
     private String userName;//姓名
@@ -378,5 +380,13 @@ public class SysEmployee implements Serializable {
 
     public void setOrgId(Integer orgId) {
         this.orgId = orgId;
+    }
+
+    public Integer[] getUserIds() {
+        return userIds;
+    }
+
+    public void setUserIds(Integer[] userIds) {
+        this.userIds = userIds;
     }
 }

@@ -7,7 +7,7 @@ import com.js.util.PageUtil;
 public interface SysRolesService {
 
     //删除
-    ApiResponse delete(Integer id);
+    ApiResponse delete(Integer[] ids);
 
     //添加
     ApiResponse insert(SysRoles sysRoles);

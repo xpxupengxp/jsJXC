@@ -114,4 +114,9 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <delete id="deleteByIds" parameterType="java.lang.Integer">
+    delete from js_sys_roles
+    where id in <foreach collection="array" item="ids" open="(" separator="," close=")">#{ids}</foreach>
+  </delete>
 </mapper>

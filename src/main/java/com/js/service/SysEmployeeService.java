@@ -11,7 +11,7 @@ import java.util.List;
 public interface SysEmployeeService {
 
     //删除
-    ApiResponse delete(Integer id);
+    ApiResponse delete(Integer[] ids);
 
     //添加
     ApiResponse insert(SysEmployee sysEmployee);

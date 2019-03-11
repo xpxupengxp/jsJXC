@@ -10,6 +10,8 @@ import java.util.List;
 public class SysRoles implements Serializable {
     private Integer id;//编号
 
+    private Integer[] ids;//编号数组
+
     private String name;//角色名称
 
     private String rolsDesc;//描述
@@ -129,5 +131,13 @@ public class SysRoles implements Serializable {
 
     public void setObjectId(String objectId) {
         this.objectId = objectId == null ? null : objectId.trim();
+    }
+
+    public Integer[] getIds() {
+        return ids;
+    }
+
+    public void setIds(Integer[] ids) {
+        this.ids = ids;
     }
 }

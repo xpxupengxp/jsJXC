@@ -54,7 +54,7 @@ public class SysUsersController {
     @RequestMapping(value = "/delete",method = RequestMethod.DELETE)
     @OperationLogger(actType="删除用户")
     public ApiResponse delete(@RequestBody SysUsers sysUsers) {
-        return sysUsersService.delete(sysUsers.getId());
+        return sysUsersService.delete(sysUsers.getIds());
     }
 
 

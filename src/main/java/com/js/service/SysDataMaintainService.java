@@ -11,7 +11,7 @@ import java.util.List;
 public interface SysDataMaintainService {
 
     //删除
-    ApiResponse delete(Long id);
+    ApiResponse delete(Long[] ids);
 
     //添加
     ApiResponse insert(SysDataMaintain sysDataMaintain);

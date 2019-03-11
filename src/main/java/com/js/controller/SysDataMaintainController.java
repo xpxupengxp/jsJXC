@@ -51,7 +51,7 @@ public class SysDataMaintainController {
     @RequestMapping(value = "/delete",method = RequestMethod.DELETE)
     @OperationLogger(actType="删除系统数据")
     public ApiResponse delete(@RequestBody SysDataMaintain sysDataMaintain) {
-        return sysDataMaintainService.delete(sysDataMaintain.getId());
+        return sysDataMaintainService.delete(sysDataMaintain.getIds());
     }
 
 

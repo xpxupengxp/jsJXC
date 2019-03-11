@@ -144,4 +144,8 @@
     where perms_id = #{permsId,jdbcType=INTEGER}
   </update>
 
+  <delete id="deleteByIds" parameterType="java.lang.Integer">
+    delete from js_old_sys_permission
+    where perms_id in <foreach collection="array" item="ids" open="(" separator="," close=")">#{ids}</foreach>
+  </delete>
 </mapper>

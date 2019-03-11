@@ -18,8 +18,14 @@ public class OldSysPermissionServiceImpl implements OldSysPermissionService {
     private OldSysPermissionMapper oldSysPermissionMapper;
 
     @Override
-    public ApiResponse delete(Integer id) {
-        if(oldSysPermissionMapper.delete(id) > 0){
+    public ApiResponse delete(Integer[] ids) {
+        int i = 0;
+        if(ids.length == 1) {
+            i = oldSysPermissionMapper.delete(ids[0]);
+        }else if(ids.length > 1) {
+            i = oldSysPermissionMapper.deleteByIds(ids);
+        }
+        if(i > 0){
             return ApiResponse.ok().setMsg("删除成功！");
         }
         //405代表操作失败
@@ -37,7 +43,8 @@ public class OldSysPermissionServiceImpl implements OldSysPermissionService {
         if(CheckUtil.isEmptyBatch(oldSysPermission.getPermsUrl())) {
             return ApiResponse.error(405).setMsg("URL地址不能为空！");
         }
-        if(oldSysPermissionMapper.insert(oldSysPermission) > 0){
+        int i = oldSysPermissionMapper.insert(oldSysPermission);
+        if(i !=0){
             return ApiResponse.ok().setMsg("添加成功！");
         }
         return ApiResponse.error(405).setMsg("添加失败！");
@@ -74,7 +81,8 @@ public class OldSysPermissionServiceImpl implements OldSysPermissionService {
         if(CheckUtil.isEmptyBatch(oldSysPermission.getPermsUrl())) {
             return ApiResponse.error(405).setMsg("URL地址不能为空！");
         }
-        if(oldSysPermissionMapper.update(oldSysPermission) > 0){
+        int i = oldSysPermissionMapper.update(oldSysPermission);
+        if(i !=0){
             return ApiResponse.ok().setMsg("修改成功！");
         }
         return ApiResponse.error(405).setMsg("修改失败！");

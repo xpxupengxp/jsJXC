@@ -54,7 +54,7 @@ public class OldSysPermissionController {
     @RequestMapping(value = "/delete",method = RequestMethod.DELETE)
     @OperationLogger(actType="删除权限")
     public ApiResponse delete(@RequestBody OldSysPermission oldSysPermission) {
-        return oldSysPermissionService.delete(oldSysPermission.getPermsId());
+        return oldSysPermissionService.delete(oldSysPermission.getPermsIds());
     }
 
 

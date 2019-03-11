@@ -8,6 +8,8 @@ import java.io.Serializable;
 public class Org implements Serializable {
     private Integer orgId;//编号
 
+    private Integer[] orgIds;//编号数组
+
     private String orgCode;//组织编码
 
     private String orgDesc;//组织描述
@@ -136,5 +138,13 @@ public class Org implements Serializable {
 
     public void setObjectId(String objectId) {
         this.objectId = objectId == null ? null : objectId.trim();
+    }
+
+    public Integer[] getOrgIds() {
+        return orgIds;
+    }
+
+    public void setOrgIds(Integer[] orgIds) {
+        this.orgIds = orgIds;
     }
 }
