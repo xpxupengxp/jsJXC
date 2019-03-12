@@ -7,13 +7,11 @@ import com.js.entity.SysUserPermission;
 import com.js.entity.SysUserRoles;
 import com.js.entity.SysUsers;
 import com.js.service.SysUsersService;
-import com.js.util.ApiResponse;
-import com.js.util.CheckUtil;
-import com.js.util.MD5Utils;
-import com.js.util.PageUtil;
+import com.js.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Service
@@ -28,6 +26,8 @@ public class SysUsersServiceImpl implements SysUsersService {
     @Autowired
     private SysUserPermissionMapper sysUserPermissionMapper;
 
+    @Autowired
+    private HttpServletRequest request;
 
 
     @Override
@@ -52,6 +52,14 @@ public class SysUsersServiceImpl implements SysUsersService {
         }
         if(CheckUtil.isEmptyBatch(sysUsers.getPassword())) {
             return ApiResponse.error(405).setMsg("密码不能为空！");
+        }
+        if(!CheckUtil.checkImgType(sysUsers.getMultipartFile())) {
+            return ApiResponse.error(405).setMsg("图片格式不正确！");
+        }
+        //上传头像
+        if(!sysUsers.getMultipartFile().isEmpty()) {
+            String[] imgUrls = FileUtil.imgUpload(request,sysUsers.getMultipartFile());
+            sysUsers.setUserImg(imgUrls[0]);
         }
         if(sysUsersMapper.insert(sysUsers) > 0){
             return ApiResponse.ok().setMsg("添加成功！");
@@ -86,6 +94,14 @@ public class SysUsersServiceImpl implements SysUsersService {
         }
         if(CheckUtil.isEmptyBatch(sysUsers.getPassword())) {
             return ApiResponse.error(405).setMsg("密码不能为空！");
+        }
+        if(!CheckUtil.checkImgType(sysUsers.getMultipartFile())) {
+            return ApiResponse.error(405).setMsg("图片格式不正确！");
+        }
+        //上传头像
+        if(!sysUsers.getMultipartFile().isEmpty()) {
+            String[] imgUrls = FileUtil.imgUpload(request,sysUsers.getMultipartFile());
+            sysUsers.setUserImg(imgUrls[0]);
         }
         if(sysUsersMapper.update(sysUsers) > 0){
             return ApiResponse.ok().setMsg("修改成功！");

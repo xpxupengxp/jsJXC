@@ -1,5 +1,7 @@
 package com.js.util;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -68,6 +70,23 @@ public class CheckUtil {
     public static boolean checkNumber(String str, Integer snum, Integer lnum) {
         if(str != null && str.length() >= snum && str.length() <= lnum) {
             return true;
+        }
+        return false;
+    }
+
+    /**
+     * 验证图片格式
+     * @param file
+     * @return 返回true为正确，false为不正确
+     */
+    public static boolean checkImgType(MultipartFile... file) {
+        String imgType = "";
+        for (MultipartFile f:file) {
+            imgType = f.getContentType();
+            if(imgType.equals("image/gif") || imgType.equals("image/bmp") || imgType.equals("image/x-ico") ||
+                    imgType.equals("image/jpeg") || imgType.equals("image/png")) {
+                return true;
+            }
         }
         return false;
     }

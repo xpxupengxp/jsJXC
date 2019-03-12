@@ -1,5 +1,7 @@
 package com.js.entity;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +39,8 @@ public class SysUsers implements Serializable {
     private String orderBy;//排序字段
 
     private String order;//排序（ASC、DESC）
+
+    private MultipartFile multipartFile;//文件接收
 
     private static final long serialVersionUID = 1L;
 
@@ -158,5 +162,13 @@ public class SysUsers implements Serializable {
 
     public void setIds(Integer[] ids) {
         this.ids = ids;
+    }
+
+    public MultipartFile getMultipartFile() {
+        return multipartFile;
+    }
+
+    public void setMultipartFile(MultipartFile multipartFile) {
+        this.multipartFile = multipartFile;
     }
 }

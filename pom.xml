@@ -211,6 +211,14 @@
       <artifactId>cglib</artifactId>
       <version>2.1_3</version>
     </dependency>
+
+    <!--mvc上传文件依赖-->
+    <dependency>
+      <groupId>commons-fileupload</groupId>
+      <artifactId>commons-fileupload</artifactId>
+      <version>1.3.1</version>
+    </dependency>
+
   </dependencies>
 
   <build>

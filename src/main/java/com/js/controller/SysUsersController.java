@@ -6,15 +6,18 @@ import com.js.entity.SysUserRoles;
 import com.js.entity.SysUsers;
 import com.js.service.SysUsersService;
 import com.js.util.ApiResponse;
+import com.js.util.FileUtil;
 import com.js.util.PageUtil;
 import com.js.util.logSave.OperationLogger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
-@RestController
+import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+
+@Controller
 @RequestMapping("/user")
 public class SysUsersController {
 
@@ -169,5 +172,14 @@ public class SysUsersController {
     }
 
 
+    @RequestMapping("/list")
+    public String list() {
+        return "userList";
+    }
 
+    @RequestMapping(value = "/test",method = RequestMethod.POST)
+    public String test(SysUsers sysUsers) {
+        sysUsersService.insert(sysUsers);
+        return "";
+    }
 }
