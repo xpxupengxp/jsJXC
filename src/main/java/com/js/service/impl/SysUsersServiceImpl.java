@@ -64,19 +64,18 @@ public class SysUsersServiceImpl implements SysUsersService {
         }
         if(CheckUtil.isEmptyBatch(sysUsers.getPassword())) {
             return ApiResponse.error(405).setMsg("密码不能为空！");
-        }else {
-            if(addValid(sysUsers.getNickname())){
-                //md5加密
-                encryptedPwd = MD5Util.md5Password(sysUsers.getPassword());
-                sysUsers.setPassword(encryptedPwd);
-                //添加到用户表
-                if(sysUsersMapper.insert(sysUsers) > 0){
-                    return ApiResponse.ok().setMsg("添加成功！");
-                }
-                return ApiResponse.error(405).setMsg("添加失败！");
-            }else{
-                return ApiResponse.error(405).setMsg("用户已存在！");
+        }
+        if(addValid(sysUsers.getNickname())){
+            //md5加密
+            encryptedPwd = MD5Util.md5Password(sysUsers.getPassword());
+            sysUsers.setPassword(encryptedPwd);
+            //添加到用户表
+            if(sysUsersMapper.insert(sysUsers) > 0){
+                return ApiResponse.ok().setMsg("添加成功！");
             }
+            return ApiResponse.error(405).setMsg("添加失败！");
+        }else{
+            return ApiResponse.error(405).setMsg("用户已存在！");
         }
     }
 
