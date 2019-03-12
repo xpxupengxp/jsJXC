@@ -26,9 +26,7 @@ public class SysUsers implements Serializable {
 
     private Integer status;//状态（0:禁用，1:正常）
 
-    private List<SysRoles> rolesList = new ArrayList<>();//角色集合
-
-    private List<SysRoles> permsList = new ArrayList<>();//权限集合
+    private Integer[] roles;//角色数组
 
     private int page;//当前页码
 
@@ -39,6 +37,15 @@ public class SysUsers implements Serializable {
     private String order;//排序（ASC、DESC）
 
     private static final long serialVersionUID = 1L;
+
+
+    public Integer[] getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Integer[] roles) {
+        this.roles = roles;
+    }
 
     public String getOrderBy() {
         return orderBy;
@@ -64,14 +71,6 @@ public class SysUsers implements Serializable {
         this.rows = rows;
     }
 
-    public List<SysRoles> getPermsList() {
-        return permsList;
-    }
-
-    public void setPermsList(List<SysRoles> permsList) {
-        this.permsList = permsList;
-    }
-
     public Integer getStatus() {
         return status;
     }
@@ -86,14 +85,6 @@ public class SysUsers implements Serializable {
 
     public void setPage(int page) {
         this.page = page;
-    }
-
-    public List<SysRoles> getRolesList() {
-        return rolesList;
-    }
-
-    public void setRolesList(List<SysRoles> rolesList) {
-        this.rolesList = rolesList;
     }
 
     public Integer getId() {

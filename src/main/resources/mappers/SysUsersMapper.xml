@@ -48,6 +48,13 @@
     where id = #{id,jdbcType=INTEGER}
   </select>
 
+  <select id="findByNickName" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from js_sys_users
+    where nickname = #{nickname,jdbcType=VARCHAR}
+  </select>
+
   <select id="findPageList" parameterType="map" resultMap="BaseResultMap">
     SELECT * FROM js_sys_users
     <where>

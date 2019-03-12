@@ -38,7 +38,7 @@ public class SysUsersController {
      * @param sysUsers
      * @return
      */
-    @RequestMapping(value = "/update",method = RequestMethod.PUT)
+    @RequestMapping(value = "/update",method = RequestMethod.POST)
     @OperationLogger(actType="修改用户")
     public ApiResponse update(@RequestBody SysUsers sysUsers) {
         return sysUsersService.update(sysUsers);
@@ -51,7 +51,7 @@ public class SysUsersController {
      * @param sysUsers
      * @return
      */
-    @RequestMapping(value = "/delete",method = RequestMethod.DELETE)
+    @RequestMapping(value = "/delete",method = RequestMethod.POST)
     @OperationLogger(actType="删除用户")
     public ApiResponse delete(@RequestBody SysUsers sysUsers) {
         return sysUsersService.delete(sysUsers.getIds());

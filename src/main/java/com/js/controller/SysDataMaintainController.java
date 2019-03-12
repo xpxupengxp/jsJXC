@@ -35,7 +35,7 @@ public class SysDataMaintainController {
      * @param sysDataMaintain
      * @return
      */
-    @RequestMapping(value = "/update",method = RequestMethod.PUT)
+    @RequestMapping(value = "/update",method = RequestMethod.POST)
     @OperationLogger(actType="修改系统数据")
     public ApiResponse update(@RequestBody SysDataMaintain sysDataMaintain) {
         return sysDataMaintainService.update(sysDataMaintain);
@@ -48,7 +48,7 @@ public class SysDataMaintainController {
      * @param sysDataMaintain
      * @return
      */
-    @RequestMapping(value = "/delete",method = RequestMethod.DELETE)
+    @RequestMapping(value = "/delete",method = RequestMethod.POST)
     @OperationLogger(actType="删除系统数据")
     public ApiResponse delete(@RequestBody SysDataMaintain sysDataMaintain) {
         return sysDataMaintainService.delete(sysDataMaintain.getIds());

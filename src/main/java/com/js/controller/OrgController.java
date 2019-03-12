@@ -35,7 +35,7 @@ public class OrgController {
      * @param org
      * @return
      */
-    @RequestMapping(value = "/update",method = RequestMethod.PUT)
+    @RequestMapping(value = "/update",method = RequestMethod.POST)
     @OperationLogger(actType="修改组织机构")
     public ApiResponse update(@RequestBody Org org) {
         return orgService.update(org);
@@ -48,7 +48,7 @@ public class OrgController {
      * @param org
      * @return
      */
-    @RequestMapping(value = "/delete",method = RequestMethod.DELETE)
+    @RequestMapping(value = "/delete",method = RequestMethod.POST)
     @OperationLogger(actType="删除组织机构")
     public ApiResponse delete(@RequestBody Org org) {
         return orgService.delete(org.getOrgIds());

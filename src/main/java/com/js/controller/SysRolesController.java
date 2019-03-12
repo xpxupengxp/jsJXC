@@ -37,7 +37,7 @@ public class SysRolesController {
      * @param sysRoles
      * @return
      */
-    @RequestMapping(value = "/update",method = RequestMethod.PUT)
+    @RequestMapping(value = "/update",method = RequestMethod.POST)
     @OperationLogger(actType="修改角色")
     public ApiResponse update(@RequestBody SysRoles sysRoles) {
         return sysRolesService.update(sysRoles);
@@ -50,7 +50,7 @@ public class SysRolesController {
      * @param sysRoles
      * @return
      */
-    @RequestMapping(value = "/delete",method = RequestMethod.DELETE)
+    @RequestMapping(value = "/delete",method = RequestMethod.POST)
     @OperationLogger(actType="删除角色")
     public ApiResponse delete(@RequestBody SysRoles sysRoles) {
         return sysRolesService.delete(sysRoles.getIds());

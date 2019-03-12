@@ -7,10 +7,7 @@ import com.js.entity.SysUserPermission;
 import com.js.entity.SysUserRoles;
 import com.js.entity.SysUsers;
 import com.js.service.SysUsersService;
-import com.js.util.ApiResponse;
-import com.js.util.CheckUtil;
-import com.js.util.MD5Utils;
-import com.js.util.PageUtil;
+import com.js.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -47,16 +44,29 @@ public class SysUsersServiceImpl implements SysUsersService {
 
     @Override
     public ApiResponse insert(SysUsers sysUsers) {
+        String encryptedPwd = null;
         if(CheckUtil.isEmptyBatch(sysUsers.getNickname())) {
             return ApiResponse.error(405).setMsg("昵称不能为空！");
         }
+        if(sysUsers.getRoles().length == 0) {
+            return ApiResponse.error(405).setMsg("请选择角色！");
+        }
         if(CheckUtil.isEmptyBatch(sysUsers.getPassword())) {
             return ApiResponse.error(405).setMsg("密码不能为空！");
+        }else {
+            if(addValid(sysUsers.getNickname())){
+                //md5加密
+                encryptedPwd = MD5Util.md5Password(sysUsers.getPassword());
+                sysUsers.setPassword(encryptedPwd);
+                //添加到用户表
+                if(sysUsersMapper.insert(sysUsers) > 0){
+                    return ApiResponse.ok().setMsg("添加成功！");
+                }
+                return ApiResponse.error(405).setMsg("添加失败！");
+            }else{
+                return ApiResponse.error(405).setMsg("用户已存在！");
+            }
         }
-        if(sysUsersMapper.insert(sysUsers) > 0){
-            return ApiResponse.ok().setMsg("添加成功！");
-        }
-        return ApiResponse.error(405).setMsg("添加失败！");
     }
 
     @Override
@@ -158,5 +168,15 @@ public class SysUsersServiceImpl implements SysUsersService {
             return ApiResponse.ok().setMsg("设置成功！");
         }
         return ApiResponse.error(405).setMsg("设置失败！");
+    }
+
+
+    //验证添加
+    public boolean addValid(String nickname){
+        if(sysUsersMapper.findByNickName(nickname) != null){
+            return false;
+        }else {
+            return true;
+        }
     }
 }

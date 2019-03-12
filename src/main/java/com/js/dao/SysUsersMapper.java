@@ -19,4 +19,7 @@ public interface SysUsersMapper extends GenericDao<SysUsers> {
 
     //通过userId设置密码
     int setPassword(SysUsers sysUsers);
+
+    //通过用户名查询
+    SysUsers findByNickName(String nickName);
 }

@@ -37,7 +37,7 @@ public class SysEmployeeController {
      * @param sysEmployee
      * @return
      */
-    @RequestMapping(value = "/update",method = RequestMethod.PUT)
+    @RequestMapping(value = "/update",method = RequestMethod.POST)
     @OperationLogger(actType="修改员工")
     public ApiResponse update(@RequestBody SysEmployee sysEmployee) {
         return sysEmployeeService.update(sysEmployee);
@@ -50,7 +50,7 @@ public class SysEmployeeController {
      * @param sysEmployee
      * @return
      */
-    @RequestMapping(value = "/delete",method = RequestMethod.DELETE)
+    @RequestMapping(value = "/delete",method = RequestMethod.POST)
     @OperationLogger(actType="删除员工")
     public ApiResponse delete(@RequestBody SysEmployee sysEmployee) {
         return sysEmployeeService.delete(sysEmployee.getUserIds());

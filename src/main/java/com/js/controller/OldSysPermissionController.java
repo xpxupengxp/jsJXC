@@ -38,7 +38,7 @@ public class OldSysPermissionController {
      * @param oldSysPermission
      * @return
      */
-    @RequestMapping(value = "/update",method = RequestMethod.PUT)
+    @RequestMapping(value = "/update",method = RequestMethod.POST)
     @OperationLogger(actType="修改权限")
     public ApiResponse update(@RequestBody OldSysPermission oldSysPermission) {
         return oldSysPermissionService.update(oldSysPermission);
@@ -51,7 +51,7 @@ public class OldSysPermissionController {
      * @param oldSysPermission
      * @return
      */
-    @RequestMapping(value = "/delete",method = RequestMethod.DELETE)
+    @RequestMapping(value = "/delete",method = RequestMethod.POST)
     @OperationLogger(actType="删除权限")
     public ApiResponse delete(@RequestBody OldSysPermission oldSysPermission) {
         return oldSysPermissionService.delete(oldSysPermission.getPermsIds());
