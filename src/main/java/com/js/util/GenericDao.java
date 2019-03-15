@@ -20,5 +20,5 @@ public interface GenericDao<S> {
 
     <T extends S> List<T> findList(T var1);
 
-    int deleteByIds(Integer[] ids);
+    int deleteByIds(Serializable[] var1s);
 }

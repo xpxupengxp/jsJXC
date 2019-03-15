@@ -1,7 +1,7 @@
 package com.js.util.logSave;
 
-import com.js.entity.SysOprateLog;
-import com.js.service.SysOprateLogService;
+import com.js.entity.sys.SysOprateLog;
+import com.js.service.sys.SysOprateLogService;
 import com.js.util.ApiResponse;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;

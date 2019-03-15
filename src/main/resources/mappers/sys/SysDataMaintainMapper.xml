@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.js.dao.sys.SysDataMaintainMapper">
+  <resultMap id="BaseResultMap" type="com.js.entity.sys.SysDataMaintain">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="object_id" jdbcType="VARCHAR" property="objectId" />
+    <result column="act_u_id" jdbcType="BIGINT" property="actUId" />
+    <result column="inserttime" jdbcType="TIMESTAMP" property="inserttime" />
+    <result column="deleted" jdbcType="INTEGER" property="deleted" />
+    <result column="enable" jdbcType="VARCHAR" property="enable" />
+    <result column="hided" jdbcType="INTEGER" property="hided" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="ip" jdbcType="VARCHAR" property="ip" />
+    <result column="op" jdbcType="VARCHAR" property="op" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, object_id, act_u_id, inserttime, deleted, enable, hided, remark, ip, op
+  </sql>
+
+  <sql id="where_sql">
+    <if test="param.id != null">and id = #{param.id}</if>
+    <if test="param.objectId != null and param.objectId != ''">and object_id = #{param.objectId}</if>
+    <if test="param.actUId != null">and act_u_id = #{param.actUId}</if>
+    <if test="param.inserttime != null and param.inserttime != ''">and inserttime = #{param.inserttime}</if>
+    <if test="param.deleted != null">and deleted = #{param.deleted}</if>
+    <if test="param.enable != null and param.enable != ''">and enable = #{param.enable}</if>
+    <if test="param.hided != null">and hided = #{param.hided}</if>
+    <if test="param.remark != null and param.remark != ''">and remark = #{param.remark}</if>
+    <if test="param.ip != null and param.ip != ''">and ip = #{param.ip}</if>
+    <if test="param.op != null and param.op != ''">and op = #{param.op}</if>
+
+  </sql>
+
+  <sql id="order_by_sql">
+    <if test="page != null">
+      <if test="page.orderBy != null and page.orderBy !=''">
+        ORDER BY ${page.orderBy} ${page.order}
+      </if>
+      <if test="page.start >= 0 and page.rows > 0">
+        limit #{page.start}, #{page.rows}
+      </if>
+    </if>
+  </sql>
+
+  <select id="findById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from js_sys_data_maintain
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <select id="findPageList" parameterType="map" resultMap="BaseResultMap">
+    SELECT * FROM js_sys_data_maintain
+    <where>
+      <include refid="where_sql"/>
+    </where>
+    <include refid="order_by_sql"/>
+  </select>
+
+  <select id="findPageListCount" parameterType="com.js.entity.sys.SysDataMaintain" resultType="int">
+    SELECT count(*) FROM js_sys_data_maintain
+    <where>
+      <include refid="where_sql"/>
+    </where>
+  </select>
+
+  <delete id="delete" parameterType="java.lang.Long">
+    delete from js_sys_data_maintain
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.js.entity.sys.SysDataMaintain">
+    insert into js_sys_data_maintain (object_id, act_u_id,
+      inserttime, deleted, enable,
+      hided, remark, ip, op)
+    values (#{objectId,jdbcType=VARCHAR}, #{actUId,jdbcType=BIGINT},
+      #{inserttime,jdbcType=TIMESTAMP}, #{deleted,jdbcType=INTEGER}, #{enable,jdbcType=VARCHAR}, 
+      #{hided,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR}, #{ip,jdbcType=VARCHAR}, 
+      #{op,jdbcType=VARCHAR})
+  </insert>
+
+  <update id="update" parameterType="com.js.entity.sys.SysDataMaintain">
+    update js_sys_data_maintain
+    <set>
+      <if test="objectId != null and objectId != ''">
+        object_id = #{objectId,jdbcType=VARCHAR},
+      </if>
+      <if test="actUId != null">
+        act_u_id = #{actUId,jdbcType=BIGINT},
+      </if>
+      <if test="inserttime != null">
+        inserttime = #{inserttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleted != null">
+        deleted = #{deleted,jdbcType=INTEGER},
+      </if>
+      <if test="enable != null and enable != ''">
+        enable = #{enable,jdbcType=VARCHAR},
+      </if>
+      <if test="hided != null">
+        hided = #{hided,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null and remark != ''">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="ip != null and ip != ''">
+        ip = #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="op != null and op != ''">
+        op = #{op,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <delete id="deleteByIds" parameterType="java.lang.Long">
+    delete from js_sys_data_maintain
+    where id in <foreach collection="array" item="ids" open="(" separator="," close=")">#{ids}</foreach>
+  </delete>
+</mapper>

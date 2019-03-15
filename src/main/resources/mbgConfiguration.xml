@@ -33,41 +33,49 @@
     也可以使用“MAVEN”来自动生成，这样生成的代码会在target/generatord-source目录下
     -->
     <!--<javaModelGenerator targetPackage="com.joey.mybaties.test.entity" targetProject="MAVEN">-->
-    <javaModelGenerator targetPackage="com.js.entity" targetProject="./src/main/java">
+    <javaModelGenerator targetPackage="com.js.entity.warehouse" targetProject="./src/main/java">
       <property name="enableSubPackages" value="true"/>
       <!-- 从数据库返回的值被清理前后的空格  -->
       <property name="trimStrings" value="true" />
     </javaModelGenerator>
 
     <!--对应的mapper.xml文件  -->
-    <sqlMapGenerator targetPackage="mappers" targetProject="./src/main/resources">
+    <sqlMapGenerator targetPackage="warehouse" targetProject="./src/main/resources/mappers">
       <property name="enableSubPackages" value="true"/>
     </sqlMapGenerator>
 
     <!-- 对应的Mapper接口类文件 -->
-    <javaClientGenerator type="XMLMAPPER" targetPackage="com.js.dao" targetProject="./src/main/java">
+    <javaClientGenerator type="XMLMAPPER" targetPackage="com.js.dao.warehouse" targetProject="./src/main/java">
       <property name="enableSubPackages" value="true"/>
     </javaClientGenerator>
 
 
     <!-- 列出要生成代码的所有表，这里配置的是不生成Example文件 -->
-    <table tableName="js_apply_result" domainObjectName="ApplyResult"
+    <table tableName="js_warehouseblock_material_object" domainObjectName="WarehouseblockMaterialObject"
            enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
            enableSelectByExample="false" selectByExampleQueryId="false" >
     </table>
-    <!--<table tableName="js_user_skill" domainObjectName="UserSkill"-->
-           <!--enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"-->
-           <!--enableSelectByExample="false" selectByExampleQueryId="false" >-->
-    <!--</table>-->
-    <!--<table tableName="js_user_system_permissions" domainObjectName="UserSystemPermissions"-->
-           <!--enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"-->
-           <!--enableSelectByExample="false" selectByExampleQueryId="false" >-->
-    <!--</table>-->
+    <table tableName="js_wherehouse_materials" domainObjectName="WherehouseMaterials"
+           enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
+           enableSelectByExample="false" selectByExampleQueryId="false" >
+    </table>
+    <table tableName="js_wherehouse_outcoming" domainObjectName="WherehouseOutcoming"
+           enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
+           enableSelectByExample="false" selectByExampleQueryId="false" >
+    </table>
+    <table tableName="m_material_disposal" domainObjectName="MaterialDisposal"
+           enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
+           enableSelectByExample="false" selectByExampleQueryId="false" >
+    </table>
     <!--<table tableName="js_warehouse" domainObjectName="Warehouse"-->
            <!--enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"-->
            <!--enableSelectByExample="false" selectByExampleQueryId="false" >-->
     <!--</table>-->
     <!--<table tableName="js_warehouse_block" domainObjectName="WarehouseBlock"-->
+           <!--enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"-->
+           <!--enableSelectByExample="false" selectByExampleQueryId="false" >-->
+    <!--</table>-->
+    <!--<table tableName="js_warehouse_m_alert_form" domainObjectName="WarehouseMAlertForm"-->
            <!--enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"-->
            <!--enableSelectByExample="false" selectByExampleQueryId="false" >-->
     <!--</table>-->
@@ -80,14 +88,6 @@
            <!--enableSelectByExample="false" selectByExampleQueryId="false" >-->
     <!--</table>-->
     <!--<table tableName="js_warehouse_user" domainObjectName="WarehouseUser"-->
-           <!--enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"-->
-           <!--enableSelectByExample="false" selectByExampleQueryId="false" >-->
-    <!--</table>-->
-    <!--<table tableName="js_warehouseblock_material_object" domainObjectName="WarehouseblockMaterialObject"-->
-           <!--enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"-->
-           <!--enableSelectByExample="false" selectByExampleQueryId="false" >-->
-    <!--</table>-->
-    <!--<table tableName="js_wherehouse_materials" domainObjectName="WherehouseMaterials"-->
            <!--enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"-->
            <!--enableSelectByExample="false" selectByExampleQueryId="false" >-->
     <!--</table>-->

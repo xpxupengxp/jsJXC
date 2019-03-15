@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.js.dao.sys.SysUserPermissionMapper">
+  <resultMap id="BaseResultMap" type="com.js.entity.sys.SysUserPermission">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="perms_id" jdbcType="INTEGER" property="permsId" />
+    <result column="memo" jdbcType="VARCHAR" property="memo" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, user_id, perms_id, memo
+  </sql>
+
+  <select id="findById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from js_sys_user_permission
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <delete id="delete" parameterType="java.lang.Integer">
+    delete from js_sys_user_permission
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+
+  <insert id="insert" parameterType="com.js.entity.sys.SysUserPermission">
+    insert into js_sys_user_permission (user_id, perms_id, memo)
+    values (#{userId,jdbcType=INTEGER}, #{permsId,jdbcType=INTEGER}, #{memo,jdbcType=VARCHAR})
+  </insert>
+
+  <update id="update" parameterType="com.js.entity.sys.SysUserPermission">
+    update js_sys_user_permission
+    <set>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="permsId != null">
+        perms_id = #{permsId,jdbcType=INTEGER},
+      </if>
+      <if test="memo != null">
+        memo = #{memo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <delete id="deleteByUserId" parameterType="java.lang.Integer">
+    delete from js_sys_user_permission
+    where user_id = #{userId}
+  </delete>
+</mapper>
