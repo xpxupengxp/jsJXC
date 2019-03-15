@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.js.dao.warehouse.WarehouseMAlertFormMapper">
+  <resultMap id="BaseResultMap" type="com.js.entity.warehouse.WarehouseMAlertForm">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="alert_color" jdbcType="VARCHAR" property="alertColor" />
+    <result column="alert_sound" jdbcType="VARCHAR" property="alertSound" />
+    <result column="alert_picture" jdbcType="VARCHAR" property="alertPicture" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, alert_color, alert_sound, alert_picture
+  </sql>
+
+  <sql id="where_sql">
+    <if test="param.alertColor != null and param.alertColor != ''">and alert_color = #{param.alertColor}</if>
+    <if test="param.alertSound != null and param.alertSound != ''">and alert_sound = #{param.alertSound}</if>
+    <if test="param.alertPicture != null and param.alertPicture != ''">and alert_picture = #{param.alertPicture}</if>
+
+  </sql>
+
+  <sql id="order_by_sql">
+    <if test="page != null">
+      <if test="page.orderBy != null and page.orderBy !=''">
+        ORDER BY ${page.orderBy} ${page.order}
+      </if>
+      <if test="page.start >= 0 and page.rows > 0">
+        limit #{page.start}, #{page.rows}
+      </if>
+    </if>
+  </sql>
+
+  <select id="findList" parameterType="com.js.entity.warehouse.WarehouseMAlertForm" resultMap="BaseResultMap">
+    select * from js_warehouse_m_alert_form
+  </select>
+
+  <select id="findById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from js_warehouse_m_alert_form
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <select id="findPageList" parameterType="map" resultMap="BaseResultMap">
+    SELECT * FROM js_warehouse_m_alert_form
+    <where>
+      <include refid="where_sql"/>
+    </where>
+    <include refid="order_by_sql"/>
+  </select>
+
+  <select id="findPageListCount" parameterType="com.js.entity.warehouse.WarehouseMAlertForm" resultType="int">
+    SELECT count(*) FROM js_warehouse_m_alert_form
+    <where>
+      <include refid="where_sql"/>
+    </where>
+  </select>
+
+  <delete id="delete" parameterType="java.lang.Integer">
+    delete from js_warehouse_m_alert_form
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+
+  <delete id="deleteByIds" parameterType="java.lang.Integer">
+    delete from js_warehouse_m_alert_form
+    where id in <foreach collection="array" item="ids" open="(" separator="," close=")">#{ids}</foreach>
+  </delete>
+
+  <insert id="insert" parameterType="com.js.entity.warehouse.WarehouseMAlertForm">
+    insert into js_warehouse_m_alert_form (alert_color, alert_sound,
+      alert_picture)
+    values (#{alertColor,jdbcType=VARCHAR}, #{alertSound,jdbcType=VARCHAR},
+      #{alertPicture,jdbcType=VARCHAR})
+  </insert>
+
+  <update id="update" parameterType="com.js.entity.warehouse.WarehouseMAlertForm">
+    update js_warehouse_m_alert_form
+    <set>
+      <if test="alertColor != null">
+        alert_color = #{alertColor,jdbcType=VARCHAR},
+      </if>
+      <if test="alertSound != null">
+        alert_sound = #{alertSound,jdbcType=VARCHAR},
+      </if>
+      <if test="alertPicture != null">
+        alert_picture = #{alertPicture,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+</mapper>

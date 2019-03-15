@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.js.dao.warehouse.WarehouseblockMaterialObjectMapper">
+  <resultMap id="BaseResultMap" type="com.js.entity.warehouse.WarehouseblockMaterialObject">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="wb_id" jdbcType="INTEGER" property="wbId" />
+    <result column="m_id" jdbcType="INTEGER" property="mId" />
+    <result column="memo" jdbcType="VARCHAR" property="memo" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, wb_id, m_id, memo
+  </sql>
+  <sql id="where_sql">
+    <if test="param.wbId != null">and wb_id = #{param.wbId}</if>
+    <if test="param.mId != null">and m_id = #{param.mId}</if>
+    <if test="param.memo != null and param.memo != ''">and memo = #{param.memo}</if>
+
+  </sql>
+
+  <sql id="order_by_sql">
+    <if test="page != null">
+      <if test="page.orderBy != null and page.orderBy !=''">
+        ORDER BY ${page.orderBy} ${page.order}
+      </if>
+      <if test="page.start &gt;= 0 and page.rows &gt; 0">
+        limit #{page.start}, #{page.rows}
+      </if>
+    </if>
+  </sql>
+
+  <select id="findList" parameterType="com.js.entity.warehouse.WarehouseblockMaterialObject" resultMap="BaseResultMap">
+    select * from js_warehouseblock_material_object
+  </select>
+
+  <select id="findById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from js_warehouseblock_material_object
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <select id="findPageList" parameterType="map" resultMap="BaseResultMap">
+    SELECT * FROM js_warehouseblock_material_object
+    <where>
+      <include refid="where_sql" />
+    </where>
+    <include refid="order_by_sql" />
+  </select>
+
+  <select id="findPageListCount" parameterType="com.js.entity.warehouse.WarehouseblockMaterialObject" resultType="int">
+    SELECT count(*) FROM js_warehouseblock_material_object
+    <where>
+      <include refid="where_sql" />
+    </where>
+  </select>
+
+  <delete id="delete" parameterType="java.lang.Integer">
+    delete from js_warehouseblock_material_object
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+
+  <delete id="deleteByIds" parameterType="java.lang.Integer">
+    delete from js_warehouseblock_material_object
+    where id in <foreach close=")" collection="array" item="ids" open="(" separator=",">#{ids}</foreach>
+  </delete>
+
+  <insert id="insert" parameterType="com.js.entity.warehouse.WarehouseblockMaterialObject">
+    insert into js_warehouseblock_material_object (b_id, m_id,
+      memo)
+    values (#{wbId,jdbcType=INTEGER}, #{mId,jdbcType=INTEGER},
+      #{memo,jdbcType=VARCHAR})
+  </insert>
+
+  <update id="update" parameterType="com.js.entity.warehouse.WarehouseblockMaterialObject">
+    update js_warehouseblock_material_object
+    <set>
+      <if test="wbId != null">
+        wb_id = #{wbId,jdbcType=INTEGER},
+      </if>
+      <if test="mId != null">
+        m_id = #{mId,jdbcType=INTEGER},
+      </if>
+      <if test="memo != null">
+        memo = #{memo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+</mapper>

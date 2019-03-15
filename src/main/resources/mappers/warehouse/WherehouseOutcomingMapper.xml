@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.js.dao.warehouse.WherehouseOutcomingMapper">
+  <resultMap id="BaseResultMap" type="com.js.entity.warehouse.WherehouseOutcoming">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="w_id" jdbcType="INTEGER" property="wId" />
+    <result column="m_real_id" jdbcType="BIGINT" property="mRealId" />
+    <result column="out_date" jdbcType="TIMESTAMP" property="outDate" />
+    <result column="store_keeper" jdbcType="VARCHAR" property="storeKeeper" />
+    <result column="m_number" jdbcType="DECIMAL" property="mNumber" />
+    <result column="memo" jdbcType="VARCHAR" property="memo" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, w_id, m_real_id, out_date, store_keeper, m_number, memo
+  </sql>
+
+  <sql id="where_sql">
+    <if test="param.wId != null">and w_id = #{param.wId}</if>
+    <if test="param.mRealId != null">and m_real_id = #{param.mRealId}</if>
+    <if test="param.outDate != null and param.outDate != ''">and out_date = #{param.outDate}</if>
+    <if test="param.storeKeeper != null and param.storeKeeper != ''">and store_keeper = #{param.storeKeeper}</if>
+    <if test="param.mNumber != null">and m_number = #{param.mNumber}</if>
+    <if test="param.memo != null and param.memo != ''">and memo = #{param.memo}</if>
+
+  </sql>
+
+  <sql id="order_by_sql">
+    <if test="page != null">
+      <if test="page.orderBy != null and page.orderBy !=''">
+        ORDER BY ${page.orderBy} ${page.order}
+      </if>
+      <if test="page.start &gt;= 0 and page.rows &gt; 0">
+        limit #{page.start}, #{page.rows}
+      </if>
+    </if>
+  </sql>
+
+  <select id="findList" parameterType="com.js.entity.warehouse.WherehouseOutcoming" resultMap="BaseResultMap">
+    select * from js_wherehouse_outcoming
+  </select>
+
+  <select id="findById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from js_wherehouse_outcoming
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <select id="findPageList" parameterType="map" resultMap="BaseResultMap">
+    SELECT * FROM js_wherehouse_outcoming
+    <where>
+      <include refid="where_sql" />
+    </where>
+    <include refid="order_by_sql" />
+  </select>
+
+  <select id="findPageListCount" parameterType="com.js.entity.warehouse.WherehouseOutcoming" resultType="int">
+    SELECT count(*) FROM js_wherehouse_outcoming
+    <where>
+      <include refid="where_sql" />
+    </where>
+  </select>
+
+  <delete id="delete" parameterType="java.lang.Long">
+    delete from js_wherehouse_outcoming
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="deleteByIds" parameterType="java.lang.Integer">
+    delete from js_wherehouse_outcoming
+    where id in <foreach close=")" collection="array" item="ids" open="(" separator=",">#{ids}</foreach>
+  </delete>
+
+  <insert id="insert" parameterType="com.js.entity.warehouse.WherehouseOutcoming">
+    insert into js_wherehouse_outcoming (w_id, m_real_id,
+      out_date, store_keeper, m_number, 
+      memo)
+    values (#{wId,jdbcType=INTEGER}, #{mRealId,jdbcType=BIGINT},
+      #{outDate,jdbcType=TIMESTAMP}, #{storeKeeper,jdbcType=VARCHAR}, #{mNumber,jdbcType=DECIMAL}, 
+      #{memo,jdbcType=VARCHAR})
+  </insert>
+
+  <update id="update" parameterType="com.js.entity.warehouse.WherehouseOutcoming">
+    update js_wherehouse_outcoming
+    <set>
+      <if test="wId != null">
+        w_id = #{wId,jdbcType=INTEGER},
+      </if>
+      <if test="mRealId != null">
+        m_real_id = #{mRealId,jdbcType=BIGINT},
+      </if>
+      <if test="outDate != null">
+        out_date = #{outDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="storeKeeper != null">
+        store_keeper = #{storeKeeper,jdbcType=VARCHAR},
+      </if>
+      <if test="mNumber != null">
+        m_number = #{mNumber,jdbcType=DECIMAL},
+      </if>
+      <if test="memo != null">
+        memo = #{memo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+</mapper>

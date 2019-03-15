@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.js.dao.warehouse.WarehouseUserMapper">
+  <resultMap id="BaseResultMap" type="com.js.entity.warehouse.WarehouseUser">
+    <id column="whu_id" jdbcType="INTEGER" property="whuId" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="wh_id" jdbcType="INTEGER" property="whId" />
+    <result column="whu_desc" jdbcType="VARCHAR" property="whuDesc" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    whu_id, user_id, wh_id, whu_desc
+  </sql>
+
+  <sql id="where_sql">
+    <if test="param.userId != null">and user_id = #{param.userId}</if>
+    <if test="param.whId != null">and wh_id = #{param.whId}</if>
+    <if test="param.whuDesc != null and param.whuDesc != ''">and whu_desc = #{param.whuDesc}</if>
+
+  </sql>
+
+  <sql id="order_by_sql">
+    <if test="page != null">
+      <if test="page.orderBy != null and page.orderBy !=''">
+        ORDER BY ${page.orderBy} ${page.order}
+      </if>
+      <if test="page.start >= 0 and page.rows > 0">
+        limit #{page.start}, #{page.rows}
+      </if>
+    </if>
+  </sql>
+
+  <select id="findList" parameterType="com.js.entity.warehouse.WarehouseUser" resultMap="BaseResultMap">
+    select * from js_warehouse_user
+  </select>
+
+  <select id="findById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from js_warehouse_user
+    where whu_id = #{whuId,jdbcType=INTEGER}
+  </select>
+
+  <select id="findPageList" parameterType="map" resultMap="BaseResultMap">
+    SELECT * FROM js_warehouse_user
+    <where>
+      <include refid="where_sql"/>
+    </where>
+    <include refid="order_by_sql"/>
+  </select>
+
+  <select id="findPageListCount" parameterType="com.js.entity.warehouse.WarehouseUser" resultType="int">
+    SELECT count(*) FROM js_warehouse_user
+    <where>
+      <include refid="where_sql"/>
+    </where>
+  </select>
+
+  <delete id="deleteByWhId" parameterType="java.lang.Integer">
+    delete from js_warehouse_user
+    where wh_id = #{whId,jdbcType=INTEGER}
+  </delete>
+
+  <delete id="deleteByIds" parameterType="java.lang.Integer">
+    delete from js_warehouse_user
+    where whu_id in <foreach collection="array" item="ids" open="(" separator="," close=")">#{ids}</foreach>
+  </delete>
+
+  <insert id="insert" parameterType="com.js.entity.warehouse.WarehouseUser">
+    insert into js_warehouse_user (user_id, wh_id,
+      whu_desc)
+    values (#{userId,jdbcType=INTEGER}, #{whId,jdbcType=INTEGER},
+      #{whuDesc,jdbcType=VARCHAR})
+  </insert>
+
+  <update id="update" parameterType="com.js.entity.warehouse.WarehouseUser">
+    update js_warehouse_user
+    <set>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="whId != null">
+        wh_id = #{whId,jdbcType=INTEGER},
+      </if>
+      <if test="whuDesc != null">
+        whu_desc = #{whuDesc,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where whu_id = #{whuId,jdbcType=INTEGER}
+  </update>
+
+</mapper>

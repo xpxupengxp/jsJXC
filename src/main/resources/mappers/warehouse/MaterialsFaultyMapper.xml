@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.js.dao.warehouse.MaterialsFaultyMapper">
+  <resultMap id="BaseResultMap" type="com.js.entity.warehouse.MaterialsFaulty">
+    <id column="m_id" jdbcType="BIGINT" property="mId" />
+    <result column="faulty_num" jdbcType="DECIMAL" property="faultyNum" />
+    <result column="operator" jdbcType="VARCHAR" property="operator" />
+    <result column="operate_date" jdbcType="TIMESTAMP" property="operateDate" />
+    <result column="result" jdbcType="VARCHAR" property="result" />
+    <result column="memo" jdbcType="VARCHAR" property="memo" />
+    <result column="audit_process_id" jdbcType="INTEGER" property="auditProcessId" />
+    <result column="is_filished" jdbcType="VARCHAR" property="isFilished" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    m_id, faulty_num, operator, operate_date, result, memo, audit_process_id, is_filished
+  </sql>
+
+  <sql id="where_sql">
+    <if test="param.faultyNum != null">and faulty_num = #{param.faultyNum}</if>
+    <if test="param.operator != null and param.operator != ''">and operator = #{param.operator}</if>
+    <if test="param.operateDate != null and param.operateDate != ''">and operate_date = #{param.operateDate}</if>
+    <if test="param.result != null and param.result != ''">and result = #{param.result}</if>
+    <if test="param.memo != null and param.memo != ''">and memo = #{param.memo}</if>
+    <if test="param.auditProcessId != null">and audit_process_id = #{param.auditProcessId}</if>
+    <if test="param.isFilished != null and param.isFilished != ''">and is_filished = #{param.isFilished}</if>
+
+  </sql>
+
+  <sql id="order_by_sql">
+    <if test="page != null">
+      <if test="page.orderBy != null and page.orderBy !=''">
+        ORDER BY ${page.orderBy} ${page.order}
+      </if>
+      <if test="page.start >= 0 and page.rows > 0">
+        limit #{page.start}, #{page.rows}
+      </if>
+    </if>
+  </sql>
+
+  <select id="findList" parameterType="com.js.entity.warehouse.MaterialsFaulty" resultMap="BaseResultMap">
+    select * from js_materials_faulty
+  </select>
+
+  <select id="findById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from js_materials_faulty
+    where m_id = #{mId,jdbcType=BIGINT}
+  </select>
+
+  <select id="findPageList" parameterType="map" resultMap="BaseResultMap">
+    SELECT * FROM js_materials_faulty
+    <where>
+      <include refid="where_sql"/>
+    </where>
+    <include refid="order_by_sql"/>
+  </select>
+
+  <select id="findPageListCount" parameterType="com.js.entity.warehouse.MaterialsFaulty" resultType="int">
+    SELECT count(*) FROM js_materials_faulty
+    <where>
+      <include refid="where_sql"/>
+    </where>
+  </select>
+
+  <delete id="delete" parameterType="java.lang.Long">
+    delete from js_materials_faulty
+    where m_id = #{mId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="deleteByIds" parameterType="java.lang.Integer">
+    delete from js_materials_faulty
+    where m_id in <foreach collection="array" item="ids" open="(" separator="," close=")">#{ids}</foreach>
+  </delete>
+
+  <insert id="insert" parameterType="com.js.entity.warehouse.MaterialsFaulty">
+    insert into js_materials_faulty (faulty_num, operator,
+      operate_date, result, memo, 
+      audit_process_id, is_filished)
+    values (#{faultyNum,jdbcType=DECIMAL}, #{operator,jdbcType=VARCHAR},
+      #{operateDate,jdbcType=TIMESTAMP}, #{result,jdbcType=VARCHAR}, #{memo,jdbcType=VARCHAR}, 
+      #{auditProcessId,jdbcType=INTEGER}, #{isFilished,jdbcType=VARCHAR})
+  </insert>
+
+  <update id="update" parameterType="com.js.entity.warehouse.MaterialsFaulty">
+    update js_materials_faulty
+    <set>
+      <if test="faultyNum != null">
+        faulty_num = #{faultyNum,jdbcType=DECIMAL},
+      </if>
+      <if test="operator != null">
+        operator = #{operator,jdbcType=VARCHAR},
+      </if>
+      <if test="operateDate != null">
+        operate_date = #{operateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="result != null">
+        result = #{result,jdbcType=VARCHAR},
+      </if>
+      <if test="memo != null">
+        memo = #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="auditProcessId != null">
+        audit_process_id = #{auditProcessId,jdbcType=INTEGER},
+      </if>
+      <if test="isFilished != null">
+        is_filished = #{isFilished,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where m_id = #{mId,jdbcType=BIGINT}
+  </update>
+
+</mapper>

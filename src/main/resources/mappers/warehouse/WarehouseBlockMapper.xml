@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.js.dao.warehouse.WarehouseBlockMapper">
+  <resultMap id="BaseResultMap" type="com.js.entity.warehouse.WarehouseBlock">
+    <id column="wb_id" jdbcType="INTEGER" property="wbId" />
+    <result column="wb_name" jdbcType="VARCHAR" property="wbName" />
+    <result column="wb_code" jdbcType="VARCHAR" property="wbCode" />
+    <result column="wb_area" jdbcType="INTEGER" property="wbArea" />
+    <result column="wb_row" jdbcType="INTEGER" property="wbRow" />
+    <result column="wb_col" jdbcType="INTEGER" property="wbCol" />
+    <result column="wb_parent_id" jdbcType="INTEGER" property="wbParentId" />
+    <result column="wb_floor" jdbcType="VARCHAR" property="wbFloor" />
+    <result column="wh_id" jdbcType="DECIMAL" property="whId" />
+    <result column="wb_desc" jdbcType="VARCHAR" property="wbDesc" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    wb_id, wb_name, wb_code, wb_area, wb_row, wb_col, wb_parent_id, wb_floor, wh_id, 
+    wb_desc
+  </sql>
+
+  <sql id="where_sql">
+    <if test="param.wbName != null and param.wbName != ''">and wb_name = #{param.wbName}</if>
+    <if test="param.wbCode != null and param.wbCode != ''">and wb_code = #{param.wbCode}</if>
+    <if test="param.wbArea != null">and wb_area = #{param.wbArea}</if>
+    <if test="param.wbRow != null">and wb_row = #{param.wbRow}</if>
+    <if test="param.wbCol != null">and wb_col = #{param.wbCol}</if>
+    <if test="param.wbParentId != null">and wb_parent_id = #{param.wbParentId}</if>
+    <if test="param.wbFloor != null and param.wbFloor != ''">and wb_floor = #{param.wbFloor}</if>
+    <if test="param.whId != null">and wh_id = #{param.whId}</if>
+    <if test="param.wbDesc != null and param.wbDesc != ''">and wb_desc = #{param.wbDesc}</if>
+
+  </sql>
+
+  <sql id="order_by_sql">
+    <if test="page != null">
+      <if test="page.orderBy != null and page.orderBy !=''">
+        ORDER BY ${page.orderBy} ${page.order}
+      </if>
+      <if test="page.start >= 0 and page.rows > 0">
+        limit #{page.start}, #{page.rows}
+      </if>
+    </if>
+  </sql>
+
+  <select id="findList" parameterType="com.js.entity.warehouse.WarehouseBlock" resultMap="BaseResultMap">
+    select * from js_warehouse_block
+  </select>
+
+  <select id="findById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from js_warehouse_block
+    where wb_id = #{wbId,jdbcType=INTEGER}
+  </select>
+
+  <select id="findPageList" parameterType="map" resultMap="BaseResultMap">
+    SELECT * FROM js_warehouse_block
+    <where>
+      <include refid="where_sql"/>
+    </where>
+    <include refid="order_by_sql"/>
+  </select>
+
+  <select id="findPageListCount" parameterType="com.js.entity.warehouse.WarehouseBlock" resultType="int">
+    SELECT count(*) FROM js_warehouse_block
+    <where>
+      <include refid="where_sql"/>
+    </where>
+  </select>
+
+  <delete id="delete" parameterType="java.lang.Integer">
+    delete from js_warehouse_block
+    where wb_id = #{wbId,jdbcType=INTEGER}
+  </delete>
+
+  <delete id="deleteByIds" parameterType="java.lang.Integer">
+    delete from js_warehouse_block
+    where wb_id in <foreach collection="array" item="ids" open="(" separator="," close=")">#{ids}</foreach>
+  </delete>
+
+  <insert id="insert" parameterType="com.js.entity.warehouse.WarehouseBlock">
+    insert into js_warehouse_block (wb_name, wb_code,
+      wb_area, wb_row, wb_col, 
+      wb_parent_id, wb_floor, wh_id, 
+      wb_desc)
+    values (#{wbName,jdbcType=VARCHAR}, #{wbCode,jdbcType=VARCHAR},
+      #{wbArea,jdbcType=INTEGER}, #{wbRow,jdbcType=INTEGER}, #{wbCol,jdbcType=INTEGER}, 
+      #{wbParentId,jdbcType=INTEGER}, #{wbFloor,jdbcType=VARCHAR}, #{whId,jdbcType=DECIMAL}, 
+      #{wbDesc,jdbcType=VARCHAR})
+  </insert>
+
+  <update id="update" parameterType="com.js.entity.warehouse.WarehouseBlock">
+    update js_warehouse_block
+    <set>
+      <if test="wbName != null">
+        wb_name = #{wbName,jdbcType=VARCHAR},
+      </if>
+      <if test="wbCode != null">
+        wb_code = #{wbCode,jdbcType=VARCHAR},
+      </if>
+      <if test="wbArea != null">
+        wb_area = #{wbArea,jdbcType=INTEGER},
+      </if>
+      <if test="wbRow != null">
+        wb_row = #{wbRow,jdbcType=INTEGER},
+      </if>
+      <if test="wbCol != null">
+        wb_col = #{wbCol,jdbcType=INTEGER},
+      </if>
+      <if test="wbParentId != null">
+        wb_parent_id = #{wbParentId,jdbcType=INTEGER},
+      </if>
+      <if test="wbFloor != null">
+        wb_floor = #{wbFloor,jdbcType=VARCHAR},
+      </if>
+      <if test="whId != null">
+        wh_id = #{whId,jdbcType=DECIMAL},
+      </if>
+      <if test="wbDesc != null">
+        wb_desc = #{wbDesc,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where wb_id = #{wbId,jdbcType=INTEGER}
+  </update>
+
+</mapper>

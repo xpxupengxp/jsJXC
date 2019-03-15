@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.js.dao.warehouse.BillDisposalMapper">
+  <resultMap id="BaseResultMap" type="com.js.entity.warehouse.BillDisposal">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="bill_name" jdbcType="VARCHAR" property="billName" />
+    <result column="bill_no" jdbcType="VARCHAR" property="billNo" />
+    <result column="bill_type" jdbcType="VARCHAR" property="billType" />
+    <result column="total_price" jdbcType="DECIMAL" property="totalPrice" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="action_time" jdbcType="TIMESTAMP" property="actionTime" />
+    <result column="c_id" jdbcType="INTEGER" property="cId" />
+    <result column="cu_name" jdbcType="VARCHAR" property="cuName" />
+    <result column="cu_mobile" jdbcType="VARCHAR" property="cuMobile" />
+    <result column="trans_address" jdbcType="VARCHAR" property="transAddress" />
+    <result column="bill_desc" jdbcType="VARCHAR" property="billDesc" />
+    <result column="audit_process_id" jdbcType="INTEGER" property="auditProcessId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, bill_name, bill_no, bill_type, total_price, user_id, action_time, c_id, cu_name, 
+    cu_mobile, trans_address, bill_desc, audit_process_id
+  </sql>
+
+  <sql id="where_sql">
+    <if test="param.billName != null and param.billName != ''">and d.bill_name = #{param.billName}</if>
+    <if test="param.billNo != null and param.billNo != ''">and d.bill_no = #{param.billNo}</if>
+    <if test="param.billType != null and param.billType != ''">and d.bill_type = #{param.billType}</if>
+    <if test="param.totalPrice != null">and d.total_price = #{param.totalPrice}</if>
+    <if test="param.userId != null">and d.user_id = #{param.userId}</if>
+    <if test="param.actionTime != null and param.actionTime != ''">and d.action_time = #{param.actionTime}</if>
+    <if test="param.cId != null">and d.c_id = #{param.cId}</if>
+    <if test="param.cuName != null and param.cuName != ''">and d.cu_name = #{param.cuName}</if>
+    <if test="param.cuMobile != null and param.cuMobile != ''">and d.cu_mobile = #{param.cuMobile}</if>
+    <if test="param.transAddress != null and param.transAddress != ''">and d.trans_address = #{param.transAddress}</if>
+    <if test="param.billDesc != null and param.billDesc != ''">and d.bill_desc = #{param.billDesc}</if>
+    <if test="param.auditProcessId != null">and d.audit_process_id = #{param.auditProcessId}</if>
+
+  </sql>
+
+  <sql id="order_by_sql">
+    <if test="page != null">
+      <if test="page.orderBy != null and page.orderBy !=''">
+        ORDER BY ${page.orderBy} ${page.order}
+      </if>
+      <if test="page.start >= 0 and page.rows > 0">
+        limit #{page.start}, #{page.rows}
+      </if>
+    </if>
+  </sql>
+
+  <select id="findList" parameterType="com.js.entity.warehouse.BillDisposal" resultMap="BaseResultMap">
+    select * from js_bill_disposal
+  </select>
+
+  <select id="findById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from js_bill_disposal
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <select id="findPageList" parameterType="map" resultType="com.js.entity.warehouse.BillDisposalDetail">
+    SELECT * FROM js_bill_disposal d
+    LEFT join js_bill_disposal_detail dd on d.id=dd.sb_id
+    <where>
+      <include refid="where_sql"/>
+    </where>
+    <include refid="order_by_sql"/>
+  </select>
+
+  <select id="findPageListCount" parameterType="com.js.entity.warehouse.BillDisposal" resultType="int">
+    SELECT count(*) FROM js_bill_disposal d
+    <where>
+      <include refid="where_sql"/>
+    </where>
+  </select>
+
+  <delete id="delete" parameterType="java.lang.Integer">
+    delete from js_bill_disposal
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+
+  <delete id="deleteByIds" parameterType="java.lang.Integer">
+    delete from js_bill_disposal
+    where id in <foreach collection="array" item="ids" open="(" separator="," close=")">#{ids}</foreach>
+  </delete>
+
+  <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.js.entity.warehouse.BillDisposalDetail">
+    insert into js_bill_disposal (bill_name, bill_no,
+      bill_type, total_price, user_id, 
+      action_time, c_id, cu_name, 
+      cu_mobile, trans_address, bill_desc, 
+      audit_process_id)
+    values (#{billName,jdbcType=VARCHAR}, #{billNo,jdbcType=VARCHAR},
+      #{billType,jdbcType=VARCHAR}, #{totalPrice,jdbcType=DECIMAL}, #{userId,jdbcType=INTEGER}, 
+      #{actionTime,jdbcType=TIMESTAMP}, #{cId,jdbcType=INTEGER}, #{cuName,jdbcType=VARCHAR}, 
+      #{cuMobile,jdbcType=VARCHAR}, #{transAddress,jdbcType=VARCHAR}, #{billDesc,jdbcType=VARCHAR}, 
+      #{auditProcessId,jdbcType=INTEGER})
+  </insert>
+
+  <update id="update" parameterType="com.js.entity.warehouse.BillDisposal">
+    update js_bill_disposal
+    <set>
+      <if test="billName != null">
+        bill_name = #{billName,jdbcType=VARCHAR},
+      </if>
+      <if test="billNo != null">
+        bill_no = #{billNo,jdbcType=VARCHAR},
+      </if>
+      <if test="billType != null">
+        bill_type = #{billType,jdbcType=VARCHAR},
+      </if>
+      <if test="totalPrice != null">
+        total_price = #{totalPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="actionTime != null">
+        action_time = #{actionTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cId != null">
+        c_id = #{cId,jdbcType=INTEGER},
+      </if>
+      <if test="cuName != null">
+        cu_name = #{cuName,jdbcType=VARCHAR},
+      </if>
+      <if test="cuMobile != null">
+        cu_mobile = #{cuMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="transAddress != null">
+        trans_address = #{transAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="billDesc != null">
+        bill_desc = #{billDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="auditProcessId != null">
+        audit_process_id = #{auditProcessId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+</mapper>

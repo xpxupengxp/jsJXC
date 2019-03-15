@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.js.dao.warehouse.WherehouseMaterialsMapper">
+  <resultMap id="BaseResultMap" type="com.js.entity.warehouse.WherehouseMaterials">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="w_id" jdbcType="INTEGER" property="wId" />
+    <result column="m_real_id" jdbcType="BIGINT" property="mRealId" />
+    <result column="store_keeper" jdbcType="INTEGER" property="storeKeeper" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, w_id, m_real_id, store_keeper
+  </sql>
+
+  <sql id="where_sql">
+    <if test="param.wId != null">and w_id = #{param.wId}</if>
+    <if test="param.mRealId != null">and m_real_id = #{param.mRealId}</if>
+    <if test="param.storeKeeper != null">and store_keeper = #{param.storeKeeper}</if>
+
+  </sql>
+
+  <sql id="order_by_sql">
+    <if test="page != null">
+      <if test="page.orderBy != null and page.orderBy !=''">
+        ORDER BY ${page.orderBy} ${page.order}
+      </if>
+      <if test="page.start &gt;= 0 and page.rows &gt; 0">
+        limit #{page.start}, #{page.rows}
+      </if>
+    </if>
+  </sql>
+
+  <select id="findList" parameterType="com.js.entity.warehouse.WherehouseMaterials" resultMap="BaseResultMap">
+    select * from js_wherehouse_materials
+  </select>
+
+  <select id="findById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from js_wherehouse_materials
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <select id="findPageList" parameterType="map" resultMap="BaseResultMap">
+    SELECT * FROM js_wherehouse_materials
+    <where>
+      <include refid="where_sql" />
+    </where>
+    <include refid="order_by_sql" />
+  </select>
+
+  <select id="findPageListCount" parameterType="com.js.entity.warehouse.WherehouseMaterials" resultType="int">
+    SELECT count(*) FROM js_wherehouse_materials
+    <where>
+      <include refid="where_sql" />
+    </where>
+  </select>
+
+  <delete id="delete" parameterType="java.lang.Long">
+    delete from js_wherehouse_materials
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="deleteByIds" parameterType="java.lang.Integer">
+    delete from js_wherehouse_materials
+    where id in <foreach close=")" collection="array" item="ids" open="(" separator=",">#{ids}</foreach>
+  </delete>
+
+  <insert id="insert" parameterType="com.js.entity.warehouse.WherehouseMaterials">
+    insert into js_wherehouse_materials (w_id, m_real_id,
+      store_keeper)
+    values (#{wId,jdbcType=INTEGER}, #{mRealId,jdbcType=BIGINT},
+      #{storeKeeper,jdbcType=INTEGER})
+  </insert>
+
+  <update id="update" parameterType="com.js.entity.warehouse.WherehouseMaterials">
+    update js_wherehouse_materials
+    <set>
+      <if test="wId != null">
+        w_id = #{wId,jdbcType=INTEGER},
+      </if>
+      <if test="mRealId != null">
+        m_real_id = #{mRealId,jdbcType=BIGINT},
+      </if>
+      <if test="storeKeeper != null">
+        store_keeper = #{storeKeeper,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+</mapper>

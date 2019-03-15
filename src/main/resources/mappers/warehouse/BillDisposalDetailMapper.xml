@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.js.dao.warehouse.BillDisposalDetailMapper">
+  <resultMap id="BaseResultMap" type="com.js.entity.warehouse.BillDisposalDetail">
+    <id column="detail_id" jdbcType="INTEGER" property="detailId" />
+    <result column="m_id" jdbcType="BIGINT" property="mId" />
+    <result column="sb_pcode" jdbcType="VARCHAR" property="sbPcode" />
+    <result column="m_num" jdbcType="DECIMAL" property="mNum" />
+    <result column="m_price" jdbcType="DECIMAL" property="mPrice" />
+    <result column="m_units" jdbcType="VARCHAR" property="mUnits" />
+    <result column="m_subtotal" jdbcType="DECIMAL" property="mSubtotal" />
+    <result column="sb_detail_desc" jdbcType="VARCHAR" property="sbDetailDesc" />
+    <result column="m_in_type" jdbcType="INTEGER" property="mInType" />
+    <result column="check_state" jdbcType="INTEGER" property="checkState" />
+    <result column="check_level" jdbcType="INTEGER" property="checkLevel" />
+    <result column="check_time" jdbcType="TIMESTAMP" property="checkTime" />
+    <result column="check_u_id" jdbcType="DECIMAL" property="checkUId" />
+    <result column="wh_id" jdbcType="DECIMAL" property="whId" />
+    <result column="whb_id" jdbcType="DECIMAL" property="whbId" />
+    <result column="sb_id" jdbcType="BIGINT" property="sbId" />
+    <result column="audit_process_id" jdbcType="INTEGER" property="auditProcessId" />
+    <result column="is_effective" jdbcType="VARCHAR" property="isEffective" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    detail_id, m_id, sb_pcode, m_num, m_price, m_units, m_subtotal, sb_detail_desc, m_in_type, 
+    check_state, check_level, check_time, check_u_id, wh_id, whb_id, sb_id, audit_process_id, 
+    is_effective
+  </sql>
+
+  <sql id="where_sql">
+    <if test="param.mId != null">and m_id = #{param.mId}</if>
+    <if test="param.sbPcode != null and param.sbPcode != ''">and sb_pcode = #{param.sbPcode}</if>
+    <if test="param.mNum != null">and m_num = #{param.mNum}</if>
+    <if test="param.mPrice != null">and m_price = #{param.mPrice}</if>
+    <if test="param.mUnits != null and param.mUnits != ''">and m_units = #{param.mUnits}</if>
+    <if test="param.mSubtotal != null">and m_subtotal = #{param.mSubtotal}</if>
+    <if test="param.sbDetailDesc != null and param.sbDetailDesc != ''">and sb_detail_desc = #{param.sbDetailDesc}</if>
+    <if test="param.mInType != null">and m_in_type = #{param.mInType}</if>
+    <if test="param.checkState != null">and check_state = #{param.checkState}</if>
+    <if test="param.checkLevel != null">and check_level = #{param.checkLevel}</if>
+    <if test="param.checkTime != null and param.checkTime != ''">and check_time = #{param.checkTime}</if>
+    <if test="param.checkUId != null'">and check_u_id = #{param.checkUId}</if>
+    <if test="param.whId != null">and wh_id = #{param.whId}</if>
+    <if test="param.whbId != null">and whb_id = #{param.whbId}</if>
+    <if test="param.sbId != null">and sb_id = #{param.sbId}</if>
+    <if test="param.auditProcessId != null">and audit_process_id = #{param.auditProcessId}</if>
+    <if test="param.isEffective != null and param.isEffective != ''">and is_effective = #{param.isEffective}</if>
+
+  </sql>
+
+  <sql id="order_by_sql">
+    <if test="page != null">
+      <if test="page.orderBy != null and page.orderBy !=''">
+        ORDER BY ${page.orderBy} ${page.order}
+      </if>
+      <if test="page.start >= 0 and page.rows > 0">
+        limit #{page.start}, #{page.rows}
+      </if>
+    </if>
+  </sql>
+
+  <select id="findList" parameterType="com.js.entity.warehouse.BillDisposalDetail" resultMap="BaseResultMap">
+    select * from js_bill_disposal_detail
+  </select>
+
+  <select id="findById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from js_bill_disposal_detail
+    where detail_id = #{detailId,jdbcType=INTEGER}
+  </select>
+
+  <select id="findPageList" parameterType="map" resultMap="BaseResultMap">
+    SELECT * FROM js_bill_disposal_detail
+    <where>
+      <include refid="where_sql"/>
+    </where>
+    <include refid="order_by_sql"/>
+  </select>
+
+  <select id="findPageListCount" parameterType="com.js.entity.warehouse.BillDisposalDetail" resultType="int">
+    SELECT count(*) FROM js_bill_disposal_detail
+    <where>
+      <include refid="where_sql"/>
+    </where>
+  </select>
+
+
+  <select id="findBySbIds" resultMap="BaseResultMap">
+    select * from js_bill_disposal_detail where sb_id in
+    <foreach collection="sbIds" item="sbId" open="(" close=")" separator=",">
+      #{sbId}
+    </foreach>
+  </select>
+
+
+  <delete id="delete" parameterType="java.lang.Integer">
+    delete from js_bill_disposal_detail
+    where detail_id = #{detailId,jdbcType=INTEGER}
+  </delete>
+
+  <delete id="deleteByIds" parameterType="java.lang.Integer">
+    delete from js_bill_disposal_detail
+    where detail_id in <foreach collection="array" item="ids" open="(" separator="," close=")">#{ids}</foreach>
+  </delete>
+
+
+  <delete id="deleteBySbId" parameterType="java.lang.Integer">
+    delete from js_bill_disposal_detail
+    where sb_id = #{sbId,jdbcType=INTEGER}
+  </delete>
+
+  <delete id="deleteBySbIds" parameterType="java.lang.Integer">
+    delete from js_bill_disposal_detail
+    where sb_id in <foreach collection="array" item="ids" open="(" separator="," close=")">#{ids}</foreach>
+  </delete>
+
+  <insert id="insert" parameterType="com.js.entity.warehouse.BillDisposalDetail">
+    insert into
+    js_bill_disposal_detail (m_id, sb_pcode, m_num, m_price, m_units,  m_subtotal, sb_detail_desc, m_in_type,
+      check_state, check_level, check_time, check_u_id, wh_id, whb_id,  sb_id, audit_process_id, is_effective)
+    values (#{mId,jdbcType=BIGINT}, #{sbPcode,jdbcType=VARCHAR},
+      #{mNum,jdbcType=DECIMAL}, #{mPrice,jdbcType=DECIMAL}, #{mUnits,jdbcType=VARCHAR}, 
+      #{mSubtotal,jdbcType=DECIMAL}, #{sbDetailDesc,jdbcType=VARCHAR}, #{mInType,jdbcType=INTEGER}, 
+      #{checkState,jdbcType=INTEGER}, #{checkLevel,jdbcType=INTEGER}, #{checkTime,jdbcType=TIMESTAMP}, 
+      #{checkUId,jdbcType=DECIMAL}, #{whId,jdbcType=DECIMAL}, #{whbId,jdbcType=DECIMAL}, 
+      #{sbId,jdbcType=BIGINT}, #{auditProcessId,jdbcType=INTEGER}, #{isEffective,jdbcType=VARCHAR})
+  </insert>
+
+  <update id="update" parameterType="com.js.entity.warehouse.BillDisposalDetail">
+    update js_bill_disposal_detail
+    <set>
+      <if test="mId != null">
+        m_id = #{mId,jdbcType=BIGINT},
+      </if>
+      <if test="sbPcode != null">
+        sb_pcode = #{sbPcode,jdbcType=VARCHAR},
+      </if>
+      <if test="mNum != null">
+        m_num = #{mNum,jdbcType=DECIMAL},
+      </if>
+      <if test="mPrice != null">
+        m_price = #{mPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="mUnits != null">
+        m_units = #{mUnits,jdbcType=VARCHAR},
+      </if>
+      <if test="mSubtotal != null">
+        m_subtotal = #{mSubtotal,jdbcType=DECIMAL},
+      </if>
+      <if test="sbDetailDesc != null">
+        sb_detail_desc = #{sbDetailDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="mInType != null">
+        m_in_type = #{mInType,jdbcType=INTEGER},
+      </if>
+      <if test="checkState != null">
+        check_state = #{checkState,jdbcType=INTEGER},
+      </if>
+      <if test="checkLevel != null">
+        check_level = #{checkLevel,jdbcType=INTEGER},
+      </if>
+      <if test="checkTime != null">
+        check_time = #{checkTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="checkUId != null">
+        check_u_id = #{checkUId,jdbcType=DECIMAL},
+      </if>
+      <if test="whId != null">
+        wh_id = #{whId,jdbcType=DECIMAL},
+      </if>
+      <if test="whbId != null">
+        whb_id = #{whbId,jdbcType=DECIMAL},
+      </if>
+      <if test="sbId != null">
+        sb_id = #{sbId,jdbcType=BIGINT},
+      </if>
+      <if test="auditProcessId != null">
+        audit_process_id = #{auditProcessId,jdbcType=INTEGER},
+      </if>
+      <if test="isEffective != null">
+        is_effective = #{isEffective,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where detail_id = #{detailId,jdbcType=INTEGER}
+  </update>
+
+
+  <update id="updateBySbId" parameterType="com.js.entity.warehouse.BillDisposalDetail">
+    update js_bill_disposal_detail
+    <set>
+      <if test="mId != null">m_id = #{mId,jdbcType=BIGINT},</if>
+      <if test="sbPcode != null">sb_pcode = #{sbPcode,jdbcType=VARCHAR},</if>
+      <if test="mNum != null">m_num = #{mNum,jdbcType=DECIMAL},</if>
+      <if test="mPrice != null">m_price = #{mPrice,jdbcType=DECIMAL},</if>
+      <if test="mUnits != null">m_units = #{mUnits,jdbcType=VARCHAR},</if>
+      <if test="mSubtotal != null">m_subtotal = #{mSubtotal,jdbcType=DECIMAL},</if>
+      <if test="sbDetailDesc != null">sb_detail_desc = #{sbDetailDesc,jdbcType=VARCHAR},</if>
+      <if test="mInType != null">m_in_type = #{mInType,jdbcType=INTEGER},</if>
+      <if test="checkState != null">check_state = #{checkState,jdbcType=INTEGER},</if>
+      <if test="checkLevel != null">check_level = #{checkLevel,jdbcType=INTEGER},</if>
+      <if test="checkTime != null">check_time = #{checkTime,jdbcType=TIMESTAMP},</if>
+      <if test="checkUId != null">check_u_id = #{checkUId,jdbcType=DECIMAL},</if>
+      <if test="whId != null">wh_id = #{whId,jdbcType=DECIMAL},</if>
+      <if test="whbId != null">whb_id = #{whbId,jdbcType=DECIMAL},</if>
+      <if test="auditProcessId != null">audit_process_id = #{auditProcessId,jdbcType=INTEGER},</if>
+      <if test="isEffective != null">is_effective = #{isEffective,jdbcType=VARCHAR},</if>
+    </set>
+    where sb_id = #{sbId,jdbcType=BIGINT}
+  </update>
+
+</mapper>

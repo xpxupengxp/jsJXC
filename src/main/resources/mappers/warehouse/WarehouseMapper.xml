@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.js.dao.warehouse.WarehouseMapper">
+  <resultMap id="BaseResultMap" type="com.js.entity.warehouse.Warehouse">
+    <id column="wh_id" jdbcType="INTEGER" property="whId" />
+    <result column="wh_name" jdbcType="VARCHAR" property="whName" />
+    <result column="wh_address" jdbcType="VARCHAR" property="whAddress" />
+    <result column="wh_capacity" jdbcType="DECIMAL" property="whCapacity" />
+    <result column="wh_code" jdbcType="VARCHAR" property="whCode" />
+    <result column="wh_desc" jdbcType="VARCHAR" property="whDesc" />
+    <result column="wh_site" jdbcType="VARCHAR" property="whSite" />
+    <result column="wh_type_id" jdbcType="INTEGER" property="whTypeId" />
+    <result column="wh_warn_val" jdbcType="DECIMAL" property="whWarnVal" />
+    <result column="org_name" jdbcType="VARCHAR" property="orgName" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    wh_id, wh_name, wh_address, wh_capacity, wh_code, wh_desc, wh_site, wh_type_id, wh_warn_val, 
+    org_name
+  </sql>
+
+  <sql id="where_sql">
+    <if test="param.whName != null and param.whName != ''">and wh_name = #{param.whName}</if>
+    <if test="param.whAddress != null and param.whAddress != ''">and wh_address = #{param.whAddress}</if>
+    <if test="param.whCapacity != null">and wh_capacity = #{param.whCapacity}</if>
+    <if test="param.whCode != null and param.whCode != ''">and wh_code = #{param.whCode}</if>
+    <if test="param.whDesc != null and param.whDesc != ''">and wh_desc = #{param.whDesc}</if>
+    <if test="param.whSite != null and param.whSite != ''">and wh_site = #{param.whSite}</if>
+    <if test="param.whTypeId != null">and wh_type_id = #{param.whTypeId}</if>
+    <if test="param.whWarnVal != null">and wh_warn_val = #{param.whWarnVal}</if>
+    <if test="param.orgName != null and param.orgName != ''">and org_name = #{param.orgName}</if>
+
+  </sql>
+
+  <sql id="order_by_sql">
+    <if test="page != null">
+      <if test="page.orderBy != null and page.orderBy !=''">
+        ORDER BY ${page.orderBy} ${page.order}
+      </if>
+      <if test="page.start >= 0 and page.rows > 0">
+        limit #{page.start}, #{page.rows}
+      </if>
+    </if>
+  </sql>
+
+  <select id="findList" parameterType="com.js.entity.warehouse.Warehouse" resultMap="BaseResultMap">
+    select * from js_warehouse
+  </select>
+
+  <select id="findById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from js_warehouse
+    where wh_id = #{whId,jdbcType=INTEGER}
+  </select>
+
+  <select id="findPageList" parameterType="map" resultMap="BaseResultMap">
+    SELECT * FROM js_warehouse
+    <where>
+      <include refid="where_sql"/>
+    </where>
+    <include refid="order_by_sql"/>
+  </select>
+
+  <select id="findPageListCount" parameterType="com.js.entity.warehouse.Warehouse" resultType="int">
+    SELECT count(*) FROM js_warehouse
+    <where>
+      <include refid="where_sql"/>
+    </where>
+  </select>
+
+  <delete id="delete" parameterType="java.lang.Integer">
+    delete from js_warehouse
+    where wh_id = #{whId,jdbcType=INTEGER}
+  </delete>
+
+  <delete id="deleteByIds" parameterType="java.lang.Integer">
+    delete from js_warehouse
+    where wh_id in <foreach collection="array" item="ids" open="(" separator="," close=")">#{ids}</foreach>
+  </delete>
+
+  <insert id="insert" parameterType="com.js.entity.warehouse.Warehouse">
+    insert into js_warehouse (wh_name, wh_address,
+      wh_capacity, wh_code, wh_desc, 
+      wh_site, wh_type_id, wh_warn_val, 
+      org_name)
+    values (#{whName,jdbcType=VARCHAR}, #{whAddress,jdbcType=VARCHAR},
+      #{whCapacity,jdbcType=DECIMAL}, #{whCode,jdbcType=VARCHAR}, #{whDesc,jdbcType=VARCHAR}, 
+      #{whSite,jdbcType=VARCHAR}, #{whTypeId,jdbcType=INTEGER}, #{whWarnVal,jdbcType=DECIMAL}, 
+      #{orgName,jdbcType=VARCHAR})
+  </insert>
+
+  <update id="update" parameterType="com.js.entity.warehouse.Warehouse">
+    update js_warehouse
+    <set>
+      <if test="whName != null">
+        wh_name = #{whName,jdbcType=VARCHAR},
+      </if>
+      <if test="whAddress != null">
+        wh_address = #{whAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="whCapacity != null">
+        wh_capacity = #{whCapacity,jdbcType=DECIMAL},
+      </if>
+      <if test="whCode != null">
+        wh_code = #{whCode,jdbcType=VARCHAR},
+      </if>
+      <if test="whDesc != null">
+        wh_desc = #{whDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="whSite != null">
+        wh_site = #{whSite,jdbcType=VARCHAR},
+      </if>
+      <if test="whTypeId != null">
+        wh_type_id = #{whTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="whWarnVal != null">
+        wh_warn_val = #{whWarnVal,jdbcType=DECIMAL},
+      </if>
+      <if test="orgName != null">
+        org_name = #{orgName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where wh_id = #{whId,jdbcType=INTEGER}
+  </update>
+
+</mapper>

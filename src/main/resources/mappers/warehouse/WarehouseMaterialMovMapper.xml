@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.js.dao.warehouse.WarehouseMaterialMovMapper">
+  <resultMap id="BaseResultMap" type="com.js.entity.warehouse.WarehouseMaterialMov">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="m_id" jdbcType="BIGINT" property="mId" />
+    <result column="bef_wh_id" jdbcType="INTEGER" property="befWhId" />
+    <result column="aft_wh_id" jdbcType="INTEGER" property="aftWhId" />
+    <result column="pre_wh_block_id" jdbcType="INTEGER" property="preWhBlockId" />
+    <result column="aft_block_id" jdbcType="INTEGER" property="aftBlockId" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="mov_date" jdbcType="TIMESTAMP" property="movDate" />
+    <result column="mov_reason" jdbcType="VARCHAR" property="movReason" />
+    <result column="mov_type" jdbcType="VARCHAR" property="movType" />
+    <result column="mov_target" jdbcType="VARCHAR" property="movTarget" />
+    <result column="audit_process_id" jdbcType="INTEGER" property="auditProcessId" />
+    <result column="in_store_id" jdbcType="BIGINT" property="inStoreId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, m_id, bef_wh_id, aft_wh_id, pre_wh_block_id, aft_block_id, user_id, mov_date, 
+    mov_reason, mov_type, mov_target, audit_process_id, in_store_id
+  </sql>
+
+  <sql id="where_sql">
+    <if test="param.mId != null">and m_id = #{param.mId}</if>
+    <if test="param.befWhId != null">and bef_wh_id = #{param.befWhId}</if>
+    <if test="param.aftWhId != null">and aft_wh_id = #{param.aftWhId}</if>
+    <if test="param.preWhBlockId != null">and pre_wh_block_id = #{param.preWhBlockId}</if>
+    <if test="param.aftBlockId != null">and aft_block_id = #{param.aftBlockId}</if>
+    <if test="param.userId != null">and user_id = #{param.userId}</if>
+    <if test="param.movDate != null and param.movDate != ''">and mov_date = #{param.movDate}</if>
+    <if test="param.movReason != null and param.movReason != ''">and mov_reason = #{param.movReason}</if>
+    <if test="param.movType != null and param.movType != ''">and mov_type = #{param.movType}</if>
+    <if test="param.movTarget != null and param.movTarget != ''">and mov_target = #{param.movTarget}</if>
+    <if test="param.auditProcessId != null">and audit_process_id = #{param.auditProcessId}</if>
+    <if test="param.inStoreId != null'">and in_store_id = #{param.inStoreId}</if>
+
+  </sql>
+
+  <sql id="order_by_sql">
+    <if test="page != null">
+      <if test="page.orderBy != null and page.orderBy !=''">
+        ORDER BY ${page.orderBy} ${page.order}
+      </if>
+      <if test="page.start >= 0 and page.rows > 0">
+        limit #{page.start}, #{page.rows}
+      </if>
+    </if>
+  </sql>
+
+  <select id="findList" parameterType="com.js.entity.warehouse.WarehouseMaterialMov" resultMap="BaseResultMap">
+    select * from js_warehouse_material_mov
+  </select>
+
+  <select id="findById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from js_warehouse_material_mov
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <select id="findPageList" parameterType="map" resultMap="BaseResultMap">
+    SELECT * FROM js_warehouse_material_mov
+    <where>
+      <include refid="where_sql"/>
+    </where>
+    <include refid="order_by_sql"/>
+  </select>
+
+  <select id="findPageListCount" parameterType="com.js.entity.warehouse.WarehouseMaterialMov" resultType="int">
+    SELECT count(*) FROM js_warehouse_material_mov
+    <where>
+      <include refid="where_sql"/>
+    </where>
+  </select>
+
+  <delete id="delete" parameterType="java.lang.Long">
+    delete from js_warehouse_material_mov
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="deleteByIds" parameterType="java.lang.Integer">
+    delete from js_warehouse_material_mov
+    where id in <foreach collection="array" item="ids" open="(" separator="," close=")">#{ids}</foreach>
+  </delete>
+
+  <insert id="insert" parameterType="com.js.entity.warehouse.WarehouseMaterialMov">
+    insert into js_warehouse_material_mov (m_id, bef_wh_id,
+      aft_wh_id, pre_wh_block_id, aft_block_id, 
+      user_id, mov_date, mov_reason, 
+      mov_type, mov_target, audit_process_id, 
+      in_store_id)
+    values (#{mId,jdbcType=BIGINT}, #{befWhId,jdbcType=INTEGER},
+      #{aftWhId,jdbcType=INTEGER}, #{preWhBlockId,jdbcType=INTEGER}, #{aftBlockId,jdbcType=INTEGER}, 
+      #{userId,jdbcType=BIGINT}, #{movDate,jdbcType=TIMESTAMP}, #{movReason,jdbcType=VARCHAR}, 
+      #{movType,jdbcType=VARCHAR}, #{movTarget,jdbcType=VARCHAR}, #{auditProcessId,jdbcType=INTEGER}, 
+      #{inStoreId,jdbcType=BIGINT})
+  </insert>
+
+  <update id="update" parameterType="com.js.entity.warehouse.WarehouseMaterialMov">
+    update js_warehouse_material_mov
+    <set>
+      <if test="mId != null">
+        m_id = #{mId,jdbcType=BIGINT},
+      </if>
+      <if test="befWhId != null">
+        bef_wh_id = #{befWhId,jdbcType=INTEGER},
+      </if>
+      <if test="aftWhId != null">
+        aft_wh_id = #{aftWhId,jdbcType=INTEGER},
+      </if>
+      <if test="preWhBlockId != null">
+        pre_wh_block_id = #{preWhBlockId,jdbcType=INTEGER},
+      </if>
+      <if test="aftBlockId != null">
+        aft_block_id = #{aftBlockId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="movDate != null">
+        mov_date = #{movDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="movReason != null">
+        mov_reason = #{movReason,jdbcType=VARCHAR},
+      </if>
+      <if test="movType != null">
+        mov_type = #{movType,jdbcType=VARCHAR},
+      </if>
+      <if test="movTarget != null">
+        mov_target = #{movTarget,jdbcType=VARCHAR},
+      </if>
+      <if test="auditProcessId != null">
+        audit_process_id = #{auditProcessId,jdbcType=INTEGER},
+      </if>
+      <if test="inStoreId != null">
+        in_store_id = #{inStoreId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+</mapper>

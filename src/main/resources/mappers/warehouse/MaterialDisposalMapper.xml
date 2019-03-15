@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.js.dao.warehouse.MaterialDisposalMapper">
+  <resultMap id="BaseResultMap" type="com.js.entity.warehouse.MaterialDisposal">
+    <id column="m_real_id" jdbcType="BIGINT" property="mRealId" />
+    <result column="m_disposal_type" jdbcType="VARCHAR" property="mDisposalType" />
+    <result column="m_num" jdbcType="DECIMAL" property="mNum" />
+    <result column="m_staff" jdbcType="VARCHAR" property="mStaff" />
+    <result column="m_disposal_date" jdbcType="TIMESTAMP" property="mDisposalDate" />
+    <result column="check_process_id" jdbcType="BIGINT" property="checkProcessId" />
+    <result column="m_disposal_result" jdbcType="VARCHAR" property="mDisposalResult" />
+    <result column="special_code" jdbcType="VARCHAR" property="specialCode" />
+    <result column="is_filished" jdbcType="VARCHAR" property="isFilished" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    m_real_id, m_disposal_type, m_num, m_staff, m_disposal_date, check_process_id, m_disposal_result,
+    special_code, is_filished
+  </sql>
+
+  <sql id="where_sql">
+    <if test="param.mDisposalType != null and param.mDisposalType != ''">and m_disposal_type = #{param.mDisposalType}</if>
+    <if test="param.mNum != null">and m_num = #{param.mNum}</if>
+    <if test="param.mStaff != null and param.mStaff != ''">and m_staff = #{param.mStaff}</if>
+    <if test="param.mDisposalDate != null and param.mDisposalDate != ''">and m_disposal_date = #{param.mDisposalDate}</if>
+    <if test="param.checkProcessId != null">and check_process_id = #{param.checkProcessId}</if>
+    <if test="param.mDisposalResult != null and param.mDisposalResult != ''">and m_disposal_result = #{param.mDisposalResult}</if>
+    <if test="param.specialCode != null and param.specialCode != ''">and special_code = #{param.specialCode}</if>
+    <if test="param.isFilished != null and param.isFilished != ''">and is_filished = #{param.isFilished}</if>
+
+  </sql>
+
+  <sql id="order_by_sql">
+    <if test="page != null">
+      <if test="page.orderBy != null and page.orderBy !=''">
+        ORDER BY ${page.orderBy} ${page.order}
+      </if>
+      <if test="page.start &gt;= 0 and page.rows &gt; 0">
+        limit #{page.start}, #{page.rows}
+      </if>
+    </if>
+  </sql>
+
+  <select id="findList" parameterType="com.js.entity.warehouse.MaterialDisposal" resultMap="BaseResultMap">
+    select * from m_material_disposal
+  </select>
+
+  <select id="findById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from m_material_disposal
+    where m_real_id = #{mRealId,jdbcType=BIGINT}
+  </select>
+
+  <select id="findPageList" parameterType="map" resultMap="BaseResultMap">
+    SELECT * FROM m_material_disposal
+    <where>
+      <include refid="where_sql" />
+    </where>
+    <include refid="order_by_sql" />
+  </select>
+
+  <select id="findPageListCount" parameterType="com.js.entity.warehouse.MaterialDisposal" resultType="int">
+    SELECT count(*) FROM m_material_disposal
+    <where>
+      <include refid="where_sql" />
+    </where>
+  </select>
+
+  <delete id="delete" parameterType="java.lang.Long">
+    delete from m_material_disposal
+    where m_real_id = #{mRealId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="deleteByIds" parameterType="java.lang.Integer">
+    delete from m_material_disposal
+    where m_real_id in <foreach close=")" collection="array" item="ids" open="(" separator=",">#{ids}</foreach>
+  </delete>
+
+  <insert id="insert" parameterType="com.js.entity.warehouse.MaterialDisposal">
+    insert into m_material_disposal (m_disposal_type, m_num,
+      m_staff, m_disposal_date, check_process_id, 
+      m_disposal_result, special_code, is_filished
+      )
+    values (#{mDisposalType,jdbcType=VARCHAR}, #{mNum,jdbcType=DECIMAL},
+      #{mStaff,jdbcType=VARCHAR}, #{mDisposalDate,jdbcType=TIMESTAMP}, #{checkProcessId,jdbcType=BIGINT}, 
+      #{mDisposalResult,jdbcType=VARCHAR}, #{specialCode,jdbcType=VARCHAR}, #{isFilished,jdbcType=VARCHAR}
+      )
+  </insert>
+
+  <update id="update" parameterType="com.js.entity.warehouse.MaterialDisposal">
+    update m_material_disposal
+    <set>
+      <if test="mDisposalType != null">
+        m_disposal_type = #{mDisposalType,jdbcType=VARCHAR},
+      </if>
+      <if test="mNum != null">
+        m_num = #{mNum,jdbcType=DECIMAL},
+      </if>
+      <if test="mStaff != null">
+        m_staff = #{mStaff,jdbcType=VARCHAR},
+      </if>
+      <if test="mDisposalDate != null">
+        m_disposal_date = #{mDisposalDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="checkProcessId != null">
+        check_process_id = #{checkProcessId,jdbcType=BIGINT},
+      </if>
+      <if test="mDisposalResult != null">
+        m_disposal_result = #{mDisposalResult,jdbcType=VARCHAR},
+      </if>
+      <if test="specialCode != null">
+        special_code = #{specialCode,jdbcType=VARCHAR},
+      </if>
+      <if test="isFilished != null">
+        is_filished = #{isFilished,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where m_real_id = #{mRealId,jdbcType=BIGINT}
+  </update>
+
+</mapper>
