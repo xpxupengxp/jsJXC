@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.js.dao.material.MaterialVolumePriceMapper">
+  <resultMap id="BaseResultMap" type="com.js.entity.material.MaterialVolumePrice">
+    <result column="m_real_id" jdbcType="BIGINT" property="mRealId" />
+    <result column="m_unit_price" jdbcType="DECIMAL" property="mUnitPrice" />
+    <result column="m_number" jdbcType="DECIMAL" property="mNumber" />
+    <result column="m_whole_quantity" jdbcType="INTEGER" property="mWholeQuantity" />
+    <result column="m_remainder" jdbcType="INTEGER" property="mRemainder" />
+    <result column="m_value" jdbcType="DECIMAL" property="mValue" />
+    <result column="m_currency" jdbcType="VARCHAR" property="mCurrency" />
+    <result column="m_unit" jdbcType="VARCHAR" property="mUnit" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    m_real_id, m_unit_price, m_number, m_whole_quantity, m_remainder, m_value, m_currency,
+    m_unit
+  </sql>
+
+  <!--查-->
+  <select id="findById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from m_material_volume_price
+    where m_real_id = #{mRealId,jdbcType=BIGINT}
+  </select>
+
+  <!--删-->
+  <delete id="deleteByMRealId" parameterType="java.lang.Long">
+    delete from m_material_volume_price
+    where m_real_id = #{mRealId,jdbcType=BIGINT}
+  </delete>
+
+  <!--增-->
+  <insert id="insert" parameterType="com.js.entity.material.MaterialVolumePrice">
+    insert into m_material_volume_price (m_real_id, m_unit_price, m_number,
+      m_whole_quantity, m_remainder, m_value, 
+      m_currency, m_unit)
+    values (#{mRealId,jdbcType=BIGINT}, #{mUnitPrice,jdbcType=DECIMAL}, #{mNumber,jdbcType=DECIMAL}, 
+      #{mWholeQuantity,jdbcType=INTEGER}, #{mRemainder,jdbcType=INTEGER}, #{mValue,jdbcType=DECIMAL}, 
+      #{mCurrency,jdbcType=VARCHAR}, #{mUnit,jdbcType=VARCHAR})
+  </insert>
+
+  <!--改-->
+  <update id="update" parameterType="com.js.entity.material.MaterialVolumePrice">
+    update m_material_volume_price
+    set m_unit_price = #{mUnitPrice,jdbcType=DECIMAL},
+    <if test="mNumber != null">
+      m_number = #{mNumber,jdbcType=DECIMAL},
+    </if>
+      m_whole_quantity = #{mWholeQuantity,jdbcType=INTEGER},
+      m_remainder = #{mRemainder,jdbcType=INTEGER},
+      m_value = #{mValue,jdbcType=DECIMAL},
+      m_currency = #{mCurrency,jdbcType=VARCHAR},
+      m_unit = #{mUnit,jdbcType=VARCHAR}
+    where m_real_id = #{mRealId,jdbcType=BIGINT}
+  </update>
+</mapper>

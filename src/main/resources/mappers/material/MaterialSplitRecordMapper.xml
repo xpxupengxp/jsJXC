@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.js.dao.material.MaterialSplitRecordMapper">
+  <resultMap id="BaseResultMap" type="com.js.entity.material.MaterialSplitRecord">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="m_real_id" jdbcType="BIGINT" property="mRealId" />
+    <result column="split_num" jdbcType="INTEGER" property="splitNum" />
+    <result column="split_reason" jdbcType="VARCHAR" property="splitReason" />
+    <result column="split_date" jdbcType="TIMESTAMP" property="splitDate" />
+    <result column="operator" jdbcType="VARCHAR" property="operator" />
+    <result column="m_split_ids" jdbcType="VARCHAR" property="mSplitIds" />
+    <result column="split_nums" jdbcType="VARCHAR" property="splitNums" />
+    <result column="memo" jdbcType="VARCHAR" property="memo" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, m_real_id, split_num, split_reason, split_date, operator, m_split_ids, split_nums, 
+    memo
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from js_material_split_record
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from js_material_split_record
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.js.entity.material.MaterialSplitRecord">
+    insert into js_material_split_record (id, m_real_id, split_num, 
+      split_reason, split_date, operator, 
+      m_split_ids, split_nums, memo
+      )
+    values (#{id,jdbcType=BIGINT}, #{mRealId,jdbcType=BIGINT}, #{splitNum,jdbcType=INTEGER}, 
+      #{splitReason,jdbcType=VARCHAR}, #{splitDate,jdbcType=TIMESTAMP}, #{operator,jdbcType=VARCHAR}, 
+      #{mSplitIds,jdbcType=VARCHAR}, #{splitNums,jdbcType=VARCHAR}, #{memo,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.js.entity.material.MaterialSplitRecord">
+    insert into js_material_split_record
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="mRealId != null">
+        m_real_id,
+      </if>
+      <if test="splitNum != null">
+        split_num,
+      </if>
+      <if test="splitReason != null">
+        split_reason,
+      </if>
+      <if test="splitDate != null">
+        split_date,
+      </if>
+      <if test="operator != null">
+        operator,
+      </if>
+      <if test="mSplitIds != null">
+        m_split_ids,
+      </if>
+      <if test="splitNums != null">
+        split_nums,
+      </if>
+      <if test="memo != null">
+        memo,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="mRealId != null">
+        #{mRealId,jdbcType=BIGINT},
+      </if>
+      <if test="splitNum != null">
+        #{splitNum,jdbcType=INTEGER},
+      </if>
+      <if test="splitReason != null">
+        #{splitReason,jdbcType=VARCHAR},
+      </if>
+      <if test="splitDate != null">
+        #{splitDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operator != null">
+        #{operator,jdbcType=VARCHAR},
+      </if>
+      <if test="mSplitIds != null">
+        #{mSplitIds,jdbcType=VARCHAR},
+      </if>
+      <if test="splitNums != null">
+        #{splitNums,jdbcType=VARCHAR},
+      </if>
+      <if test="memo != null">
+        #{memo,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.js.entity.material.MaterialSplitRecord">
+    update js_material_split_record
+    <set>
+      <if test="mRealId != null">
+        m_real_id = #{mRealId,jdbcType=BIGINT},
+      </if>
+      <if test="splitNum != null">
+        split_num = #{splitNum,jdbcType=INTEGER},
+      </if>
+      <if test="splitReason != null">
+        split_reason = #{splitReason,jdbcType=VARCHAR},
+      </if>
+      <if test="splitDate != null">
+        split_date = #{splitDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operator != null">
+        operator = #{operator,jdbcType=VARCHAR},
+      </if>
+      <if test="mSplitIds != null">
+        m_split_ids = #{mSplitIds,jdbcType=VARCHAR},
+      </if>
+      <if test="splitNums != null">
+        split_nums = #{splitNums,jdbcType=VARCHAR},
+      </if>
+      <if test="memo != null">
+        memo = #{memo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.js.entity.material.MaterialSplitRecord">
+    update js_material_split_record
+    set m_real_id = #{mRealId,jdbcType=BIGINT},
+      split_num = #{splitNum,jdbcType=INTEGER},
+      split_reason = #{splitReason,jdbcType=VARCHAR},
+      split_date = #{splitDate,jdbcType=TIMESTAMP},
+      operator = #{operator,jdbcType=VARCHAR},
+      m_split_ids = #{mSplitIds,jdbcType=VARCHAR},
+      split_nums = #{splitNums,jdbcType=VARCHAR},
+      memo = #{memo,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

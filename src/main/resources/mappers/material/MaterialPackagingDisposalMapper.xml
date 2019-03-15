@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.js.dao.material.MaterialPackagingDisposalMapper">
+  <resultMap id="BaseResultMap" type="com.js.entity.material.MaterialPackagingDisposal">
+    <result column="m_real_id" jdbcType="BIGINT" property="mRealId" />
+    <result column="is_repackaging" jdbcType="TINYINT" property="isRepackaging" />
+    <result column="packer" jdbcType="VARCHAR" property="packer" />
+    <result column="time_limit" jdbcType="TIMESTAMP" property="timeLimit" />
+    <result column="disposal_result" jdbcType="VARCHAR" property="disposalResult" />
+    <result column="memo" jdbcType="VARCHAR" property="memo" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    m_real_id, is_repackaging, packer, time_limit, disposal_result, memo
+  </sql>
+
+  <!--查-->
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from m_material_packaging_disposal
+    where m_real_id = #{mRealId,jdbcType=BIGINT}
+  </select>
+
+  <!--删-->
+  <delete id="deleteByMRealId" parameterType="java.lang.Long">
+    delete from m_material_packaging_disposal
+    where m_real_id = #{mRealId,jdbcType=BIGINT}
+  </delete>
+
+  <!--增-->
+  <insert id="insert" parameterType="com.js.entity.material.MaterialPackagingDisposal">
+    insert into m_material_packaging_disposal (m_real_id, is_repackaging, packer,
+      time_limit, disposal_result, memo
+      )
+    values (#{mRealId,jdbcType=BIGINT}, #{isRepackaging,jdbcType=TINYINT}, #{packer,jdbcType=VARCHAR}, 
+      #{timeLimit,jdbcType=TIMESTAMP}, #{disposalResult,jdbcType=VARCHAR}, #{memo,jdbcType=VARCHAR}
+      )
+  </insert>
+
+  <!--改-->
+  <update id="update" parameterType="com.js.entity.material.MaterialPackagingDisposal">
+    update m_material_packaging_disposal
+    set is_repackaging = #{isRepackaging,jdbcType=TINYINT},
+      packer = #{packer,jdbcType=VARCHAR},
+      time_limit = #{timeLimit,jdbcType=TIMESTAMP},
+      disposal_result = #{disposalResult,jdbcType=VARCHAR},
+      memo = #{memo,jdbcType=VARCHAR}
+    where m_real_id = #{mRealId,jdbcType=BIGINT}
+  </update>
+</mapper>

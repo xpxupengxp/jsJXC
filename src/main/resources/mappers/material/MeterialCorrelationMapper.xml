@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.js.dao.material.MeterialCorrelationMapper">
+  <resultMap id="BaseResultMap" type="com.js.entity.material.MeterialCorrelation">
+    <result column="m_real_id" jdbcType="BIGINT" property="mRealId" />
+    <result column="order_id" jdbcType="BIGINT" property="orderId" />
+    <result column="purchase_order_id" jdbcType="BIGINT" property="purchaseOrderId" />
+    <result column="outsourcing_orders" jdbcType="BIGINT" property="outsourcingOrders" />
+    <result column="productive_task_order" jdbcType="BIGINT" property="productiveTaskOrder" />
+    <result column="purchase_inbound_order_id" jdbcType="BIGINT" property="purchaseInboundOrderId" />
+    <result column="outsourcing_inbound_order_id" jdbcType="BIGINT" property="outsourcingInboundOrderId" />
+    <result column="product_inbound_order_id" jdbcType="BIGINT" property="productInboundOrderId" />
+    <result column="material_outbound_order_id" jdbcType="BIGINT" property="materialOutboundOrderId" />
+    <result column="outsourcing_outbound_order_id" jdbcType="BIGINT" property="outsourcingOutboundOrderId" />
+    <result column="order_outbound_id" jdbcType="BIGINT" property="orderOutboundId" />
+    <result column="distribution_sheet" jdbcType="BIGINT" property="distributionSheet" />
+    <result column="supplier_outbound_order_id" jdbcType="BIGINT" property="supplierOutboundOrderId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    m_real_id, order_id, purchase_order_id, outsourcing_orders, productive_task_order, 
+    purchase_inbound_order_id, outsourcing_inbound_order_id, product_inbound_order_id, 
+    material_outbound_order_id, outsourcing_outbound_order_id, order_outbound_id, distribution_sheet, 
+    supplier_outbound_order_id
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from js_meterial_correlation
+    where m_real_id = #{mRealId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from js_meterial_correlation
+    where m_real_id = #{mRealId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.js.entity.material.MeterialCorrelation">
+    insert into js_meterial_correlation (m_real_id, order_id, purchase_order_id, 
+      outsourcing_orders, productive_task_order, purchase_inbound_order_id, 
+      outsourcing_inbound_order_id, product_inbound_order_id, 
+      material_outbound_order_id, outsourcing_outbound_order_id, 
+      order_outbound_id, distribution_sheet, supplier_outbound_order_id
+      )
+    values (#{mRealId,jdbcType=BIGINT}, #{orderId,jdbcType=BIGINT}, #{purchaseOrderId,jdbcType=BIGINT}, 
+      #{outsourcingOrders,jdbcType=BIGINT}, #{productiveTaskOrder,jdbcType=BIGINT}, #{purchaseInboundOrderId,jdbcType=BIGINT}, 
+      #{outsourcingInboundOrderId,jdbcType=BIGINT}, #{productInboundOrderId,jdbcType=BIGINT}, 
+      #{materialOutboundOrderId,jdbcType=BIGINT}, #{outsourcingOutboundOrderId,jdbcType=BIGINT}, 
+      #{orderOutboundId,jdbcType=BIGINT}, #{distributionSheet,jdbcType=BIGINT}, #{supplierOutboundOrderId,jdbcType=BIGINT}
+      )
+  </insert>
+
+  <update id="updateByPrimaryKey" parameterType="com.js.entity.material.MeterialCorrelation">
+    update js_meterial_correlation
+    set order_id = #{orderId,jdbcType=BIGINT},
+      purchase_order_id = #{purchaseOrderId,jdbcType=BIGINT},
+      outsourcing_orders = #{outsourcingOrders,jdbcType=BIGINT},
+      productive_task_order = #{productiveTaskOrder,jdbcType=BIGINT},
+      purchase_inbound_order_id = #{purchaseInboundOrderId,jdbcType=BIGINT},
+      outsourcing_inbound_order_id = #{outsourcingInboundOrderId,jdbcType=BIGINT},
+      product_inbound_order_id = #{productInboundOrderId,jdbcType=BIGINT},
+      material_outbound_order_id = #{materialOutboundOrderId,jdbcType=BIGINT},
+      outsourcing_outbound_order_id = #{outsourcingOutboundOrderId,jdbcType=BIGINT},
+      order_outbound_id = #{orderOutboundId,jdbcType=BIGINT},
+      distribution_sheet = #{distributionSheet,jdbcType=BIGINT},
+      supplier_outbound_order_id = #{supplierOutboundOrderId,jdbcType=BIGINT}
+    where m_real_id = #{mRealId,jdbcType=BIGINT}
+  </update>
+</mapper>
