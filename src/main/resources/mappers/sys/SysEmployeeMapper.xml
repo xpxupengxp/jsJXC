@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.js.dao.sys.SysEmployeeMapper">
+  <resultMap id="BaseResultMap" type="com.js.entity.sys.SysEmployee">
+    <id column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="user_code" jdbcType="VARCHAR" property="userCode" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+    <result column="user_mobile" jdbcType="VARCHAR" property="userMobile" />
+    <result column="user_telephone" jdbcType="VARCHAR" property="userTelephone" />
+    <result column="user_address" jdbcType="VARCHAR" property="userAddress" />
+    <result column="user_qq" jdbcType="VARCHAR" property="userQq" />
+    <result column="user_email" jdbcType="VARCHAR" property="userEmail" />
+    <result column="user_sex" jdbcType="VARCHAR" property="userSex" />
+    <result column="birthday" jdbcType="VARCHAR" property="birthday" />
+    <result column="id_card" jdbcType="VARCHAR" property="idCard" />
+    <result column="education" jdbcType="VARCHAR" property="education" />
+    <result column="user_base_remark" jdbcType="VARCHAR" property="userBaseRemark" />
+    <result column="user_ethnicity" jdbcType="VARCHAR" property="userEthnicity" />
+    <result column="user_hukou" jdbcType="VARCHAR" property="userHukou" />
+    <result column="user_hunyin" jdbcType="VARCHAR" property="userHunyin" />
+    <result column="user_Induction" jdbcType="TIMESTAMP" property="userInduction" />
+    <result column="user_join_insurance" jdbcType="VARCHAR" property="userJoinInsurance" />
+    <result column="user_shebao" jdbcType="VARCHAR" property="userShebao" />
+    <result column="user_labor_contract_end" jdbcType="VARCHAR" property="userLaborContractEnd" />
+    <result column="user_labor_contract_start" jdbcType="VARCHAR" property="userLaborContractStart" />
+    <result column="user_labor_relations" jdbcType="VARCHAR" property="userLaborRelations" />
+    <result column="user_linkman_phone" jdbcType="VARCHAR" property="userLinkmanPhone" />
+    <result column="user_other_insurance" jdbcType="VARCHAR" property="userOtherInsurance" />
+    <result column="user_other_linkman" jdbcType="VARCHAR" property="userOtherLinkman" />
+    <result column="user_place_now" jdbcType="VARCHAR" property="userPlaceNow" />
+    <result column="user_Photo" jdbcType="VARCHAR" property="userPhoto" />
+    <result column="user_zzmm" jdbcType="VARCHAR" property="userZzmm" />
+    <result column="is_master" jdbcType="TINYINT" property="isMaster" />
+    <result column="object_id" jdbcType="VARCHAR" property="objectId" />
+    <result column="org_id" jdbcType="INTEGER" property="orgId" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    user_id, user_code, user_name, user_mobile, user_telephone, user_address, user_qq, 
+    user_email, user_sex, birthday, id_card, education, user_base_remark, user_ethnicity, 
+    user_hukou, user_hunyin, user_Induction, user_join_insurance, user_shebao, user_labor_contract_end, 
+    user_labor_contract_start, user_labor_relations, user_linkman_phone, user_other_insurance, 
+    user_other_linkman, user_place_now, user_Photo, user_zzmm, is_master, object_id, 
+    org_id,status
+  </sql>
+
+  <sql id="where_sql">
+    <if test="param.userId != null">and user_id = #{param.userId}</if>
+    <if test="param.userCode != null and param.userCode != ''">and user_code = #{param.userCode}</if>
+    <if test="param.userName != null and param.userName != ''">and (user_name LIKE concat('%',#{param.userName},'%')</if>
+    <if test="param.userMobile != null and param.userMobile != ''">and (user_mobile LIKE concat('%',#{param.userMobile},'%')</if>
+    <if test="param.userTelephone != null and param.userTelephone != ''">and user_telephone = #{param.userTelephone}</if>
+    <if test="param.userAddress != null and param.userAddress != ''">and user_address = #{param.userAddress}</if>
+    <if test="param.userQq != null and param.userQq != ''">and user_qq = #{param.userQq}</if>
+    <if test="param.userEmail != null and param.userEmail != ''">and user_email = #{param.userEmail}</if>
+    <if test="param.userSex != null and param.userSex != ''">and user_sex = #{param.userSex}</if>
+    <if test="param.birthday != null and param.birthday != ''">and birthday = #{param.birthday}</if>
+    <if test="param.idCard != null and param.idCard != ''">and id_card = #{param.idCard}</if>
+    <if test="param.education != null and param.education != ''">and education = #{param.education}</if>
+    <if test="param.userBaseRemark != null and param.userBaseRemark != ''">and user_base_remark = #{param.userBaseRemark}</if>
+    <if test="param.userEthnicity != null and param.userEthnicity != ''">and user_ethnicity = #{param.userEthnicity}</if>
+    <if test="param.userHukou != null and param.userHukou != ''">and user_hukou = #{param.userHukou}</if>
+    <if test="param.userHunyin != null and param.userHunyin != ''">and user_hunyin = #{param.userHunyin}</if>
+    <if test="param.userInduction != null and param.userInduction != ''">and user_Induction = #{param.userInduction}</if>
+    <if test="param.userJoinInsurance != null and param.userJoinInsurance != ''">and user_join_insurance = #{param.userJoinInsurance}</if>
+    <if test="param.userShebao != null and param.userShebao != ''">and user_shebao = #{param.userShebao}</if>
+    <if test="param.userLaborContractEnd != null and param.userLaborContractEnd != ''">and user_labor_contract_end = #{param.userLaborContractEnd}</if>
+    <if test="param.userLaborContractStart != null and param.userLaborContractStart != ''">and user_labor_contract_start = #{param.userLaborContractStart}</if>
+    <if test="param.userLaborRelations != null and param.userLaborRelations != ''">and user_labor_relations = #{param.userLaborRelations}</if>
+    <if test="param.userLinkmanPhone != null and param.userLinkmanPhone != ''">and user_linkman_phone = #{param.userLinkmanPhone}</if>
+    <if test="param.userOtherInsurance != null and param.userOtherInsurance != ''">and user_other_insurance = #{param.userOtherInsurance}</if>
+    <if test="param.userOtherLinkman != null and param.userOtherLinkman != ''">and user_other_linkman = #{param.userOtherLinkman}</if>
+    <if test="param.userPlaceNow != null and param.userPlaceNow != ''">and user_place_now = #{param.userPlaceNow}</if>
+    <if test="param.userPhoto != null and param.userPhoto != ''">and user_Photo = #{param.userPhoto}</if>
+    <if test="param.userZzmm != null and param.userZzmm != ''">and user_zzmm = #{param.userZzmm}</if>
+    <if test="param.isMaster != null and param.isMaster != ''">and is_master = #{param.isMaster}</if>
+    <if test="param.objectId != null and param.objectId != ''">and object_id = #{param.objectId}</if>
+    <if test="param.orgId != null">and org_id = #{param.orgId}</if>
+    <if test="param.status != null">and status = #{param.status}</if>
+
+  </sql>
+
+  <sql id="order_by_sql">
+    <if test="page != null">
+      <if test="page.orderBy != null and page.orderBy !=''">
+        ORDER BY ${page.orderBy} ${page.order}
+      </if>
+      <if test="page.start >= 0 and page.rows > 0">
+        limit #{page.start}, #{page.rows}
+      </if>
+    </if>
+  </sql>
+
+
+  <select id="findList" parameterType="com.js.entity.sys.SysEmployee" resultMap="BaseResultMap">
+    select * from js_sys_employee
+  </select>
+
+  <select id="findById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from js_sys_employee
+    where user_id = #{userId,jdbcType=INTEGER}
+  </select>
+
+  <select id="findPageList" parameterType="map" resultMap="BaseResultMap">
+    SELECT *
+    FROM js_sys_employee
+    <where>
+      <include refid="where_sql"/>
+    </where>
+    <include refid="order_by_sql"/>
+  </select>
+
+  <select id="findPageListCount" parameterType="com.js.entity.sys.SysEmployee" resultType="int">
+    SELECT count(*)
+    FROM js_sys_employee
+    <where>
+      <include refid="where_sql"/>
+    </where>
+  </select>
+
+  <select id="findOrgByUserId" parameterType="java.lang.Integer" resultType="com.js.entity.sys.Org">
+    SELECT o.* FROM
+    js_sys_employee e left join js_sys_employee_org eo on e.user_id=eo.user_id
+    left join js_org o on eo.org_id=o.org_id
+    WHERE e.user_id=#{userId,jdbcType=INTEGER}
+  </select>
+
+  <select id="findUserByUserId" parameterType="java.lang.Integer" resultType="com.js.entity.sys.SysUsers">
+    select u.* from
+    js_sys_employee e left join js_sys_users u on e.user_id=u.user_id
+    WHERE e.user_id=#{userId,jdbcType=INTEGER}
+  </select>
+
+  <delete id="delete" parameterType="java.lang.Integer">
+    delete from js_sys_employee
+    where user_id = #{userId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.js.entity.sys.SysEmployee">
+    insert into js_sys_employee (user_code, user_name,
+      user_mobile, user_telephone, user_address, 
+      user_qq, user_email, user_sex, 
+      birthday, id_card, education, 
+      user_base_remark, user_ethnicity, user_hukou, 
+      user_hunyin, user_Induction, user_join_insurance, 
+      user_shebao, user_labor_contract_end, user_labor_contract_start, 
+      user_labor_relations, user_linkman_phone, user_other_insurance, 
+      user_other_linkman, user_place_now, user_Photo, 
+      user_zzmm, is_master, object_id, 
+      org_id,status)
+    values (#{userCode,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR},
+      #{userMobile,jdbcType=VARCHAR}, #{userTelephone,jdbcType=VARCHAR}, #{userAddress,jdbcType=VARCHAR}, 
+      #{userQq,jdbcType=VARCHAR}, #{userEmail,jdbcType=VARCHAR}, #{userSex,jdbcType=VARCHAR}, 
+      #{birthday,jdbcType=VARCHAR}, #{idCard,jdbcType=VARCHAR}, #{education,jdbcType=VARCHAR}, 
+      #{userBaseRemark,jdbcType=VARCHAR}, #{userEthnicity,jdbcType=VARCHAR}, #{userHukou,jdbcType=VARCHAR}, 
+      #{userHunyin,jdbcType=VARCHAR}, #{userInduction,jdbcType=TIMESTAMP}, #{userJoinInsurance,jdbcType=VARCHAR}, 
+      #{userShebao,jdbcType=VARCHAR}, #{userLaborContractEnd,jdbcType=VARCHAR}, #{userLaborContractStart,jdbcType=VARCHAR}, 
+      #{userLaborRelations,jdbcType=VARCHAR}, #{userLinkmanPhone,jdbcType=VARCHAR}, #{userOtherInsurance,jdbcType=VARCHAR}, 
+      #{userOtherLinkman,jdbcType=VARCHAR}, #{userPlaceNow,jdbcType=VARCHAR}, #{userPhoto,jdbcType=VARCHAR}, 
+      #{userZzmm,jdbcType=VARCHAR}, #{isMaster,jdbcType=TINYINT}, #{objectId,jdbcType=VARCHAR}, 
+      #{orgId,jdbcType=INTEGER},#{status,jdbcType=INTEGER})
+  </insert>
+
+  <update id="update" parameterType="com.js.entity.sys.SysEmployee">
+    update js_sys_employee
+    <set>
+      <if test="userCode != null and userCode != ''">
+        user_code = #{userCode,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null and userName != ''">
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="userMobile != null and userMobile != ''">
+        user_mobile = #{userMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="userTelephone != null and userTelephone != ''">
+        user_telephone = #{userTelephone,jdbcType=VARCHAR},
+      </if>
+      <if test="userAddress != null and userAddress != ''">
+        user_address = #{userAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="userQq != null and userQq != ''">
+        user_qq = #{userQq,jdbcType=VARCHAR},
+      </if>
+      <if test="userEmail != null and userEmail != ''">
+        user_email = #{userEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="userSex != null and userSex != ''">
+        user_sex = #{userSex,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null and birthday != ''">
+        birthday = #{birthday,jdbcType=VARCHAR},
+      </if>
+      <if test="idCard != null and idCard != ''">
+        id_card = #{idCard,jdbcType=VARCHAR},
+      </if>
+      <if test="education != null and education != ''">
+        education = #{education,jdbcType=VARCHAR},
+      </if>
+      <if test="userBaseRemark != null and userBaseRemark != ''">
+        user_base_remark = #{userBaseRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="userEthnicity != null and userEthnicity != ''">
+        user_ethnicity = #{userEthnicity,jdbcType=VARCHAR},
+      </if>
+      <if test="userHukou != null and userHukou != ''">
+        user_hukou = #{userHukou,jdbcType=VARCHAR},
+      </if>
+      <if test="userHunyin != null and userHunyin != ''">
+        user_hunyin = #{userHunyin,jdbcType=VARCHAR},
+      </if>
+      <if test="userInduction != null">
+        user_Induction = #{userInduction,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userJoinInsurance != null and userJoinInsurance != ''">
+        user_join_insurance = #{userJoinInsurance,jdbcType=VARCHAR},
+      </if>
+      <if test="userShebao != null and userShebao != ''">
+        user_shebao = #{userShebao,jdbcType=VARCHAR},
+      </if>
+      <if test="userLaborContractEnd != null and userLaborContractEnd != ''">
+        user_labor_contract_end = #{userLaborContractEnd,jdbcType=VARCHAR},
+      </if>
+      <if test="userLaborContractStart != null and userLaborContractStart != ''">
+        user_labor_contract_start = #{userLaborContractStart,jdbcType=VARCHAR},
+      </if>
+      <if test="userLaborRelations != null and userLaborRelations != ''">
+        user_labor_relations = #{userLaborRelations,jdbcType=VARCHAR},
+      </if>
+      <if test="userLinkmanPhone != null and userLinkmanPhone != ''">
+        user_linkman_phone = #{userLinkmanPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="userOtherInsurance != null and userOtherInsurance != ''">
+        user_other_insurance = #{userOtherInsurance,jdbcType=VARCHAR},
+      </if>
+      <if test="userOtherLinkman != null and userOtherLinkman != ''">
+        user_other_linkman = #{userOtherLinkman,jdbcType=VARCHAR},
+      </if>
+      <if test="userPlaceNow != null and userPlaceNow != ''">
+        user_place_now = #{userPlaceNow,jdbcType=VARCHAR},
+      </if>
+      <if test="userPhoto != null and userPhoto != ''">
+        user_Photo = #{userPhoto,jdbcType=VARCHAR},
+      </if>
+      <if test="userZzmm != null and userZzmm != ''">
+        user_zzmm = #{userZzmm,jdbcType=VARCHAR},
+      </if>
+      <if test="isMaster != null">
+        is_master = #{isMaster,jdbcType=TINYINT},
+      </if>
+      <if test="objectId != null and objectId != ''">
+        object_id = #{objectId,jdbcType=VARCHAR},
+      </if>
+      <if test="orgId != null">
+        org_id = #{orgId,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+    </set>
+    where user_id = #{userId,jdbcType=INTEGER}
+  </update>
+
+  <delete id="deleteByIds" parameterType="java.lang.Integer">
+    delete from js_sys_employee
+    where user_id in <foreach collection="array" item="ids" open="(" separator="," close=")">#{ids}</foreach>
+  </delete>
+</mapper>

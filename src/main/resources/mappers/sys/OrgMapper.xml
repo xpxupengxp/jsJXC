@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.js.dao.sys.OrgMapper">
+  <resultMap id="BaseResultMap" type="com.js.entity.sys.Org">
+    <id column="org_id" jdbcType="INTEGER" property="orgId" />
+    <result column="org_code" jdbcType="VARCHAR" property="orgCode" />
+    <result column="org_desc" jdbcType="VARCHAR" property="orgDesc" />
+    <result column="org_name" jdbcType="VARCHAR" property="orgName" />
+    <result column="org_parentid" jdbcType="INTEGER" property="orgParentid" />
+    <result column="org_sequence" jdbcType="INTEGER" property="orgSequence" />
+    <result column="org_type_id" jdbcType="INTEGER" property="orgTypeId" />
+    <result column="object_id" jdbcType="VARCHAR" property="objectId" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    org_id, org_code, org_desc, org_name, org_parentid, org_sequence, org_type_id, object_id,status
+  </sql>
+
+  <sql id="where_sql">
+    <if test="param.orgId != null">and org_id = #{param.orgId}</if>
+    <if test="param.orgCode != null and param.orgCode != ''">and org_code = #{param.orgCode}</if>
+    <if test="param.orgDesc != null and param.orgDesc != ''">and org_desc = #{param.orgDesc}</if>
+    <if test="param.orgName != null and param.orgName != ''">and org_name = #{param.orgName}</if>
+    <if test="param.orgParentid != null">and org_parentid = #{param.orgParentid}</if>
+    <if test="param.orgSequence != null">and org_sequence = #{param.orgSequence}</if>
+    <if test="param.orgTypeId != null">and org_type_id = #{param.orgTypeId}</if>
+    <if test="param.objectId != null and param.objectId != ''">and object_id = #{param.objectId}</if>
+    <if test="param.status != null">and status = #{param.status}</if>
+
+  </sql>
+
+  <sql id="order_by_sql">
+    <if test="page != null">
+      <if test="page.orderBy != null and page.orderBy !=''">
+        ORDER BY ${page.orderBy} ${page.order}
+      </if>
+      <if test="page.start >= 0 and page.rows > 0">
+        limit #{page.start}, #{page.rows}
+      </if>
+    </if>
+  </sql>
+
+  <select id="findList" parameterType="com.js.entity.sys.Org" resultMap="BaseResultMap">
+    select * from js_org
+  </select>
+
+  <select id="findById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from js_org
+    where org_id = #{orgId,jdbcType=INTEGER}
+  </select>
+
+  <select id="findPageList" parameterType="map" resultMap="BaseResultMap">
+    SELECT * FROM js_org
+    <where>
+      <include refid="where_sql"/>
+    </where>
+    <include refid="order_by_sql"/>
+  </select>
+
+  <select id="findPageListCount" parameterType="com.js.entity.sys.Org" resultType="int">
+    SELECT count(*) FROM js_org
+    <where>
+      <include refid="where_sql"/>
+    </where>
+  </select>
+
+  <select id="findUserByOrgId" parameterType="java.lang.Integer" resultType="com.js.entity.sys.SysEmployee">
+    SELECT e.* FROM
+    js_org o left join js_sys_employee_org eo on o.org_id=eo.org_id
+    left join js_sys_employee e on eo.user_id=e.user_id
+    WHERE o.org_id=#{orgId,jdbcType=INTEGER}
+  </select>
+
+  <delete id="delete" parameterType="java.lang.Integer">
+    delete from js_org
+    where org_id = #{orgId,jdbcType=INTEGER}
+  </delete>
+
+  <insert id="insert" parameterType="com.js.entity.sys.Org">
+    insert into js_org (org_code, org_desc,
+      org_name, org_parentid, org_sequence, 
+      org_type_id, object_id,status)
+    values (#{orgCode,jdbcType=VARCHAR}, #{orgDesc,jdbcType=VARCHAR},
+      #{orgName,jdbcType=VARCHAR}, #{orgParentid,jdbcType=INTEGER}, #{orgSequence,jdbcType=INTEGER}, 
+      #{orgTypeId,jdbcType=INTEGER}, #{objectId,jdbcType=VARCHAR},#{status,jdbcType=INTEGER})
+  </insert>
+
+  <update id="update" parameterType="com.js.entity.sys.Org">
+    update js_org
+    <set>
+      <if test="orgCode != null and orgCode != ''">
+        org_code = #{orgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="orgDesc != null and orgDesc != ''">
+        org_desc = #{orgDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="orgName != null and orgName != ''">
+        org_name = #{orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="orgParentid != null">
+        org_parentid = #{orgParentid,jdbcType=INTEGER},
+      </if>
+      <if test="orgSequence != null">
+        org_sequence = #{orgSequence,jdbcType=INTEGER},
+      </if>
+      <if test="orgTypeId != null">
+        org_type_id = #{orgTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="objectId != null and objectId != ''">
+        object_id = #{objectId,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+    </set>
+    where org_id = #{orgId,jdbcType=INTEGER}
+  </update>
+
+  <delete id="deleteByIds" parameterType="java.lang.Integer">
+    delete from js_org
+    where org_id in <foreach collection="array" item="ids" open="(" separator="," close=")">#{ids}</foreach>
+  </delete>
+</mapper>
