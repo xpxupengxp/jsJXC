@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.js.dao.material.MaterialFactoryInformationMapper">
+  <resultMap id="BaseResultMap" type="com.js.entity.material.MaterialFactoryInformation">
+    <result column="m_real_id" jdbcType="INTEGER" property="mRealId" />
+    <result column="manufacturer_name" jdbcType="VARCHAR" property="manufacturerName" />
+    <result column="manufacture_date" jdbcType="TIMESTAMP" property="manufactureDate" />
+    <result column="manufacture_batch" jdbcType="VARCHAR" property="manufactureBatch" />
+    <result column="expiration_date" jdbcType="VARCHAR" property="expirationDate" />
+    <result column="quality_grade" jdbcType="VARCHAR" property="qualityGrade" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    m_real_id, manufacturer_name, manufacture_date, manufacture_batch, expiration_date, 
+    quality_grade
+  </sql>
+
+  <!--查-->
+  <select id="findById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from js_material_factory_information
+    where m_real_id = #{mRealId,jdbcType=INTEGER}
+  </select>
+
+  <!--删-->
+  <delete id="deleteByMRealId" parameterType="java.lang.Long">
+    delete from js_material_factory_information
+    where m_real_id = #{mRealId,jdbcType=INTEGER}
+  </delete>
+
+  <!--增-->
+  <insert id="insert" parameterType="com.js.entity.material.MaterialFactoryInformation">
+    insert into js_material_factory_information (m_real_id, manufacturer_name, manufacture_date, 
+      manufacture_batch, expiration_date, quality_grade
+      )
+    values (#{mRealId,jdbcType=INTEGER}, #{manufacturerName,jdbcType=VARCHAR}, #{manufactureDate,jdbcType=TIMESTAMP}, 
+      #{manufactureBatch,jdbcType=VARCHAR}, #{expirationDate,jdbcType=VARCHAR}, #{qualityGrade,jdbcType=VARCHAR}
+      )
+  </insert>
+
+  <!--改-->
+  <update id="update" parameterType="com.js.entity.material.MaterialFactoryInformation">
+    update js_material_factory_information
+    set manufacturer_name = #{manufacturerName,jdbcType=VARCHAR},
+      manufacture_date = #{manufactureDate,jdbcType=TIMESTAMP},
+      manufacture_batch = #{manufactureBatch,jdbcType=VARCHAR},
+      expiration_date = #{expirationDate,jdbcType=VARCHAR},
+      quality_grade = #{qualityGrade,jdbcType=VARCHAR}
+    where m_real_id = #{mRealId,jdbcType=INTEGER}
+  </update>
+</mapper>

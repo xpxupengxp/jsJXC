@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.js.dao.material.MaterialListMapper">
+  <resultMap id="BaseResultMap" type="com.js.entity.material.MaterialList">
+    <id column="m_id" jdbcType="BIGINT" property="mId" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
+    <result column="m_type" jdbcType="VARCHAR" property="mType" />
+    <result column="m_specification" jdbcType="VARCHAR" property="mSpecification" />
+    <result column="category" jdbcType="VARCHAR" property="category" />
+    <result column="m_image" jdbcType="VARCHAR" property="mImage" />
+    <result column="m_sound" jdbcType="VARCHAR" property="mSound" />
+    <result column="purpose" jdbcType="VARCHAR" property="purpose" />
+    <result column="security_value" jdbcType="TINYINT" property="securityValue" />
+    <result column="m_video" jdbcType="VARCHAR" property="mVideo" />
+    <result column="shape" jdbcType="VARCHAR" property="shape" />
+    <result column="m_qrcode" jdbcType="VARCHAR" property="mQrcode" />
+    <result column="m_qrcode_addr" jdbcType="VARCHAR" property="mQrcodeAddr" />
+    <result column="memo" jdbcType="VARCHAR" property="memo" />
+    <result column="m_barcode" jdbcType="VARCHAR" property="mBarcode" />
+    <result column="m_barcode_addr" jdbcType="VARCHAR" property="mBarcodeAddr" />
+    <result column="is_alert" jdbcType="TINYINT" property="isAlert" />
+    <result column="default_warehouseID" jdbcType="INTEGER" property="defaultWarehouseid" />
+    <result column="m_total" jdbcType="DECIMAL" property="mTotal" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.js.entity.material.MaterialList">
+    <result column="m_visual_data" jdbcType="LONGVARCHAR" property="mVisualData" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    m_id, name, code, m_type, m_specification, category, m_image, m_sound, purpose, security_value, 
+    m_video, shape, m_qrcode,m_qrcode_addr, memo, m_barcode,m_barcode_addr, is_alert, default_warehouseID, m_total
+  </sql>
+  <sql id="Blob_Column_List">
+    m_visual_data
+  </sql>
+  <sql id="where_sql">
+    <if test="param.mId != null">and m_id = #{param.mId}</if>
+    <if test="param.name != null and param.name != ''">and  name= #{param.name}</if>
+    <if test="param.code != null and param.code != ''">and  code= #{param.code}</if>
+    <if test="param.mType != null and param.mType != ''">and  m_type= #{param.mType}</if>
+    <if test="param.mSpecification != null and param.mSpecification != ''">and  m_specification= #{param.mSpecification}</if>
+    <if test="param.category != null and param.category != ''">and  category= #{param.category}</if>
+    <if test="param.securityValue != null and param.securityValue != ''">and  security_value= #{param.securityValue}</if>
+    <if test="param.defaultWarehouseid != null and param.defaultWarehouseid != ''">and  default_warehouseID= #{param.defaultWarehouseid}</if>
+    <if test="param.shape != null and param.shape != ''">and  shape= #{param.shape}</if>
+    <if test="param.isAlert != null and param.isAlert != ''">and  is_alert= #{param.isAlert}</if>
+    <if test="param.mTotal != null and param.mTotal != ''">and  m_total= #{param.mTotal}</if>
+  </sql>
+  <sql id="order_by_sql">
+    <if test="page != null">
+      <if test="page.orderBy != null and page.orderBy !=''">
+        ORDER BY ${page.orderBy} ${page.order}
+      </if>
+      <if test="page.start >= 0 and page.rows > 0">
+        limit #{page.start}, #{page.rows}
+      </if>
+    </if>
+  </sql>
+
+  <!--查-->
+  <select id="findList" resultMap="BaseResultMap">
+    select * from js_material_list
+  </select>
+
+  <select id="findPageList" parameterType="map" resultMap="BaseResultMap">
+    SELECT * FROM js_material_list
+    <where>
+      <include refid="where_sql"/>
+    </where>
+    <include refid="order_by_sql"/>
+  </select>
+
+  <select id="findPageListCount" parameterType="com.js.entity.material.MaterialList" resultType="int">
+    SELECT count(*) FROM js_material_list
+    <where>
+      <include refid="where_sql"/>
+    </where>
+  </select>
+
+  <select id="findById" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from js_material_list
+    where m_id = #{mId,jdbcType=BIGINT}
+  </select>
+
+  <!--删-->
+  <delete id="deleteById" parameterType="java.lang.Long">
+    delete from js_material_list
+    where m_id = #{mId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="deleteList" parameterType="java.lang.Long">
+    delete from js_material_list
+    where m_id in <foreach collection="array" item="ids" open="(" separator="," close=")">#{ids}</foreach>
+  </delete>
+
+  <!--增-->
+  <insert id="insert" parameterType="com.js.entity.material.MaterialList">
+    insert into js_material_list (name, code,
+      m_type, m_specification, category,
+      m_image, m_sound, purpose,
+      security_value, m_video, shape,
+      m_qrcode,m_qrcode_addr, memo, m_barcode,
+      m_barcode_addr, is_alert, default_warehouseID,
+      m_total, m_visual_data)
+    values (#{name,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR},
+      #{mType,jdbcType=VARCHAR}, #{mSpecification,jdbcType=VARCHAR}, #{category,jdbcType=VARCHAR},
+      #{mImage,jdbcType=VARCHAR}, #{mSound,jdbcType=VARCHAR}, #{purpose,jdbcType=VARCHAR},
+      #{securityValue,jdbcType=TINYINT}, #{mVideo,jdbcType=VARCHAR}, #{shape,jdbcType=VARCHAR},
+      #{mQrcode,jdbcType=VARCHAR},#{mQrcodeAddr,jdbcType=VARCHAR}, #{memo,jdbcType=VARCHAR}, #{mBarcode,jdbcType=VARCHAR},
+      #{mBarcodeAddr,jdbcType=VARCHAR},#{isAlert,jdbcType=TINYINT}, #{defaultWarehouseid,jdbcType=INTEGER},
+      #{mTotal,jdbcType=DECIMAL}, #{mVisualData,jdbcType=LONGVARCHAR})
+  </insert>
+
+  <insert id="insertList" parameterType="java.util.List">
+    insert into js_material_list (name, code,
+        m_type, m_specification, category,
+        m_image, m_sound, purpose,
+        security_value, m_video, shape,
+        m_qrcode,m_qrcode_addr, memo, m_barcode,
+        m_barcode_addr, is_alert, default_warehouseID,
+        m_total, m_visual_data)
+      values
+      <foreach collection="list" item="item" separator=",">
+        (#{item.name},#{item.code},
+        #{item.mType},#{item.mSpecification},#{item.category},#{item.mImage},#{item.mSound},#{item.purpose},
+        #{item.securityValue},#{item.mVideo},#{item.shape},#{item.mQrcode},#{item.mQrcodeAddr},
+        #{item.memo},#{item.mBarcode},#{item.mBarcodeAddr},#{item.isAlert},#{item.defaultWarehouseid},
+        #{item.mTotal},#{item.mVisualData})
+      </foreach>
+  </insert>
+
+  <!--改-->
+  <update id="update" parameterType="com.js.entity.material.MaterialList">
+    update js_material_list
+    set name = #{name,jdbcType=VARCHAR},
+      code = #{code,jdbcType=VARCHAR},
+      m_type = #{mType,jdbcType=VARCHAR},
+      m_specification = #{mSpecification,jdbcType=VARCHAR},
+      category = #{category,jdbcType=VARCHAR},
+      m_image = #{mImage,jdbcType=VARCHAR},
+      m_sound = #{mSound,jdbcType=VARCHAR},
+      purpose = #{purpose,jdbcType=VARCHAR},
+      security_value = #{securityValue,jdbcType=TINYINT},
+      m_video = #{mVideo,jdbcType=VARCHAR},
+      shape = #{shape,jdbcType=VARCHAR},
+      m_qrcode = #{mQrcode,jdbcType=VARCHAR},
+      m_qrcode_addr = #{mQrcodeAddr,jdbcType=VARCHAR},
+      memo = #{memo,jdbcType=VARCHAR},
+      m_barcode = #{mBarcode,jdbcType=VARCHAR},
+      m_barcode_addr = #{mBarcodeAddr,jdbcType=VARCHAR},
+      is_alert = #{isAlert,jdbcType=TINYINT},
+      default_warehouseID = #{defaultWarehouseid,jdbcType=INTEGER},
+      m_visual_data = #{mVisualData,jdbcType=LONGVARCHAR}
+    where m_id = #{mId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateList" parameterType="java.util.List">
+    <foreach collection="list" item="item" separator=";">
+      update js_material_list
+      set name= #{item.name},
+      code = #{item.code},
+      m_type = #{item.mType},
+      m_specification = #{item.mSpecification},
+      category = #{item.category},
+      m_image = #{item.mImage},
+      m_sound = #{item.mSound},
+      purpose = #{item.purpose},
+      security_value = #{item.securityValue},
+      m_video = #{item.mVideo},
+      shape = #{item.shape},
+      m_qrcode = #{item.mQrcode},
+      m_qrcode_addr = #{item.mQrcodeAddr},
+      memo = #{item.memo},
+      m_barcode = #{item.mBarcode},
+      m_barcode_addr = #{item.mBarcodeAddr},
+      is_alert = #{item.isAlert},
+      default_warehouseID = #{item.defaultWarehouseid},
+      m_visual_data = #{item.mVisualData}
+      where m_id = #{item.mId}
+    </foreach>
+  </update>
+  
+  <update id="mTotalStatistics" parameterType="map">
+    update js_material_list
+    set m_total = #{mTotal}
+    where m_id = #{mId}
+  </update>
+</mapper>

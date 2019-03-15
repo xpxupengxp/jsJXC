@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-@Controller
+@RestController
 @RequestMapping("/user")
 public class SysUsersController {
 
@@ -166,15 +166,4 @@ public class SysUsersController {
         return ApiResponse.ok().setData(sysUsersService.setPerms(sysUserPermission));
     }
 
-
-    @RequestMapping("/list")
-    public String list() {
-        return "userList";
-    }
-
-    @RequestMapping(value = "/test",method = RequestMethod.POST)
-    public String test(SysUsers sysUsers) {
-        sysUsersService.insert(sysUsers);
-        return "";
-    }
 }

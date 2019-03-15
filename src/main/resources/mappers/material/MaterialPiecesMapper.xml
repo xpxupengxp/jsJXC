@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.js.dao.material.MaterialPiecesMapper">
+  <resultMap id="BaseResultMap" type="com.js.entity.material.MaterialPieces">
+    <id column="m_real_id" jdbcType="BIGINT" property="mRealId" />
+    <result column="m_id" jdbcType="BIGINT" property="mId" />
+    <result column="m_batch" jdbcType="VARCHAR" property="mBatch" />
+    <result column="m_category_id" jdbcType="BIGINT" property="mCategoryId" />
+    <result column="m_source" jdbcType="VARCHAR" property="mSource" />
+    <result column="m_package" jdbcType="VARCHAR" property="mPackage" />
+    <result column="m_store_id" jdbcType="INTEGER" property="mStoreId" />
+    <result column="m_store_area_id" jdbcType="INTEGER" property="mStoreAreaId" />
+    <result column="m_in_store_time" jdbcType="TIMESTAMP" property="mInStoreTime" />
+    <result column="m_in_store_staff" jdbcType="VARCHAR" property="mInStoreStaff" />
+    <result column="memo" jdbcType="VARCHAR" property="memo" />
+    <result column="is_splited" jdbcType="TINYINT" property="isSplited" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    m_real_id, m_id, m_batch, m_category_id, m_source, m_package, m_store_id, m_store_area_id, 
+    m_in_store_time, m_in_store_staff, memo, is_splited
+  </sql>
+  <sql id="where_sql">
+    <if test="param.mRealId != null">and m_real_id = #{param.mRealId}</if>
+    <if test="param.mId != null and param.mId != ''">and  m_id= #{param.mId}</if>
+    <if test="param.mBatch != null and param.mBatch != ''">and  m_batch= #{param.mBatch}</if>
+    <if test="param.mCategoryId != null and param.mCategoryId != ''">and  m_category_id= #{param.mCategoryId}</if>
+    <if test="param.mSource != null and param.mSource != ''">and  m_source= #{param.mSource}</if>
+    <if test="param.mPackage != null and param.mPackage != ''">and  m_package= #{param.mPackage}</if>
+    <if test="param.mStoreId != null and param.mStoreId != ''">and  m_store_id= #{param.mStoreId}</if>
+    <if test="param.mStoreAreaId != null and param.mStoreAreaId != ''">and  m_store_area_id= #{param.mStoreAreaId}</if>
+    <if test="param.mInStoreStaff != null and param.mInStoreStaff != ''">and  m_in_store_staff= #{param.mInStoreStaff}</if>
+    <if test="param.isSplited != null and param.isSplited != ''">and  is_splited= #{param.isSplited}</if>
+  </sql>
+  <sql id="order_by_sql">
+    <if test="page != null">
+      <if test="page.orderBy != null and page.orderBy !=''">
+        ORDER BY ${page.orderBy} ${page.order}
+      </if>
+      <if test="page.start >= 0 and page.rows > 0">
+        limit #{page.start}, #{page.rows}
+      </if>
+    </if>
+  </sql>
+
+  <!--查-->
+  <select id="findById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from js_material_pieces
+    where m_real_id = #{mRealId,jdbcType=BIGINT}
+  </select>
+
+  <select id="findByMId"  parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" />
+    from js_material_pieces
+    where m_id = #{#mId}
+  </select>
+
+  <select id="findList" resultMap="BaseResultMap">
+    select * from js_material_pieces
+  </select>
+
+  <select id="findPageList" parameterType="map" resultMap="BaseResultMap">
+    SELECT * FROM js_material_pieces
+    <where>
+      <include refid="where_sql"/>
+    </where>
+    <include refid="order_by_sql"/>
+  </select>
+
+  <select id="findPageListCount" parameterType="com.js.entity.material.MaterialPieces" resultType="int">
+    SELECT count(*) FROM js_material_pieces
+    <where>
+      <include refid="where_sql"/>
+    </where>
+  </select>
+
+  <!--删-->
+  <delete id="deleteByMId" parameterType="java.lang.Long">
+    delete from js_material_pieces
+    where m_id = #{mId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByMRealId" parameterType="java.lang.Long">
+    delete from js_material_pieces
+    where m_real_id = #{mRealId,jdbcType=BIGINT}
+  </delete>
+
+  <!--增-->
+  <insert id="insert" parameterType="com.js.entity.material.MaterialPieces">
+    insert into js_material_pieces (m_id, m_batch,
+      m_category_id, m_source, m_package,
+      m_store_id, m_store_area_id, m_in_store_time,
+      m_in_store_staff, memo, is_splited
+      )
+    values (#{mId,jdbcType=BIGINT}, #{mBatch,jdbcType=VARCHAR},
+      #{mCategoryId,jdbcType=BIGINT}, #{mSource,jdbcType=VARCHAR}, #{mPackage,jdbcType=VARCHAR},
+      #{mStoreId,jdbcType=INTEGER}, #{mStoreAreaId,jdbcType=INTEGER}, #{mInStoreTime,jdbcType=TIMESTAMP},
+      #{mInStoreStaff,jdbcType=VARCHAR}, #{memo,jdbcType=VARCHAR}, #{isSplited,jdbcType=TINYINT}
+      )
+  </insert>
+
+  <!--改-->
+  <update id="update" parameterType="com.js.entity.material.MaterialPieces">
+    update js_material_pieces
+    set m_id = #{mId,jdbcType=BIGINT},
+      m_batch = #{mBatch,jdbcType=VARCHAR},
+      m_category_id = #{mCategoryId,jdbcType=BIGINT},
+      m_source = #{mSource,jdbcType=VARCHAR},
+      m_package = #{mPackage,jdbcType=VARCHAR},
+      m_store_id = #{mStoreId,jdbcType=INTEGER},
+      m_store_area_id = #{mStoreAreaId,jdbcType=INTEGER},
+      m_in_store_time = #{mInStoreTime,jdbcType=TIMESTAMP},
+      m_in_store_staff = #{mInStoreStaff,jdbcType=VARCHAR},
+      memo = #{memo,jdbcType=VARCHAR},
+      is_splited = #{isSplited,jdbcType=TINYINT}
+    where m_real_id = #{mRealId,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.js.dao.material.MaterialMergeRecordMapper">
+  <resultMap id="BaseResultMap" type="com.js.entity.material.MaterialMergeRecord">
+    <result column="m_real_id" jdbcType="BIGINT" property="mRealId" />
+    <result column="m_batch" jdbcType="VARCHAR" property="mBatch" />
+    <result column="security_value" jdbcType="TINYINT" property="securityValue" />
+    <result column="m_source" jdbcType="VARCHAR" property="mSource" />
+    <result column="m_package" jdbcType="VARCHAR" property="mPackage" />
+    <result column="m_store_id" jdbcType="INTEGER" property="mStoreId" />
+    <result column="m_in_store_time" jdbcType="TIMESTAMP" property="mInStoreTime" />
+    <result column="m_in_store_staff" jdbcType="VARCHAR" property="mInStoreStaff" />
+    <result column="is_alert" jdbcType="TINYINT" property="isAlert" />
+    <result column="memo" jdbcType="VARCHAR" property="memo" />
+    <result column="m_merged_id" jdbcType="BIGINT" property="mMergedId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    m_real_id, m_batch, security_value, m_source, m_package, m_store_id, m_in_store_time, 
+    m_in_store_staff, is_alert, memo, m_merged_id
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from js_material_merge_record
+    where m_real_id = #{mRealId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from js_material_merge_record
+    where m_real_id = #{mRealId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.js.entity.material.MaterialMergeRecord">
+    insert into js_material_merge_record (m_real_id, m_batch, security_value, 
+      m_source, m_package, m_store_id, 
+      m_in_store_time, m_in_store_staff, is_alert, 
+      memo, m_merged_id)
+    values (#{mRealId,jdbcType=BIGINT}, #{mBatch,jdbcType=VARCHAR}, #{securityValue,jdbcType=TINYINT}, 
+      #{mSource,jdbcType=VARCHAR}, #{mPackage,jdbcType=VARCHAR}, #{mStoreId,jdbcType=INTEGER}, 
+      #{mInStoreTime,jdbcType=TIMESTAMP}, #{mInStoreStaff,jdbcType=VARCHAR}, #{isAlert,jdbcType=TINYINT}, 
+      #{memo,jdbcType=VARCHAR}, #{mMergedId,jdbcType=BIGINT})
+  </insert>
+
+
+  <update id="updateByPrimaryKey" parameterType="com.js.entity.material.MaterialMergeRecord">
+    update js_material_merge_record
+    set m_batch = #{mBatch,jdbcType=VARCHAR},
+      security_value = #{securityValue,jdbcType=TINYINT},
+      m_source = #{mSource,jdbcType=VARCHAR},
+      m_package = #{mPackage,jdbcType=VARCHAR},
+      m_store_id = #{mStoreId,jdbcType=INTEGER},
+      m_in_store_time = #{mInStoreTime,jdbcType=TIMESTAMP},
+      m_in_store_staff = #{mInStoreStaff,jdbcType=VARCHAR},
+      is_alert = #{isAlert,jdbcType=TINYINT},
+      memo = #{memo,jdbcType=VARCHAR},
+      m_merged_id = #{mMergedId,jdbcType=BIGINT}
+    where m_real_id = #{mRealId,jdbcType=BIGINT}
+  </update>
+</mapper>

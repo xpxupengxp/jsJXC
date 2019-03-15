@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.js.dao.material.MaterialQualityMapper">
+  <resultMap id="BaseResultMap" type="com.js.entity.material.MaterialQuality">
+    <result column="m_real_id" jdbcType="BIGINT" property="mRealId" />
+    <result column="c_result" jdbcType="VARCHAR" property="cResult" />
+    <result column="c_isinspection" jdbcType="VARCHAR" property="cIsinspection" />
+    <result column="c_inspection_grade" jdbcType="VARCHAR" property="cInspectionGrade" />
+    <result column="c_Inspector" jdbcType="VARCHAR" property="cInspector" />
+    <result column="c_inspection_date" jdbcType="TIMESTAMP" property="cInspectionDate" />
+    <result column="c_inspection_memo" jdbcType="VARCHAR" property="cInspectionMemo" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    m_real_id, c_result, c_isinspection, c_inspection_grade, c_Inspector, c_inspection_date, 
+    c_inspection_memo
+  </sql>
+
+  <!--查-->
+  <select id="findById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from js_material_quality
+    where m_real_id = #{mRealId,jdbcType=BIGINT}
+  </select>
+
+  <!--删-->
+  <delete id="deleteByMRealId" parameterType="java.lang.Long">
+    delete from js_material_quality
+    where m_real_id = #{mRealId,jdbcType=BIGINT}
+  </delete>
+
+  <!--增-->
+  <insert id="insert" parameterType="com.js.entity.material.MaterialQuality">
+    insert into js_material_quality (m_real_id, c_result, c_isinspection, 
+      c_inspection_grade, c_Inspector, c_inspection_date, 
+      c_inspection_memo)
+    values (#{mRealId,jdbcType=BIGINT}, #{cResult,jdbcType=VARCHAR}, #{cIsinspection,jdbcType=VARCHAR}, 
+      #{cInspectionGrade,jdbcType=VARCHAR}, #{cInspector,jdbcType=VARCHAR}, #{cInspectionDate,jdbcType=TIMESTAMP}, 
+      #{cInspectionMemo,jdbcType=VARCHAR})
+  </insert>
+
+  <!--改-->
+  <update id="update" parameterType="com.js.entity.material.MaterialQuality">
+    update js_material_quality
+    set c_result = #{cResult,jdbcType=VARCHAR},
+      c_isinspection = #{cIsinspection,jdbcType=VARCHAR},
+      c_inspection_grade = #{cInspectionGrade,jdbcType=VARCHAR},
+      c_Inspector = #{cInspector,jdbcType=VARCHAR},
+      c_inspection_date = #{cInspectionDate,jdbcType=TIMESTAMP},
+      c_inspection_memo = #{cInspectionMemo,jdbcType=VARCHAR}
+    where m_real_id = #{mRealId,jdbcType=BIGINT}
+  </update>
+</mapper>

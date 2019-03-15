@@ -1,4 +1,4 @@
-package com.js.controller;
+package com.js.controller.sys;
 
 
 import com.js.util.ResultUtil;
